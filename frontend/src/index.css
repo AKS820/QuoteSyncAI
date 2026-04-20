@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #09090E;
+    color: #FFFFFF;
+    font-family: 'IBM Plex Sans', Inter, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: #09090E; }
+  ::-webkit-scrollbar-thumb { background: #2A2A3E; border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover { background: #0F62FE; }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, #ffffff 0%, #c7d4ff 50%, #4589FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .card-glass {
+    background: rgba(17, 17, 24, 0.9);
+    border: 1px solid rgba(42, 42, 62, 0.8);
+    backdrop-filter: blur(12px);
+  }
+
+  .glow-blue {
+    box-shadow: 0 0 40px rgba(15, 98, 254, 0.2), 0 0 80px rgba(15, 98, 254, 0.08);
+  }
+
+  .glow-blue-sm {
+    box-shadow: 0 0 20px rgba(15, 98, 254, 0.15);
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(42, 42, 62, 0.4) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(42, 42, 62, 0.4) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .bg-dots {
+    background-image: radial-gradient(rgba(42, 42, 62, 0.8) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+/* Smooth agent log scroll */
+.agent-log-scroll {
+  scroll-behavior: smooth;
+}
+
+/* Slider styling */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: #2A2A3E;
+  outline: none;
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #0F62FE;
+  cursor: pointer;
+  box-shadow: 0 0 0 3px rgba(15, 98, 254, 0.2);
+  transition: box-shadow 0.15s;
+}
+input[type='range']::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 5px rgba(15, 98, 254, 0.25);
+}
+input[type='range']::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #0F62FE;
+  cursor: pointer;
+  border: none;
+}

@@ -1,0 +1,17 @@
+{
+  "name": "mock-cpq",
+  "version": "1.0.0",
+  "description": "Mock Salesforce CPQ REST service for QuoteSync AI demos",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
