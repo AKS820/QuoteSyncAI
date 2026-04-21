@@ -1,5 +1,7 @@
 import { Check } from 'lucide-react';
 
+const STAGE_IDS = ['hero', 'demo', 'setup', 'roi', 'pricing'];
+
 export default function ProgressIndicator({ currentStage, visitedStages, labels = [] }) {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-surface-2/95 backdrop-blur-sm border-b border-border">
@@ -22,7 +24,7 @@ export default function ProgressIndicator({ currentStage, visitedStages, labels 
               return (
                 <a
                   key={i}
-                  href={`#stage-${i}`}
+                  href={`#${STAGE_IDS[i] ?? `stage-${i}`}`}
                   className={`flex items-center gap-1.5 px-3 h-11 text-[11px] font-medium transition-colors whitespace-nowrap border-r border-border first:border-l ${
                     isActive
                       ? 'text-white bg-ibm-blue/10'
@@ -46,7 +48,7 @@ export default function ProgressIndicator({ currentStage, visitedStages, labels 
         {/* CTA — fixed width matching logo */}
         <div className="shrink-0 w-36 flex justify-end">
           <a
-            href="#stage-4"
+            href="#pricing"
             className="hidden sm:block bg-ibm-blue hover:bg-ibm-blue-hover text-white text-xs font-semibold px-3 py-1.5 transition-colors"
           >
             Get Started

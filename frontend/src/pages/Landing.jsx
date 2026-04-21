@@ -103,11 +103,11 @@ export default function Landing() {
 
       <StickyCTA currentStage={currentStage} />
 
-      <section id="stage-0" data-stage="0">
+      <section id="hero" data-stage="0">
         <Hero />
       </section>
 
-      <section id="stage-1" data-stage="1" className="border-t border-border">
+      <section id="demo" data-stage="1" className="border-t border-border">
         <DemoEnvironment />
       </section>
 
@@ -123,22 +123,22 @@ export default function Landing() {
       <div className="border-t border-border bg-surface px-6 py-8 text-center">
         <p className="text-sm text-muted font-light mb-4">Seen enough? Start with a read-only scan — nothing changes in your systems.</p>
         <a
-          href="#stage-4"
+          href="#pricing"
           className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-6 py-3 transition-colors text-sm"
         >
           See pricing and get started
         </a>
       </div>
 
-      <section id="stage-2" data-stage="2" className="border-t border-border bg-surface">
+      <section id="setup" data-stage="2" className="border-t border-border bg-surface">
         <ImplementationGuide />
       </section>
 
-      <section id="stage-3" data-stage="3" className="border-t border-border">
+      <section id="roi" data-stage="3" className="border-t border-border">
         <ROICalculator />
       </section>
 
-      <section id="stage-4" data-stage="4" className="border-t border-border bg-surface">
+      <section id="pricing" data-stage="4" className="border-t border-border bg-surface">
         <PricingSection />
       </section>
 

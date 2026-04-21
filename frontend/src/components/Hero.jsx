@@ -97,7 +97,7 @@ export default function Hero() {
           className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10"
         >
           <a
-            href="#stage-1"
+            href="#demo"
             onClick={() => trackEvent('cta_click', { cta: 'see_cost', stage: 0 })}
             className="flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-7 py-3.5 transition-colors text-sm"
           >
@@ -105,7 +105,7 @@ export default function Hero() {
             <ChevronRight size={16} />
           </a>
           <a
-            href="#stage-4"
+            href="#pricing"
             onClick={() => trackEvent('cta_click', { cta: 'see_pricing', stage: 0 })}
             className="flex items-center gap-2 border border-border hover:border-border-bright text-white font-light px-7 py-3.5 transition-colors text-sm"
           >
