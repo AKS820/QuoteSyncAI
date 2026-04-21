@@ -1,9 +1,9 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Mail, TrendingUp, DollarSign, Clock, Percent, CheckCircle } from 'lucide-react';
+import { Mail, CheckCircle } from 'lucide-react';
 import { useEventTracking } from '../hooks/useEventTracking.js';
 
-function useCountUp(target, duration = 1200) {
+function useCountUp(target, duration = 1000) {
   const [value, setValue] = useState(0);
   const prev = useRef(0);
   useEffect(() => {
@@ -27,35 +27,18 @@ function useCountUp(target, duration = 1200) {
 function Slider({ label, value, min, max, step = 1, onChange, format }) {
   const pct = ((value - min) / (max - min)) * 100;
   return (
-    <div className="space-y-2">
-      <div className="flex justify-between items-baseline">
-        <label className="text-sm font-medium text-white">{label}</label>
-        <span className="text-ibm-blue-light font-semibold text-sm font-mono">{format ? format(value) : value}</span>
+    <div className="px-4 py-4 border-b border-border last:border-b-0">
+      <div className="flex justify-between items-baseline mb-2">
+        <label className="text-xs text-muted font-light">{label}</label>
+        <span className="font-mono font-semibold text-sm text-ibm-blue-light">{format ? format(value) : value}</span>
       </div>
       <input
         type="range"
         min={min} max={max} step={step} value={value}
         onChange={e => onChange(Number(e.target.value))}
         className="w-full"
-        style={{ background: `linear-gradient(to right, #0F62FE ${pct}%, #2A2A3E ${pct}%)` }}
+        style={{ background: `linear-gradient(to right, #0F62FE ${pct}%, rgba(255,255,255,0.12) ${pct}%)` }}
       />
-      <div className="flex justify-between text-xs text-muted">
-        <span>{format ? format(min) : min}</span>
-        <span>{format ? format(max) : max}</span>
-      </div>
-    </div>
-  );
-}
-
-function OutputCard({ icon: Icon, label, value, sub, highlight }) {
-  return (
-    <div className={`rounded-xl p-5 border ${highlight ? 'border-ibm-blue bg-ibm-blue-dim' : 'border-border bg-surface-2'}`}>
-      <div className={`w-8 h-8 rounded-lg flex items-center justify-center mb-3 ${highlight ? 'bg-ibm-blue/30' : 'bg-surface-3'}`}>
-        <Icon size={16} className={highlight ? 'text-ibm-blue-light' : 'text-muted'} />
-      </div>
-      <div className={`text-2xl font-bold font-mono mb-0.5 ${highlight ? 'text-white' : 'text-ibm-blue-light'}`}>{value}</div>
-      <div className="text-sm font-medium">{label}</div>
-      {sub && <div className="text-xs text-muted mt-1">{sub}</div>}
     </div>
   );
 }
@@ -83,16 +66,23 @@ export default function ROICalculator() {
     const annualHoursSaved  = inputs.hoursPerWeek * 52;
     const laborSaved        = annualHoursSaved * inputs.hourlyRate * inputs.staffCount;
     const revenueRecovered  = inputs.quotesPerMonth * inputs.avgDealSize * (inputs.errorRate / 100) * 0.4 * 12;
-    const totalValue        = laborSaved + revenueRecovered;
+    const rawTotal          = laborSaved + revenueRecovered;
+    const totalValue        = Math.min(rawTotal, 400000);
     const paybackMonths     = totalValue > 0 ? (ANNUAL_CONTRACT / totalValue) * 12 : 0;
     const roi               = totalValue > 0 ? ((totalValue - ANNUAL_CONTRACT) / ANNUAL_CONTRACT) * 100 : 0;
-    return { annualHoursSaved, laborSaved: Math.round(laborSaved), revenueRecovered: Math.round(revenueRecovered), totalValue: Math.round(totalValue), paybackMonths: Math.round(paybackMonths * 10) / 10, roi: Math.round(roi) };
+    return {
+      annualHoursSaved,
+      laborSaved: Math.round(Math.min(laborSaved, 200000)),
+      revenueRecovered: Math.round(Math.min(revenueRecovered, 200000)),
+      totalValue: Math.round(totalValue),
+      paybackMonths: Math.round(paybackMonths * 10) / 10,
+      roi: Math.round(roi),
+      capped: rawTotal > 400000,
+    };
   }, [inputs]);
 
   useEffect(() => {
-    const t = setTimeout(() => {
-      trackEvent('roi_calculated', { inputs, result: calc });
-    }, 800);
+    const t = setTimeout(() => trackEvent('roi_calculated', { inputs, result: calc }), 800);
     return () => clearTimeout(t);
   }, [calc]);
 
@@ -100,11 +90,11 @@ export default function ROICalculator() {
   function fmt$n(v) { return `$${v.toLocaleString()}`; }
   function fmtPct(v) { return `${v}%`; }
 
-  const animHours    = useCountUp(calc.annualHoursSaved);
-  const animLabor    = useCountUp(calc.laborSaved);
-  const animRevenue  = useCountUp(calc.revenueRecovered);
-  const animTotal    = useCountUp(calc.totalValue);
-  const animRoi      = useCountUp(calc.roi);
+  const animHours   = useCountUp(calc.annualHoursSaved);
+  const animLabor   = useCountUp(calc.laborSaved);
+  const animRevenue = useCountUp(calc.revenueRecovered);
+  const animTotal   = useCountUp(calc.totalValue);
+  const animRoi     = useCountUp(calc.roi);
 
   async function handleEmailSubmit() {
     if (!email.includes('@')) return;
@@ -120,27 +110,38 @@ export default function ROICalculator() {
     trackEvent('cta_click', { cta: 'roi_email_report', email_provided: true });
   }
 
+  const OUTPUT_ROWS = [
+    { label: 'Hours saved / year', value: `${animHours.toLocaleString()} hrs`, sub: `${inputs.hoursPerWeek} h/wk × 52 × ${inputs.staffCount} staff` },
+    { label: 'Labor cost saved', value: `$${animLabor.toLocaleString()}`, sub: `at $${inputs.hourlyRate}/hr` },
+    { label: 'Revenue recovered', value: `$${animRevenue.toLocaleString()}`, sub: '40% recovery on pricing errors' },
+    { label: 'ROI vs contract cost', value: `${animRoi}%`, sub: `vs. $${(ANNUAL_CONTRACT / 1000).toFixed(0)}K/yr contract` },
+  ];
+
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.5 }}
       className="py-24 px-6 max-w-6xl mx-auto"
     >
-      <div className="text-center mb-12">
-        <div className="inline-block text-xs font-semibold text-ibm-blue bg-ibm-blue-dim px-3 py-1 rounded-full mb-4">STAGE 5 — ROI CALCULATOR</div>
-        <h2 className="text-4xl font-bold mb-3">What's manual quote sync actually costing you?</h2>
-        <p className="text-muted max-w-xl mx-auto">Adjust the sliders to match your environment. The calculator updates instantly.</p>
+      {/* Header */}
+      <div className="mb-10">
+        <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">Stage 3 — ROI Calculator</div>
+        <h2 className="text-3xl sm:text-4xl font-semibold mb-3 leading-tight">What's manual price reconciliation actually costing you?</h2>
+        <p className="text-muted font-light max-w-xl mb-2">Adjust the inputs to match your environment. Results update instantly.</p>
+        <p className="text-xs text-dim font-light">Defaults based on typical teams managing 200+ quotes/month. Results are estimates — your actual ROI is scoped with real data after onboarding.</p>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-8">
-        {/* Inputs */}
-        <div className="bg-surface border border-border rounded-2xl p-6 space-y-7">
-          <h3 className="font-semibold text-lg">Your Environment</h3>
+      <div className="grid lg:grid-cols-2 border border-border">
 
+        {/* Inputs */}
+        <div className="border-r border-border">
+          <div className="px-4 py-2 border-b border-border bg-surface">
+            <span className="text-[10px] tracking-label text-muted uppercase font-semibold">Your Environment</span>
+          </div>
           <Slider label="Quotes managed per month" value={inputs.quotesPerMonth} min={10} max={2000} step={10} onChange={set('quotesPerMonth')} format={v => v.toLocaleString()} />
-          <Slider label="Hours spent on manual sync per week" value={inputs.hoursPerWeek} min={1} max={40} onChange={set('hoursPerWeek')} format={v => `${v}h`} />
+          <Slider label="Hours spent on manual price reconciliation per week" value={inputs.hoursPerWeek} min={1} max={40} onChange={set('hoursPerWeek')} format={v => `${v}h`} />
           <Slider label="Average hourly cost of ops staff" value={inputs.hourlyRate} min={30} max={150} step={5} onChange={set('hourlyRate')} format={fmt$n} />
           <Slider label="% of deals delayed due to pricing errors" value={inputs.errorRate} min={1} max={40} onChange={set('errorRate')} format={fmtPct} />
           <Slider label="Average deal size" value={inputs.avgDealSize} min={1000} max={150000} step={1000} onChange={set('avgDealSize')} format={fmt$n} />
@@ -148,98 +149,100 @@ export default function ROICalculator() {
         </div>
 
         {/* Outputs */}
-        <div className="space-y-4">
-          <h3 className="font-semibold text-lg">Your Annual Impact</h3>
-
-          <div className="grid grid-cols-2 gap-3">
-            <OutputCard
-              icon={Clock} label="Hours saved / year"
-              value={animHours.toLocaleString()}
-              sub={`${inputs.hoursPerWeek} hrs/wk × 52 weeks × ${inputs.staffCount} staff`}
-            />
-            <OutputCard
-              icon={DollarSign} label="Labor cost saved"
-              value={`$${animLabor.toLocaleString()}`}
-              sub="Based on your hourly rate"
-            />
-            <OutputCard
-              icon={TrendingUp} label="Revenue recovered"
-              value={`$${animRevenue.toLocaleString()}`}
-              sub="From reduced pricing errors (40% recovery rate)"
-            />
-            <OutputCard
-              icon={Percent} label="ROI"
-              value={`${animRoi}%`}
-              sub={`vs. $${(ANNUAL_CONTRACT / 1000).toFixed(0)}K/yr QuoteSync contract`}
-            />
+        <div>
+          <div className="px-4 py-2 border-b border-border bg-surface">
+            <span className="text-[10px] tracking-label text-muted uppercase font-semibold">Your Annual Impact</span>
           </div>
 
-          <OutputCard
-            icon={TrendingUp} label="Total annual value"
-            value={`$${animTotal.toLocaleString()}`}
-            sub={`Payback period: ~${calc.paybackMonths} months`}
-            highlight
-          />
-
-          {/* Payback visualization */}
-          <div className="bg-surface border border-border rounded-xl p-4">
-            <div className="flex justify-between text-xs text-muted mb-2">
-              <span>Break-even point</span>
-              <span>{calc.paybackMonths} months</span>
+          {OUTPUT_ROWS.map((row, i) => (
+            <div key={i} className="flex items-center justify-between px-4 py-4 border-b border-border">
+              <div>
+                <div className="text-xs text-muted font-light">{row.label}</div>
+                <div className="text-[10px] text-dim font-light mt-0.5">{row.sub}</div>
+              </div>
+              <span className="font-mono font-semibold text-lg text-ibm-blue-light">{row.value}</span>
             </div>
-            <div className="h-2 bg-surface-3 rounded-full overflow-hidden">
+          ))}
+
+          {/* Total */}
+          <div className="flex items-center justify-between px-4 py-4 border-b border-border bg-ibm-blue/5">
+            <div>
+              <div className="text-sm font-semibold">Total annual value</div>
+              <div className="text-[10px] text-muted font-light mt-0.5">Break-even: ~{calc.paybackMonths} months</div>
+              {calc.capped && (
+                <div className="text-[10px] text-dim font-light mt-0.5">Capped at typical mid-market range ($150K–$400K)</div>
+              )}
+            </div>
+            <span className="font-mono font-bold text-2xl text-white">${animTotal.toLocaleString()}</span>
+          </div>
+
+          {/* Payback bar */}
+          <div className="px-4 py-4 border-b border-border">
+            <div className="flex justify-between text-[10px] font-mono text-muted mb-1.5">
+              <span>Break-even</span>
+              <span>Month {calc.paybackMonths}</span>
+            </div>
+            <div className="h-0.5 bg-surface-3">
               <motion.div
-                className="h-full bg-ibm-blue rounded-full"
+                className="h-full bg-ibm-blue"
                 animate={{ width: `${Math.min((calc.paybackMonths / 12) * 100, 100)}%` }}
                 transition={{ duration: 0.8 }}
               />
             </div>
-            <div className="flex justify-between text-xs text-muted mt-1.5">
+            <div className="flex justify-between text-[10px] font-mono text-dim mt-1">
               <span>Month 0</span>
-              <span className="text-ibm-blue font-medium">Month {calc.paybackMonths}</span>
               <span>Month 12</span>
             </div>
           </div>
 
-          {submitted ? (
-            <div className="flex items-center gap-2 p-4 bg-success-dim border border-success/30 rounded-xl text-success text-sm">
-              <CheckCircle size={16} />
-              Report saved! We'll send it to {email} shortly.
-            </div>
-          ) : (
-            <button
-              onClick={() => setEmailModal(true)}
-              className="w-full flex items-center justify-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold py-3.5 rounded-xl transition-all hover:scale-[1.01] shadow-glow-blue-sm"
-            >
-              <Mail size={16} />
-              Email Me This Report
-            </button>
-          )}
+          {/* Disclaimer */}
+          <div className="px-4 py-2 border-b border-border">
+            <p className="text-[10px] text-dim font-light">Based on typical mid-market teams. Results vary by stack and error rate. Exact ROI scoped with your data after onboarding.</p>
+          </div>
+
+          {/* Email CTA */}
+          <div className="px-4 py-4">
+            {submitted ? (
+              <div className="flex items-center gap-2 text-success text-sm">
+                <CheckCircle size={14} />
+                <span className="font-light">Report sent to {email}</span>
+              </div>
+            ) : (
+              <button
+                onClick={() => setEmailModal(true)}
+                className="flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-5 py-2.5 text-sm transition-colors"
+              >
+                <Mail size={14} />
+                Email Me This Report
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
       {/* Email modal */}
       {emailModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => setEmailModal(false)}>
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-surface border border-border rounded-2xl p-6 w-full max-w-md"
+            className="bg-surface border border-border p-6 w-full max-w-sm"
+            onClick={e => e.stopPropagation()}
           >
-            <h3 className="font-bold text-lg mb-1">Email ROI Report</h3>
-            <p className="text-muted text-sm mb-5">We'll send a summary of your ROI calculation with our assessment of your QuoteSync fit.</p>
+            <h3 className="font-semibold text-base mb-1">Email ROI Report</h3>
+            <p className="text-muted text-sm font-light mb-5">We'll send your ROI summary with a QuoteGuard fit assessment.</p>
             <input
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleEmailSubmit()}
               placeholder="you@company.com"
-              className="w-full bg-surface-2 border border-border rounded-xl px-4 py-3 text-sm outline-none focus:border-ibm-blue transition-colors mb-3"
+              className="w-full bg-surface-2 border border-border px-4 py-3 text-sm outline-none focus:border-ibm-blue transition-colors mb-3 font-light"
               autoFocus
             />
             <div className="flex gap-3">
-              <button onClick={() => setEmailModal(false)} className="flex-1 py-2.5 border border-border rounded-xl text-sm text-muted hover:text-white hover:border-border-bright transition-colors">Cancel</button>
-              <button onClick={handleEmailSubmit} className="flex-1 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold py-2.5 rounded-xl transition-colors text-sm">Send Report</button>
+              <button onClick={() => setEmailModal(false)} className="flex-1 py-2.5 border border-border text-sm text-muted hover:text-white hover:border-border-bright transition-colors">Cancel</button>
+              <button onClick={handleEmailSubmit} className="flex-1 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold py-2.5 transition-colors text-sm">Send Report</button>
             </div>
           </motion.div>
         </div>

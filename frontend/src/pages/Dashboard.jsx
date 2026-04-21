@@ -1,24 +1,21 @@
 import { useState, useEffect, useCallback } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { Users, Play, Zap, Calculator, CreditCard, MessageSquare, RefreshCw, Lock } from 'lucide-react';
+import { Users, Zap, Calculator, CreditCard, MessageSquare, RefreshCw, Lock, ShieldCheck } from 'lucide-react';
 
-const ADMIN_PASSWORD = 'quotesync-admin';
+const ADMIN_PASSWORD = 'quoteguard-admin';
 
-function MetricCard({ icon: Icon, label, value, sub, color = 'ibm-blue' }) {
-  const colors = {
-    'ibm-blue': 'text-ibm-blue',
-    'success': 'text-success',
-    'warning': 'text-warning',
-    'purple': 'text-purple-400',
-  };
+const STAGE_LABELS = ['Overview', 'Demo', 'Setup', 'ROI', 'Pricing'];
+
+function MetricCard({ icon: Icon, label, value, sub, accent = false }) {
   return (
-    <div className="bg-surface border border-border rounded-xl p-5">
-      <div className={`w-9 h-9 rounded-lg flex items-center justify-center mb-3 ${color === 'ibm-blue' ? 'bg-ibm-blue-dim' : color === 'success' ? 'bg-success-dim' : color === 'warning' ? 'bg-warning-dim' : 'bg-purple-400/10'}`}>
-        <Icon size={18} className={colors[color]} />
+    <div className={`border border-border p-5 ${accent ? 'bg-ibm-blue/5 border-ibm-blue/30' : 'bg-surface'}`}>
+      <div className="flex items-start justify-between mb-4">
+        <Icon size={16} className={accent ? 'text-ibm-blue' : 'text-muted'} />
+        {accent && <span className="w-1.5 h-1.5 bg-ibm-blue rounded-full animate-pulse-dot" />}
       </div>
-      <div className="text-2xl font-bold mb-0.5">{value}</div>
-      <div className="text-sm font-medium text-white">{label}</div>
-      {sub && <div className="text-xs text-muted mt-1">{sub}</div>}
+      <div className="font-mono font-bold text-2xl text-white mb-0.5">{value}</div>
+      <div className="text-xs font-medium text-white/80">{label}</div>
+      {sub && <div className="text-[10px] text-muted font-light mt-1">{sub}</div>}
     </div>
   );
 }
@@ -26,9 +23,10 @@ function MetricCard({ icon: Icon, label, value, sub, color = 'ibm-blue' }) {
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-surface-2 border border-border rounded-lg p-3 text-sm">
-        <p className="font-medium mb-1">Stage {label}</p>
-        <p className="text-ibm-blue">{payload[0].value} users ({payload[1]?.value}%)</p>
+      <div className="bg-surface-2 border border-border p-3 text-xs">
+        <p className="font-medium mb-1 text-white">{label}</p>
+        <p className="text-ibm-blue-light font-mono">{payload[0].value} visitors</p>
+        {payload[1] && <p className="text-muted">{payload[1].value}% of total</p>}
       </div>
     );
   }
@@ -41,8 +39,7 @@ export default function Dashboard() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [lastRefresh, setLastRefresh] = useState(null);
-
-  const STAGE_LABELS = ['Overview', 'How It Works', 'Your Fit', 'Live Demo', 'Setup', 'ROI Calc', 'Pricing'];
+  const [pwError, setPwError] = useState(false);
 
   const loadData = useCallback(async () => {
     setLoading(true);
@@ -65,26 +62,36 @@ export default function Dashboard() {
     return () => clearInterval(interval);
   }, [authed, loadData]);
 
+  function handleAuth() {
+    if (pw === ADMIN_PASSWORD) {
+      setAuthed(true);
+      setPwError(false);
+    } else {
+      setPwError(true);
+    }
+  }
+
   if (!authed) {
     return (
-      <div className="min-h-screen bg-[#09090E] flex items-center justify-center">
-        <div className="bg-surface border border-border rounded-2xl p-8 w-full max-w-sm">
-          <div className="w-12 h-12 bg-ibm-blue-dim rounded-xl flex items-center justify-center mb-6">
-            <Lock size={22} className="text-ibm-blue" />
+      <div className="min-h-screen bg-surface-2 flex items-center justify-center px-4">
+        <div className="bg-surface border border-border p-8 w-full max-w-sm">
+          <div className="w-8 h-8 bg-ibm-blue flex items-center justify-center mb-6">
+            <Lock size={14} className="text-white" />
           </div>
-          <h1 className="text-2xl font-bold mb-1">Analytics Dashboard</h1>
-          <p className="text-muted text-sm mb-6">Enter admin password to continue</p>
+          <h1 className="text-lg font-semibold mb-1">QuoteGuard Analytics</h1>
+          <p className="text-muted text-xs font-light mb-6">Admin access only</p>
           <input
             type="password"
             value={pw}
-            onChange={e => setPw(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && pw === ADMIN_PASSWORD && setAuthed(true)}
+            onChange={e => { setPw(e.target.value); setPwError(false); }}
+            onKeyDown={e => e.key === 'Enter' && handleAuth()}
             placeholder="Password"
-            className="w-full bg-surface-2 border border-border rounded-lg px-4 py-3 text-sm outline-none focus:border-ibm-blue transition-colors mb-3"
+            className={`w-full bg-surface-2 border px-4 py-3 text-sm outline-none focus:border-ibm-blue transition-colors mb-3 font-light ${pwError ? 'border-danger' : 'border-border'}`}
           />
+          {pwError && <p className="text-[10px] text-danger font-light mb-3">Incorrect password</p>}
           <button
-            onClick={() => pw === ADMIN_PASSWORD ? setAuthed(true) : alert('Incorrect password')}
-            className="w-full bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold py-3 rounded-lg transition-colors"
+            onClick={handleAuth}
+            className="w-full bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold py-3 transition-colors text-sm"
           >
             Access Dashboard
           </button>
@@ -93,129 +100,113 @@ export default function Dashboard() {
     );
   }
 
-  const funnelData = data?.stageFunnel?.map(s => ({
-    stage: STAGE_LABELS[s.stage] || `Stage ${s.stage}`,
-    users: s.users,
-    pct: s.pct
-  })) || [];
+  const funnelData = (data?.stageFunnel || [])
+    .filter(s => s.stage < STAGE_LABELS.length)
+    .map(s => ({ stage: STAGE_LABELS[s.stage], users: s.users, pct: s.pct }));
 
   const tierData = Object.entries(data?.purchaseIntents?.byTier || {}).map(([tier, count]) => ({ tier, count }));
-  const videoKeys = Object.keys(data?.videoStats || {});
 
   return (
-    <div className="min-h-screen bg-[#09090E] p-6 md:p-8">
+    <div className="min-h-screen bg-surface-2 p-6 md:p-8">
       <div className="max-w-7xl mx-auto">
+
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-2xl font-bold">QuoteSync AI — Analytics</h1>
-            <p className="text-muted text-sm mt-1">
-              {lastRefresh ? `Last updated ${lastRefresh.toLocaleTimeString()}` : 'Loading...'}
-            </p>
+        <div className="flex items-center justify-between mb-8 pb-4 border-b border-border">
+          <div className="flex items-center gap-3">
+            <div className="w-7 h-7 bg-ibm-blue flex items-center justify-center">
+              <ShieldCheck size={14} className="text-white" />
+            </div>
+            <div>
+              <h1 className="text-base font-semibold">QuoteGuard — Analytics</h1>
+              <p className="text-[10px] text-muted font-light font-mono mt-0.5">
+                {lastRefresh ? `Updated ${lastRefresh.toLocaleTimeString()}` : 'Loading...'}
+              </p>
+            </div>
           </div>
           <button
             onClick={loadData}
-            className="flex items-center gap-2 px-4 py-2 bg-surface border border-border rounded-lg text-sm hover:border-ibm-blue transition-colors"
+            className="flex items-center gap-2 px-3 py-2 bg-surface border border-border text-xs hover:border-ibm-blue transition-colors"
           >
-            <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />
+            <RefreshCw size={12} className={loading ? 'animate-spin' : ''} />
             Refresh
           </button>
         </div>
 
         {!data ? (
-          <div className="flex items-center justify-center h-64 text-muted">Loading analytics...</div>
+          <div className="flex items-center justify-center h-64 text-muted text-sm">Loading analytics...</div>
         ) : (
           <>
             {/* Top metrics */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
-              <MetricCard icon={Users} label="Unique Visitors" value={data.totalUsers} color="ibm-blue" />
-              <MetricCard icon={Play} label="Demo Runs" value={data.demo.starts} sub={`${data.demo.completionRate}% completion`} color="success" />
-              <MetricCard icon={Calculator} label="ROI Calcs" value={data.roi.totalCalculations} sub={`Avg ROI: ${data.roi.avgRoiPct}%`} color="warning" />
-              <MetricCard icon={CreditCard} label="Purchase Intents" value={data.purchaseIntents.total} color="purple" />
-              <MetricCard icon={MessageSquare} label="Agent Questions" value={data.agentQuestions.total} color="ibm-blue" />
-              <MetricCard icon={Zap} label="Demo Complete" value={data.demo.completes} sub={`of ${data.demo.starts} started`} color="success" />
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-0 border border-border mb-8">
+              {[
+                { icon: Users,         label: 'Unique Visitors',    value: data.totalUsers,                  sub: null,                                        accent: false },
+                { icon: Zap,           label: 'Demo Runs',          value: data.demo.starts,                 sub: `${data.demo.completionRate}% completion`,    accent: true  },
+                { icon: Calculator,    label: 'ROI Calculations',   value: data.roi.totalCalculations,       sub: `Avg ROI: ${data.roi.avgRoiPct}%`,           accent: false },
+                { icon: CreditCard,    label: 'Purchase Intents',   value: data.purchaseIntents.total,       sub: null,                                        accent: true  },
+                { icon: MessageSquare, label: 'Agent Questions',    value: data.agentQuestions.total,        sub: null,                                        accent: false },
+              ].map((m, i) => (
+                <div key={i} className={`border-r border-border last:border-r-0 ${i > 2 ? 'border-t border-t-border md:border-t-0' : ''}`}>
+                  <MetricCard {...m} />
+                </div>
+              ))}
             </div>
 
-            {/* Stage Funnel */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-              <div className="bg-surface border border-border rounded-xl p-6">
-                <h2 className="font-semibold mb-4">Buyer Journey Funnel</h2>
-                <ResponsiveContainer width="100%" height={240}>
+            {/* Charts */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-border mb-8">
+              {/* Funnel */}
+              <div className="p-6 border-r border-border">
+                <div className="text-[10px] tracking-label text-muted uppercase font-semibold mb-4">Buyer Journey Funnel</div>
+                <ResponsiveContainer width="100%" height={220}>
                   <BarChart data={funnelData} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#2A2A3E" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
                     <XAxis dataKey="stage" tick={{ fill: '#8B8BA7', fontSize: 10 }} />
-                    <YAxis tick={{ fill: '#8B8BA7', fontSize: 11 }} />
+                    <YAxis tick={{ fill: '#8B8BA7', fontSize: 10 }} />
                     <Tooltip content={<CustomTooltip />} />
-                    <Bar dataKey="users" radius={[4, 4, 0, 0]}>
+                    <Bar dataKey="users" radius={0}>
                       {funnelData.map((_, i) => (
-                        <Cell key={i} fill={`rgba(15,98,254,${1 - i * 0.1})`} />
+                        <Cell key={i} fill={`rgba(15,98,254,${1 - i * 0.12})`} />
                       ))}
                     </Bar>
                   </BarChart>
                 </ResponsiveContainer>
               </div>
 
-              <div className="bg-surface border border-border rounded-xl p-6">
-                <h2 className="font-semibold mb-4">Purchase Intent by Tier</h2>
+              {/* Purchase intent by tier */}
+              <div className="p-6">
+                <div className="text-[10px] tracking-label text-muted uppercase font-semibold mb-4">Purchase Intent by Tier</div>
                 {tierData.length === 0 ? (
-                  <div className="text-muted text-sm h-48 flex items-center justify-center">No purchase intents yet</div>
+                  <div className="text-muted text-xs h-48 flex items-center justify-center">No purchase intents yet</div>
                 ) : (
-                  <ResponsiveContainer width="100%" height={240}>
+                  <ResponsiveContainer width="100%" height={220}>
                     <BarChart data={tierData} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#2A2A3E" />
-                      <XAxis dataKey="tier" tick={{ fill: '#8B8BA7', fontSize: 12 }} />
-                      <YAxis tick={{ fill: '#8B8BA7', fontSize: 11 }} />
-                      <Tooltip contentStyle={{ background: '#1A1A28', border: '1px solid #2A2A3E', borderRadius: 8 }} />
-                      <Bar dataKey="count" fill="#24A148" radius={[4, 4, 0, 0]} />
+                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                      <XAxis dataKey="tier" tick={{ fill: '#8B8BA7', fontSize: 11 }} />
+                      <YAxis tick={{ fill: '#8B8BA7', fontSize: 10 }} />
+                      <Tooltip contentStyle={{ background: '#13131C', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 0 }} />
+                      <Bar dataKey="count" fill="#24A148" radius={0} />
                     </BarChart>
                   </ResponsiveContainer>
                 )}
               </div>
             </div>
 
-            {/* Video + Questions */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="bg-surface border border-border rounded-xl p-6">
-                <h2 className="font-semibold mb-4">Video Engagement</h2>
-                <div className="space-y-3">
-                  {videoKeys.length === 0 ? (
-                    <p className="text-muted text-sm">No video plays yet</p>
-                  ) : videoKeys.map(vid => {
-                    const stats = data.videoStats[vid];
-                    const rate = stats.plays > 0 ? Math.round((stats.completes / stats.plays) * 100) : 0;
-                    return (
-                      <div key={vid} className="flex items-center justify-between py-2 border-b border-border last:border-0">
-                        <div>
-                          <div className="text-sm font-medium capitalize">{vid} video</div>
-                          <div className="text-xs text-muted">{stats.plays} plays</div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="w-24 h-1.5 bg-surface-3 rounded-full overflow-hidden">
-                            <div className="h-full bg-ibm-blue rounded-full" style={{ width: `${rate}%` }} />
-                          </div>
-                          <span className="text-sm text-ibm-blue font-medium w-10 text-right">{rate}%</span>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
+            {/* Recent agent questions */}
+            <div className="border border-border">
+              <div className="px-4 py-2 border-b border-border bg-surface">
+                <span className="text-[10px] tracking-label text-muted uppercase font-semibold">Recent Agent Questions</span>
               </div>
-
-              <div className="bg-surface border border-border rounded-xl p-6">
-                <h2 className="font-semibold mb-4">Recent Agent Questions</h2>
-                <div className="space-y-2">
-                  {data.agentQuestions.recent.length === 0 ? (
-                    <p className="text-muted text-sm">No questions yet</p>
-                  ) : data.agentQuestions.recent.map((q, i) => (
-                    <div key={i} className="flex gap-3 py-2 border-b border-border last:border-0">
-                      <span className="text-ibm-blue text-xs mt-0.5 shrink-0">Q</span>
-                      <div>
-                        <p className="text-sm">{q.question || '—'}</p>
-                        <p className="text-xs text-muted mt-0.5">{q.timestamp ? new Date(q.timestamp).toLocaleString() : ''}</p>
-                      </div>
+              <div className="divide-y divide-border">
+                {data.agentQuestions.recent.length === 0 ? (
+                  <p className="text-muted text-xs font-light px-4 py-4">No questions yet</p>
+                ) : data.agentQuestions.recent.map((q, i) => (
+                  <div key={i} className="flex gap-4 px-4 py-3">
+                    <span className="text-ibm-blue text-[10px] font-mono shrink-0 mt-0.5">Q</span>
+                    <div>
+                      <p className="text-sm text-white/80">{q.question || '—'}</p>
+                      <p className="text-[10px] text-muted font-mono mt-0.5">{q.timestamp ? new Date(q.timestamp).toLocaleString() : ''}</p>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
           </>

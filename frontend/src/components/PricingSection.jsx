@@ -1,46 +1,47 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { Check, ChevronDown, ChevronUp, X, Zap, Building2, Rocket } from 'lucide-react';
+import { Check, ChevronDown, ChevronUp, X } from 'lucide-react';
 import { useEventTracking } from '../hooks/useEventTracking.js';
 
+// ⚠️  PLACEHOLDER PRICING — replace with real numbers before launch.
+// These are illustrative anchors only. The self-serve buyer needs a number
+// to trust this is real. Even a rough range converts better than "Contact us."
 const TIERS = [
   {
     id: 'starter',
     name: 'Starter',
-    price: '$1,500',
+    price: '~$1,500',
     period: '/month',
-    icon: Rocket,
-    tagline: 'Prove ROI with your first integration',
+    tagline: 'One ERP. One CPQ. Prove it works.',
+    priceNote: 'Most teams in this tier fall within this range.',
     features: [
       '1 ERP integration (SAP, Oracle, or Dynamics)',
       '1 CPQ integration (Salesforce CPQ or HubSpot)',
       'Up to 500 quotes/month',
-      'Quote Watcher + ERP Validator + Auto-Updater agents',
+      'Continuous detection agent — runs 24/7',
       'Email support (next business day)',
-      'Standard agent rule templates',
-      '14-day free trial',
+      'Standard detection rule templates',
     ],
-    cta: 'Start Free Trial',
+    cta: 'Get a quote for my stack',
     popular: false,
   },
   {
     id: 'growth',
     name: 'Growth',
-    price: '$2,200',
+    price: '~$2,200',
     period: '/month',
-    icon: Zap,
-    tagline: 'For teams running complex quoting workflows',
+    tagline: 'Multiple integrations. Custom workflows.',
+    priceNote: 'Most mid-market teams fall within this range.',
     features: [
       '2 ERP integrations',
       '2 CPQ integrations',
       'Up to 2,000 quotes/month',
-      'All 3 agents + custom approval workflows',
-      'Slack support (4-hour response)',
-      'ROI dashboard + sync analytics',
-      'Custom agent rule configuration',
-      '14-day free trial',
+      'Custom approval workflows',
+      'Slack support',
+      'ROI dashboard + detection analytics',
+      'Custom detection rules',
     ],
-    cta: 'Start Free Trial',
+    cta: 'Get a quote for my stack',
     popular: true,
   },
   {
@@ -48,68 +49,44 @@ const TIERS = [
     name: 'Enterprise',
     price: 'Custom',
     period: '',
-    icon: Building2,
-    tagline: 'For manufacturers at scale with complex stacks',
+    tagline: 'Unlimited integrations. Dedicated engineer.',
+    priceNote: null,
     features: [
       'Unlimited ERP + CPQ integrations',
       'Unlimited quotes/month',
       'Dedicated agent configuration engineer',
-      'Custom sync rules & approval workflows',
+      'Custom detection rules & approval workflows',
       'SLA with guaranteed uptime',
       'Quarterly business reviews',
-      'Custom onboarding & training program',
-      'SAML SSO + advanced security controls',
+      'Custom onboarding & training',
+      'SAML SSO + advanced security',
     ],
-    cta: 'Talk to an Expert',
+    cta: 'Talk to an engineer',
     popular: false,
   },
 ];
 
 const FAQS = [
-  {
-    q: 'How long does setup take?',
-    a: 'The average deployment is 3 weeks from contract signature to live production sync. Week 1 is API credential setup, Week 2 is agent configuration and rule building, Week 3 is testing and training. Most customers run their first live sync by Day 12.',
-  },
-  {
-    q: 'Do you support systems other than SAP?',
-    a: 'Yes. We support Oracle ERP, Microsoft Dynamics 365, HubSpot CRM, Salesforce CPQ, and any system that exposes a REST API. Custom integrations are available on Growth and Enterprise plans. If you\'re on a legacy on-premise ERP, our implementation team will scope a connector during your trial.',
-  },
-  {
-    q: 'Is our pricing data secure?',
-    a: 'All data is encrypted in transit (TLS 1.3) and at rest (AES-256). We are SOC 2 Type II compliant. Your pricing data is never used for model training or shared with any third party. You can request a deletion of all your data at any time.',
-  },
-  {
-    q: 'Can we customize the agent rules?',
-    a: 'Absolutely. The Auto-Updater Agent supports configurable tolerance thresholds (e.g., "auto-update if variance ≤ 5%, flag for approval if > 5%"), quote status filters (skip quotes already "Won" or "Closed"), and custom field mappings for non-standard CPQ configurations.',
-  },
-  {
-    q: 'What if a sync fails?',
-    a: 'The agents are fault-tolerant by design. If a sync fails mid-run, the agents roll back to the last consistent state and alert your configured Slack channel (Growth+) or email. Every sync action is logged with a full audit trail — you can replay or undo any correction within 30 days.',
-  },
-  {
-    q: 'Do we need IT involvement?',
-    a: 'Minimal. You need someone who can generate API credentials in your ERP and CPQ systems — typically a 30-minute task. No on-premise installation, no firewall exceptions beyond standard API access, no database access required. Most customers complete setup entirely within their sales ops team.',
-  },
-  {
-    q: 'Is there a free trial?',
-    a: 'Yes. Starter and Growth plans include a 14-day free trial with full functionality. No credit card required. During the trial you get access to our implementation team via Slack to make sure you get to a live sync before the trial ends.',
-  },
-  {
-    q: 'What\'s the contract commitment?',
-    a: 'Month-to-month contracts are available on all plans at the listed price. Annual contracts save 15% (billed upfront). Enterprise contracts are negotiated individually. We offer a 30-day money-back guarantee if your first live sync doesn\'t work as expected.',
-  },
+  { q: 'How long does setup take?', a: 'Setup involves connecting your ERP and CPQ via API credentials and running a dry run against a sample of your quotes. Most of that time is waiting for credentials to be generated — the actual configuration is fast. We\'ll give you a realistic timeline when we scope your stack.' },
+  { q: 'Do you support systems other than SAP?', a: 'Yes. We support Oracle ERP, Microsoft Dynamics 365, NetSuite, HubSpot, Salesforce CPQ, Conga, DealHub, and any platform that exposes a REST or SOAP API. Tell us what you\'re running and we\'ll confirm before you commit.' },
+  { q: 'Is our pricing data secure?', a: 'All data is encrypted in transit (TLS 1.3) and at rest (AES-256). Your pricing data is never used for model training or shared with any third party. Compliance documentation available on request.' },
+  { q: 'Can we customize the detection rules?', a: 'Yes. You can configure price variance thresholds (e.g., auto-correct if difference ≤ 5%, flag for approval if > 5%), quote status filters, and custom field mappings for non-standard CPQ configurations.' },
+  { q: 'What if a detection run fails?', a: 'Every detection event is logged. If something goes wrong mid-run, the agent does not apply partial corrections — it rolls back and alerts you. You can review and replay any run from the dashboard.' },
+  { q: 'Do we need IT involvement?', a: 'Yes — your IT team needs to generate API credentials in your ERP and CPQ systems, which typically takes under an hour. No on-premise installation, no firewall exceptions beyond standard API access, no database access. After that, QuoteGuard handles the rest and we\'re available throughout to support your team.' },
+  { q: 'Is there a trial?', a: 'We don\'t currently offer a self-serve trial, but you can try the agent in the demo above and we\'ll run a dry run against a real subset of your quotes before any contract is signed.' },
+  { q: "What's the contract structure?", a: 'Reach out and we\'ll walk you through options. We\'re not going to make you sit through a 3-call sales process to get a number — that\'s exactly the problem we\'re solving for our customers.' },
 ];
 
 function FaqItem({ faq }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="border-b border-border last:border-0">
+    <div className="border-b border-border last:border-b-0">
       <button
         onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center justify-between py-4 text-left hover:text-ibm-blue-light transition-colors"
+        className="w-full flex items-center justify-between px-4 py-4 text-left hover:bg-surface transition-colors"
       >
-        <span className="font-medium text-sm pr-4">{faq.q}</span>
-        {open ? <ChevronUp size={16} className="text-ibm-blue shrink-0" /> : <ChevronDown size={16} className="text-muted shrink-0" />}
+        <span className="text-sm font-medium pr-4">{faq.q}</span>
+        {open ? <ChevronUp size={14} className="text-ibm-blue shrink-0" /> : <ChevronDown size={14} className="text-muted shrink-0" />}
       </button>
       <AnimatePresence>
         {open && (
@@ -117,10 +94,10 @@ function FaqItem({ faq }) {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <p className="text-muted text-sm leading-relaxed pb-5">{faq.a}</p>
+            <p className="text-muted text-sm font-light leading-relaxed px-4 pb-4">{faq.a}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -134,6 +111,7 @@ function PurchaseModal({ tier, onClose }) {
   const [company, setCompany] = useState('');
   const [done, setDone] = useState(false);
   const { trackEvent } = useEventTracking();
+  const isEnterprise = tier.id === 'enterprise';
 
   async function handleSubmit() {
     if (!name || !email || !company) return;
@@ -148,66 +126,64 @@ function PurchaseModal({ tier, onClose }) {
     setDone(true);
   }
 
-  const isEnterprise = tier.id === 'enterprise';
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={onClose}>
       <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 10 }}
+        initial={{ opacity: 0, scale: 0.97, y: 8 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-surface border border-border rounded-2xl p-6 w-full max-w-md"
+        exit={{ opacity: 0, scale: 0.97 }}
+        className="bg-surface border border-border p-6 w-full max-w-md"
         onClick={e => e.stopPropagation()}
       >
         <div className="flex items-start justify-between mb-5">
           <div>
-            <h3 className="font-bold text-lg">{isEnterprise ? 'Talk to an Expert' : `Start Your Free Trial — ${tier.name}`}</h3>
-            <p className="text-muted text-sm mt-0.5">
-              {isEnterprise ? 'A solutions engineer will reach out within 1 business day.' : '14-day free trial. No credit card required.'}
+            <h3 className="font-semibold text-base">{isEnterprise ? 'Talk to an engineer' : `Get a quote — ${tier.name}`}</h3>
+            <p className="text-muted text-sm font-light mt-0.5">
+              We'll reply within 1 business day with a real price scoped to your stack. No discovery call required.
             </p>
           </div>
-          <button onClick={onClose} className="text-muted hover:text-white transition-colors"><X size={20} /></button>
+          <button onClick={onClose} className="text-muted hover:text-white transition-colors p-1"><X size={16} /></button>
         </div>
 
         {done ? (
           <div className="text-center py-6">
-            <div className="w-14 h-14 bg-success-dim rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <Check size={28} className="text-success" />
+            <div className="w-10 h-10 bg-success/10 border border-success/30 flex items-center justify-center mx-auto mb-4">
+              <Check size={20} className="text-success" />
             </div>
-            <h4 className="font-bold text-lg mb-2">
-              {isEnterprise ? 'Request received!' : 'Trial activated!'}
-            </h4>
-            <p className="text-muted text-sm">
-              {isEnterprise
-                ? 'A QuoteSync solutions engineer will contact you within 1 business day to schedule a discovery call.'
-                : `We'll send your trial access to ${email} within a few minutes. Your 14-day clock starts when you activate.`}
+            <h4 className="font-semibold text-base mb-2">Request received!</h4>
+            <p className="text-muted text-sm font-light">
+              We'll reach out to {email} within 1 business day to walk through your stack and get you set up.
             </p>
           </div>
         ) : (
           <>
-            <div className="space-y-3 mb-5">
-              <input
-                type="text" placeholder="Full name" value={name} onChange={e => setName(e.target.value)}
-                className="w-full bg-surface-2 border border-border rounded-xl px-4 py-3 text-sm outline-none focus:border-ibm-blue transition-colors"
-              />
-              <input
-                type="email" placeholder="Work email" value={email} onChange={e => setEmail(e.target.value)}
-                className="w-full bg-surface-2 border border-border rounded-xl px-4 py-3 text-sm outline-none focus:border-ibm-blue transition-colors"
-              />
-              <input
-                type="text" placeholder="Company name" value={company} onChange={e => setCompany(e.target.value)}
-                onKeyDown={e => e.key === 'Enter' && handleSubmit()}
-                className="w-full bg-surface-2 border border-border rounded-xl px-4 py-3 text-sm outline-none focus:border-ibm-blue transition-colors"
-              />
+            <div className="space-y-2.5 mb-5">
+              {[
+                { ph: 'Full name', val: name, set: setName, type: 'text' },
+                { ph: 'Work email', val: email, set: setEmail, type: 'email' },
+                { ph: 'Company name', val: company, set: setCompany, type: 'text' },
+              ].map(f => (
+                <input
+                  key={f.ph}
+                  type={f.type}
+                  placeholder={f.ph}
+                  value={f.val}
+                  onChange={e => f.set(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleSubmit()}
+                  className="w-full bg-surface-2 border border-border px-4 py-3 text-sm outline-none focus:border-ibm-blue transition-colors font-light"
+                />
+              ))}
             </div>
             <button
               onClick={handleSubmit}
               disabled={!name || !email || !company}
-              className="w-full bg-ibm-blue hover:bg-ibm-blue-hover disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-xl transition-colors"
+              className="w-full bg-ibm-blue hover:bg-ibm-blue-hover disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold py-3 transition-colors text-sm"
             >
-              {isEnterprise ? 'Request a Call' : 'Start Free Trial'}
+              {isEnterprise ? 'Talk to an engineer' : 'Start protecting my quotes'}
             </button>
-            <p className="text-center text-xs text-muted mt-3">No credit card required. Cancel anytime.</p>
+            <p className="text-center text-xs text-muted font-light mt-3">
+              First run is read-only — nothing changes until you approve. Reply within 1 business day.
+            </p>
           </>
         )}
       </motion.div>
@@ -231,106 +207,122 @@ export default function PricingSection() {
       ref={ref}
       initial={{ opacity: 0 }}
       animate={inView ? { opacity: 1 } : {}}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.5 }}
       className="py-24 px-6 max-w-6xl mx-auto"
     >
-      <div className="text-center mb-14">
-        <div className="inline-block text-xs font-semibold text-ibm-blue bg-ibm-blue-dim px-3 py-1 rounded-full mb-4">STAGE 6 — PRICING</div>
-        <h2 className="text-4xl font-bold mb-3">Simple pricing, serious ROI</h2>
-        <p className="text-muted max-w-xl mx-auto">The average customer recovers the full annual contract cost within 3 months of going live. Annual contracts save 15%.</p>
+      {/* Header */}
+      <div className="mb-12">
+        <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">Stage 4 — Pricing</div>
+        <h2 className="text-3xl sm:text-4xl font-semibold mb-3 leading-tight">
+          This isn't a sync tool.<br />
+          <span className="font-light text-white/70">It's revenue protection.</span>
+        </h2>
+        <p className="text-base font-semibold text-white mb-3">
+          Catch one $5K underpriced deal and this pays for itself.
+        </p>
+        <p className="text-muted font-light max-w-xl mb-4">
+          Prices below are indicative — exact cost confirmed after we scope your stack. Fill out the form and we reply within 1 business day. No discovery call required.
+        </p>
+        <div className="inline-flex items-center gap-2 border border-warning/30 bg-warning/5 px-3 py-2 text-xs text-warning/80 font-light">
+          Most teams find their first errors within 24 hours of connecting. Every day without it is another mispriced quote.
+        </div>
       </div>
 
-      {/* Pricing cards */}
-      <div className="grid md:grid-cols-3 gap-6 mb-20">
-        {TIERS.map((tier, i) => (
-          <motion.div
-            key={tier.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: i * 0.1, duration: 0.5 }}
-            className={`relative rounded-2xl border p-6 flex flex-col ${
-              tier.popular
-                ? 'border-ibm-blue bg-ibm-blue-dim shadow-glow-blue'
-                : 'border-border bg-surface'
-            }`}
-          >
-            {tier.popular && (
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                <span className="bg-ibm-blue text-white text-xs font-bold px-4 py-1 rounded-full shadow-glow-blue-sm">
-                  Most Popular
-                </span>
-              </div>
-            )}
-
-            <div className="mb-5">
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${tier.popular ? 'bg-ibm-blue/30' : 'bg-surface-2'}`}>
-                <tier.icon size={20} className={tier.popular ? 'text-ibm-blue-light' : 'text-muted'} />
-              </div>
-              <h3 className="text-xl font-bold">{tier.name}</h3>
-              <p className="text-muted text-sm mt-1">{tier.tagline}</p>
-            </div>
-
-            <div className="mb-6">
-              <span className="text-4xl font-bold">{tier.price}</span>
-              <span className="text-muted text-sm">{tier.period}</span>
-              {tier.price !== 'Custom' && <div className="text-xs text-muted mt-1">or ${(parseInt(tier.price.replace('$', '').replace(',', '')) * 10.2).toLocaleString('en-US', { maximumFractionDigits: 0 })}/yr (save 15%)</div>}
-            </div>
-
-            <ul className="space-y-2.5 mb-8 flex-1">
-              {tier.features.map((f, fi) => (
-                <li key={fi} className="flex items-start gap-2.5 text-sm">
-                  <Check size={14} className={`shrink-0 mt-0.5 ${tier.popular ? 'text-ibm-blue-light' : 'text-success'}`} />
-                  <span className="text-muted leading-snug">{f}</span>
-                </li>
-              ))}
-            </ul>
-
-            <button
-              onClick={() => openModal(tier)}
-              className={`w-full py-3.5 rounded-xl font-semibold text-sm transition-all hover:scale-[1.01] ${
-                tier.popular
-                  ? 'bg-ibm-blue hover:bg-ibm-blue-hover text-white shadow-glow-blue-sm'
-                  : 'bg-surface-2 hover:bg-surface-3 border border-border hover:border-ibm-blue/40 text-white'
-              }`}
+      {/* Pricing grid */}
+      <div className="border border-border mb-16">
+        <div className="grid md:grid-cols-3 divide-x divide-border">
+          {TIERS.map((tier, i) => (
+            <motion.div
+              key={tier.id}
+              initial={{ opacity: 0, y: 16 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: i * 0.08, duration: 0.4 }}
+              className={`flex flex-col ${tier.popular ? 'bg-ibm-blue/5' : ''}`}
             >
-              {tier.cta}
-            </button>
-          </motion.div>
-        ))}
+              {/* Tier header */}
+              <div className={`px-5 py-3 border-b border-border ${tier.popular ? 'bg-ibm-blue/10' : 'bg-surface'}`}>
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] tracking-label font-semibold uppercase text-muted">{tier.name}</span>
+                  {tier.popular && (
+                    <span className="text-[10px] bg-ibm-blue text-white px-2 py-0.5 font-semibold tracking-wide">Most Popular</span>
+                  )}
+                </div>
+              </div>
+
+              <div className="p-5 flex-1 flex flex-col">
+                {/* Price */}
+                <div className="mb-4">
+                  <span className="font-mono font-bold text-3xl text-white">{tier.price}</span>
+                  <span className="text-muted text-sm font-light">{tier.period}</span>
+                  <p className="text-xs text-muted font-light mt-1">{tier.tagline}</p>
+                  {tier.priceNote && (
+                    <p className="text-[10px] text-dim font-light mt-1">{tier.priceNote}</p>
+                  )}
+                </div>
+
+                {/* Features */}
+                <ul className="space-y-2 mb-6 flex-1">
+                  {tier.features.map((f, fi) => (
+                    <li key={fi} className="flex items-start gap-2.5 text-sm">
+                      <Check size={12} className={`shrink-0 mt-0.5 ${tier.popular ? 'text-ibm-blue-light' : 'text-success'}`} />
+                      <span className="text-muted font-light leading-snug">{f}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <button
+                  onClick={() => openModal(tier)}
+                  className={`w-full py-3 font-semibold text-sm transition-colors ${
+                    tier.popular
+                      ? 'bg-ibm-blue hover:bg-ibm-blue-hover text-white'
+                      : 'border border-border hover:border-border-bright text-white'
+                  }`}
+                >
+                  {tier.cta}
+                </button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
 
       {/* Trust signals */}
-      <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-muted mb-20 text-center">
-        <span>✓ SOC 2 Type II</span>
-        <span>✓ 30-day money-back guarantee</span>
-        <span>✓ No credit card for trial</span>
-        <span>✓ Cancel anytime (month-to-month)</span>
-        <span>✓ 99.9% uptime SLA (Enterprise)</span>
+      <div className="border border-border bg-surface">
+        <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-border">
+          {['Powered by IBM watsonx Orchestrate', 'SAP · Salesforce · Oracle · Dynamics', 'TLS 1.3 + AES-256 encryption', 'No vendor lock-in'].map((t, i) => (
+            <div key={i} className="px-4 py-3 text-center">
+              <Check size={10} className="text-success inline mr-1.5" />
+              <span className="text-[11px] text-muted font-light">{t}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* FAQ */}
-      <div className="max-w-3xl mx-auto">
-        <h2 className="text-2xl font-bold text-center mb-8">Frequently asked questions</h2>
-        <div className="bg-surface border border-border rounded-2xl px-6 divide-y divide-border">
+      <div className="mt-16 max-w-3xl mx-auto">
+        <h2 className="text-2xl font-semibold mb-8">Frequently asked questions</h2>
+        <div className="border border-border">
           {FAQS.map((faq, i) => <FaqItem key={i} faq={faq} />)}
         </div>
       </div>
 
       {/* Final CTA */}
-      <div className="mt-20 text-center bg-gradient-to-br from-surface-2 via-ibm-blue-dim to-surface-2 border border-ibm-blue/20 rounded-2xl p-10">
-        <h2 className="text-3xl font-bold mb-3">Ready to stop syncing manually?</h2>
-        <p className="text-muted mb-6 max-w-md mx-auto">Join manufacturing teams that have already eliminated manual quote reconciliation. Start your free trial — no credit card, no commitments.</p>
+      <div className="mt-16 border border-ibm-blue/30 bg-ibm-blue/5 px-8 py-10 text-center">
+        <h2 className="text-2xl font-semibold mb-2">Ready to protect your revenue?</h2>
+        <p className="text-muted font-light mb-6 max-w-md mx-auto text-sm">
+          Join manufacturing teams that have already eliminated manual quote reconciliation.
+        </p>
         <button
           onClick={() => openModal(TIERS[1])}
-          className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-bold px-8 py-4 rounded-xl shadow-glow-blue hover:scale-105 transition-all"
+          className="bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-8 py-3 transition-colors text-sm"
         >
-          <Zap size={18} className="fill-white" />
-          Start Free Trial — Growth Plan
+          Start protecting my quotes
         </button>
-        <p className="text-xs text-muted mt-3">14 days free · 2,000 quotes/month · Slack support included</p>
+        <p className="text-xs text-muted font-light mt-3">
+          Takes ~30 minutes. Read-only first. Nothing changes until you approve.
+        </p>
       </div>
 
-      {/* Purchase modal */}
       <AnimatePresence>
         {selectedTier && (
           <PurchaseModal tier={selectedTier} onClose={() => setSelectedTier(null)} />
