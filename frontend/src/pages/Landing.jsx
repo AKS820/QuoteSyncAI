@@ -1,5 +1,6 @@
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { X } from 'lucide-react';
 import { useScrollStage } from '../hooks/useScrollStage.js';
 import ProgressIndicator from '../components/ProgressIndicator.jsx';
 import Hero from '../components/Hero.jsx';
@@ -8,6 +9,46 @@ import PricingSection from '../components/PricingSection.jsx';
 import ChatWidget from '../components/ChatWidget.jsx';
 
 const STAGE_LABELS = ['Overview', 'Why', 'What', 'How', 'Pricing'];
+
+// ─── Demo Modal ───────────────────────────────────────────────────────────────
+
+function DemoModal({ onClose }) {
+  const embedUrl = import.meta.env.VITE_ORCHESTRATE_AGENT_URL;
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4" onClick={onClose}>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.97, y: 8 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.97 }}
+        transition={{ duration: 0.2 }}
+        className="bg-surface border border-border w-full max-w-3xl flex flex-col"
+        style={{ height: '620px' }}
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between px-4 py-3 border-b border-border shrink-0">
+          <div>
+            <span className="text-sm font-semibold">QuoteGuard — Live Agent</span>
+            <span className="text-xs text-muted font-light ml-3">IBM watsonx Orchestrate</span>
+          </div>
+          <button onClick={onClose} className="text-muted hover:text-white transition-colors p-1">
+            <X size={16} />
+          </button>
+        </div>
+        {embedUrl ? (
+          <iframe src={embedUrl} className="flex-1 w-full border-0" title="QuoteGuard Live Demo" />
+        ) : (
+          <div className="flex-1 flex flex-col items-center justify-center text-center px-6">
+            <div className="w-8 h-8 border border-border flex items-center justify-center mb-4">
+              <span className="text-ibm-blue font-bold text-xs">Q</span>
+            </div>
+            <p className="text-sm font-medium mb-1">Demo agent not yet configured</p>
+            <p className="text-xs text-muted font-light max-w-xs">Set <code className="text-ibm-blue-light">VITE_ORCHESTRATE_AGENT_URL</code> in your environment to embed the live Orchestrate agent here.</p>
+          </div>
+        )}
+      </motion.div>
+    </div>
+  );
+}
 
 // ─── Why ─────────────────────────────────────────────────────────────────────
 
@@ -54,6 +95,7 @@ function WhySection() {
 function WhatSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
+  const [showDemo, setShowDemo] = useState(false);
   return (
     <motion.div
       ref={ref}
@@ -87,7 +129,7 @@ function WhatSection() {
         ))}
       </div>
 
-      <div className="border border-border">
+      <div className="border border-border mb-8">
         <div className="grid sm:grid-cols-2 divide-x divide-border">
           <div className="px-5 py-5">
             <div className="text-[10px] text-success font-semibold uppercase tracking-wide mb-2">Automated</div>
@@ -101,6 +143,17 @@ function WhatSection() {
           </div>
         </div>
       </div>
+
+      <button
+        onClick={() => setShowDemo(true)}
+        className="flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-6 py-3 transition-colors text-sm"
+      >
+        Try the live demo
+      </button>
+
+      <AnimatePresence>
+        {showDemo && <DemoModal onClose={() => setShowDemo(false)} />}
+      </AnimatePresence>
     </motion.div>
   );
 }
@@ -139,7 +192,7 @@ function WinStory() {
         <p className="text-xl sm:text-2xl font-light text-white/80 leading-relaxed mb-3">
           "The ERP wasn't the source of truth. The quote was."
         </p>
-        <cite className="text-xs text-muted font-light not-italic">VP of IT, <span className="bg-white/20 text-transparent select-none px-1">Redacted Client</span> (manufacturing, NDA)</cite>
+        <cite className="text-xs text-muted font-light not-italic">VP of IT, Manufacturing Client</cite>
       </blockquote>
 
       {/* Before / After */}
