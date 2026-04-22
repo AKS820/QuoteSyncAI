@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, ChevronDown, ChevronUp, X, ArrowLeft } from 'lucide-react';
+import { Check, ChevronDown, ChevronUp, X, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useEventTracking } from '../hooks/useEventTracking.js';
 
@@ -20,7 +20,7 @@ const TIERS = [
       'Auto-correct or hold with email alert',
       'Email support (next business day)',
     ],
-    cta: 'Get a quote for my stack',
+    cta: 'Get a quote',
     popular: false,
   },
   {
@@ -39,7 +39,7 @@ const TIERS = [
       'Executive email audit trail after each run',
       'Slack support',
     ],
-    cta: 'Get a quote for my stack',
+    cta: 'Get a quote',
     popular: true,
   },
   {
@@ -59,7 +59,7 @@ const TIERS = [
       'SAML SSO + advanced security',
       'Quarterly business reviews',
     ],
-    cta: 'Talk to an engineer',
+    cta: 'Contact us',
     popular: false,
   },
 ];
@@ -84,12 +84,12 @@ const FAQS = [
 function FaqItem({ faq }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="border-b border-border last:border-b-0">
+    <div className="border-t border-border first:border-t-0">
       <button
         onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center justify-between px-4 py-4 text-left hover:bg-surface transition-colors"
+        className="w-full flex items-center justify-between py-5 text-left hover:opacity-80 transition-opacity"
       >
-        <span className="text-sm font-medium pr-4">{faq.q}</span>
+        <span className="text-sm font-medium pr-8">{faq.q}</span>
         {open
           ? <ChevronUp size={14} className="text-ibm-blue shrink-0" />
           : <ChevronDown size={14} className="text-muted shrink-0" />}
@@ -103,7 +103,7 @@ function FaqItem({ faq }) {
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <p className="text-muted text-sm font-light leading-relaxed px-4 pb-4">{faq.a}</p>
+            <p className="text-muted text-sm font-light leading-relaxed pb-5">{faq.a}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -143,7 +143,7 @@ function ContactModal({ tier, onClose }) {
       >
         <div className="flex items-start justify-between mb-5">
           <div>
-            <h3 className="font-semibold text-base">{isEnterprise ? 'Talk to an engineer' : `Get a quote — ${tier.name}`}</h3>
+            <h3 className="font-semibold text-base">{isEnterprise ? 'Contact us' : `Get a quote — ${tier.name}`}</h3>
             <p className="text-muted text-sm font-light mt-0.5">Real price scoped to your stack within 1 business day. No discovery call.</p>
           </div>
           <button onClick={onClose} className="text-muted hover:text-white transition-colors p-1"><X size={16} /></button>
@@ -177,7 +177,7 @@ function ContactModal({ tier, onClose }) {
               disabled={!name || !email || !company}
               className="w-full bg-ibm-blue hover:bg-ibm-blue-hover disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold py-3 transition-colors text-sm"
             >
-              {isEnterprise ? 'Talk to an engineer' : 'Start protecting my quotes'}
+              {isEnterprise ? 'Contact us' : 'Start protecting my quotes'}
             </button>
             <p className="text-center text-xs text-muted font-light mt-3">Read-only first. Nothing changes until you approve.</p>
           </>
@@ -273,22 +273,37 @@ export default function Pricing() {
 
   return (
     <div className="min-h-screen bg-surface-2">
-      {/* Nav */}
+
+      {/* ── Top nav with product tabs ─────────────────────────────────────── */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-surface-2/95 backdrop-blur-sm border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 h-11 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 text-muted hover:text-white transition-colors text-xs font-light">
-            <ArrowLeft size={12} />
-            <span>Overview</span>
-          </Link>
-          <Link to="/" className="flex items-center gap-2.5 absolute left-1/2 -translate-x-1/2">
+        <div className="max-w-7xl mx-auto px-6 h-11 flex items-center gap-0">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2.5 shrink-0 mr-6">
             <div className="w-6 h-6 bg-ibm-blue flex items-center justify-center">
               <span className="text-white font-bold text-xs">Q</span>
             </div>
             <span className="font-semibold text-sm tracking-tight">QuoteGuard</span>
           </Link>
+
+          {/* Divider */}
+          <div className="h-4 w-px bg-border mr-0 shrink-0" />
+
+          {/* Product tabs */}
+          <Link
+            to="/"
+            className="h-11 flex items-center px-4 text-xs text-muted hover:text-white transition-colors border-b-2 border-transparent"
+          >
+            Overview
+          </Link>
+          <div className="h-11 flex items-center px-4 text-xs text-white font-medium border-b-2 border-ibm-blue">
+            Pricing
+          </div>
+
+          <div className="flex-1" />
+
           <button
             onClick={() => setMeetingModal(true)}
-            className="hidden sm:block bg-ibm-blue hover:bg-ibm-blue-hover text-white text-xs font-semibold px-3 py-1.5 transition-colors"
+            className="hidden sm:flex items-center gap-1.5 bg-ibm-blue hover:bg-ibm-blue-hover text-white text-xs font-semibold px-3 py-1.5 transition-colors"
           >
             Request a meeting
           </button>
@@ -296,75 +311,105 @@ export default function Pricing() {
       </nav>
 
       <div className="pt-11">
-        {/* Pricing header + tiers */}
-        <div className="py-24 px-6 max-w-6xl mx-auto">
-          <div className="mb-12">
-            <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">Pricing</div>
-            <h1 className="text-3xl sm:text-4xl font-semibold mb-3 leading-tight">
-              Agents that catch pricing errors<br />
-              <span className="font-light text-white/70">before your shop floor does.</span>
-            </h1>
-            <p className="text-base font-semibold text-white mb-3">
-              Not a script. Not a batch job. An agent that validates every customer PO against your ERP pricing rules — automatically, overnight, every night.
-            </p>
-            <p className="text-muted font-light max-w-xl mb-4">
-              Prices are indicative — confirmed after we scope your stack. Reply within 1 business day. No discovery call.
-            </p>
-            <div className="inline-flex items-center gap-2 border border-warning/30 bg-warning/5 px-3 py-2 text-xs text-warning/80 font-light">
-              Most manufacturers find their first tiered pricing or MOQ violation within 24 hours of connecting.
+
+        {/* ── Hero ──────────────────────────────────────────────────────────── */}
+        <div className="bg-surface border-b border-border">
+          <div className="max-w-7xl mx-auto px-6 py-16 md:py-20 grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              {/* Breadcrumb */}
+              <div className="flex items-center gap-1.5 text-[11px] text-muted font-light mb-8">
+                <Link to="/" className="hover:text-white transition-colors">QuoteGuard</Link>
+                <span>/</span>
+                <span className="text-white">Pricing</span>
+              </div>
+              <h1 className="text-5xl sm:text-6xl font-light text-white mb-6 leading-none tracking-tight">Pricing</h1>
+              <p className="text-base text-muted font-light max-w-sm leading-relaxed">
+                Not a script. Not a batch job. An agent that validates every customer PO against your ERP pricing rules — automatically, overnight, every night.
+              </p>
+            </div>
+            {/* Right — product visual placeholder */}
+            <div className="hidden md:flex items-center justify-center h-48 border border-dashed border-border/50">
+              <div className="text-center opacity-30">
+                <div className="text-[11px] tracking-label font-medium text-muted uppercase">Product Visual</div>
+                <div className="text-[10px] text-dim font-light mt-1">Coming soon</div>
+              </div>
             </div>
           </div>
+        </div>
 
-          {/* Tier grid */}
-          <div className="border border-border mb-12">
-            <div className="grid md:grid-cols-3 divide-x divide-border">
-              {TIERS.map((tier) => (
-                <div key={tier.id} className={`flex flex-col ${tier.popular ? 'bg-ibm-blue/5' : ''}`}>
-                  <div className={`px-5 py-3 border-b border-border ${tier.popular ? 'bg-ibm-blue/10' : 'bg-surface'}`}>
-                    <div className="flex items-center justify-between">
-                      <span className="text-[10px] tracking-label font-semibold uppercase text-muted">{tier.name}</span>
-                      {tier.popular && (
-                        <span className="text-[10px] bg-ibm-blue text-white px-2 py-0.5 font-semibold tracking-wide">Most Popular</span>
-                      )}
-                    </div>
+        {/* ── Pricing plans ─────────────────────────────────────────────────── */}
+        <div className="max-w-7xl mx-auto px-6 py-20">
+          <h2 className="text-3xl font-light text-white mb-10">Pricing plans</h2>
+
+          <div className="grid md:grid-cols-3 gap-0 border border-border">
+            {TIERS.map((tier, i) => (
+              <div
+                key={tier.id}
+                className={`flex flex-col border-r border-border last:border-r-0 ${tier.popular ? 'bg-ibm-blue/5' : ''}`}
+              >
+                {/* Top accent bar for popular */}
+                {tier.popular
+                  ? <div className="h-1 bg-ibm-blue w-full" />
+                  : <div className="h-1" />}
+
+                {/* Price + CTA section */}
+                <div className="px-6 pt-6 pb-6">
+                  <div className="text-[10px] tracking-label font-semibold uppercase text-muted mb-4">{tier.name}</div>
+                  {tier.price !== 'Custom' && (
+                    <div className="text-[11px] text-muted font-light mb-1">Starting at</div>
+                  )}
+                  <div className="flex items-baseline gap-1.5 mb-1">
+                    <span className="font-mono font-bold text-3xl text-white">{tier.price}</span>
+                    {tier.period && <span className="text-muted text-sm font-light">{tier.period}</span>}
                   </div>
-                  <div className="p-5 flex-1 flex flex-col">
-                    <div className="mb-4">
-                      <span className="font-mono font-bold text-3xl text-white">{tier.price}</span>
-                      <span className="text-muted text-sm font-light">{tier.period}</span>
-                      <p className="text-xs text-muted font-light mt-1">{tier.tagline}</p>
-                      {tier.priceNote && <p className="text-[10px] text-dim font-light mt-1">{tier.priceNote}</p>}
-                    </div>
-                    <ul className="space-y-2 mb-6 flex-1">
-                      {tier.features.map((f, fi) => (
-                        <li key={fi} className="flex items-start gap-2.5 text-sm">
-                          <Check size={12} className={`shrink-0 mt-0.5 ${tier.popular ? 'text-ibm-blue-light' : 'text-success'}`} />
-                          <span className="text-muted font-light leading-snug">{f}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <button
-                      onClick={() => openModal(tier)}
-                      className={`w-full py-3 font-semibold text-sm transition-colors ${
-                        tier.popular
-                          ? 'bg-ibm-blue hover:bg-ibm-blue-hover text-white'
-                          : 'border border-border hover:border-border-bright text-white'
-                      }`}
-                    >
-                      {tier.cta}
-                    </button>
-                  </div>
+                  {tier.priceNote && (
+                    <p className="text-[10px] text-dim font-light mb-5">{tier.priceNote}</p>
+                  )}
+                  {!tier.priceNote && <div className="mb-5" />}
+                  <button
+                    onClick={() => openModal(tier)}
+                    className={`w-full flex items-center justify-between px-4 py-3 font-semibold text-sm transition-colors ${
+                      tier.popular
+                        ? 'bg-ibm-blue hover:bg-ibm-blue-hover text-white'
+                        : 'border border-border hover:border-border-bright text-white'
+                    }`}
+                  >
+                    <span>{tier.cta}</span>
+                    <ChevronRight size={14} />
+                  </button>
                 </div>
-              ))}
-            </div>
+
+                {/* Divider */}
+                <div className="border-t border-border" />
+
+                {/* Description + features */}
+                <div className="px-6 py-6 flex-1">
+                  <p className="text-sm text-muted font-light mb-5 leading-relaxed">{tier.tagline}</p>
+                  <ul className="space-y-2.5">
+                    {tier.features.map((f, fi) => (
+                      <li key={fi} className="flex items-start gap-2.5">
+                        <Check size={12} className={`shrink-0 mt-0.5 ${tier.popular ? 'text-ibm-blue-light' : 'text-success'}`} />
+                        <span className="text-xs text-muted font-light leading-snug">{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
           </div>
 
-          {/* Trust signals */}
-          <div className="border border-border bg-surface mb-24">
-            <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-border">
+          <p className="text-[11px] text-dim font-light mt-4">
+            * Prices are indicative and confirmed after we scope your ERP, PO volume, and rule complexity.
+          </p>
+        </div>
+
+        {/* ── Trust signals ─────────────────────────────────────────────────── */}
+        <div className="border-t border-border">
+          <div className="max-w-7xl mx-auto px-6 py-6">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {['Powered by IBM watsonx Orchestrate', 'SAP · Salesforce · Oracle · Dynamics', 'TLS 1.3 + AES-256 encryption', 'No vendor lock-in'].map((t, i) => (
-                <div key={i} className="px-4 py-3 text-center">
-                  <Check size={10} className="text-success inline mr-1.5" />
+                <div key={i} className="flex items-center gap-2">
+                  <Check size={10} className="text-success shrink-0" />
                   <span className="text-[11px] text-muted font-light">{t}</span>
                 </div>
               ))}
@@ -372,57 +417,61 @@ export default function Pricing() {
           </div>
         </div>
 
-        {/* Setup */}
+        {/* ── Getting started ───────────────────────────────────────────────── */}
         <div className="border-t border-border bg-surface">
-          <div className="py-24 px-6 max-w-4xl mx-auto">
-            <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">Setup</div>
-            <h2 className="text-3xl sm:text-4xl font-semibold mb-12 leading-tight">
-              Any ERP. Any quote format.<br />
-              <span className="font-light text-white/60">Live in under an hour.</span>
-            </h2>
-            <div className="border border-border mb-4">
+          <div className="max-w-7xl mx-auto px-6 py-20">
+            <h2 className="text-3xl font-light text-white mb-2">Getting started</h2>
+            <p className="text-muted font-light text-sm mb-12">Any ERP. Any quote format. Live in under an hour.</p>
+            <div className="grid md:grid-cols-3 gap-0 border border-border">
               {SETUP_STEPS.map((s, i) => (
-                <div key={i} className="flex items-start gap-5 px-5 py-5 border-b border-border last:border-b-0">
-                  <div className="font-mono text-xs text-ibm-blue-light font-semibold w-16 shrink-0 pt-0.5">{s.time}</div>
-                  <div>
-                    <div className="text-sm font-medium mb-0.5">{s.title}</div>
-                    <div className="text-xs text-muted font-light">{s.desc}</div>
-                  </div>
+                <div key={i} className="px-6 py-8 border-r border-border last:border-r-0">
+                  <div className="font-mono text-xs text-ibm-blue-light font-semibold mb-3">{s.time}</div>
+                  <div className="text-base font-medium mb-2">{s.title}</div>
+                  <div className="text-sm text-muted font-light leading-relaxed">{s.desc}</div>
                 </div>
               ))}
             </div>
-            <p className="text-xs text-muted font-light">Any ERP or CPQ with a REST or SOAP API. Credentials only — no on-premise work.</p>
+            <p className="text-xs text-muted font-light mt-4">Any ERP or CPQ with a REST or SOAP API. Credentials only — no on-premise work.</p>
           </div>
         </div>
 
-        {/* FAQs */}
+        {/* ── FAQ ───────────────────────────────────────────────────────────── */}
         <div className="border-t border-border">
-          <div className="py-24 px-6 max-w-3xl mx-auto">
-            <h2 className="text-2xl font-semibold mb-8">Frequently asked questions</h2>
-            <div className="border border-border">
+          <div className="max-w-7xl mx-auto px-6 py-20">
+            <h2 className="text-3xl font-light text-white mb-12">FAQ</h2>
+            <div className="max-w-3xl border-b border-border">
               {FAQS.map((faq, i) => <FaqItem key={i} faq={faq} />)}
             </div>
           </div>
         </div>
 
-        {/* Bottom CTA */}
+        {/* ── Take the next step ────────────────────────────────────────────── */}
         <div className="border-t border-border bg-surface">
-          <div className="py-24 px-6 max-w-4xl mx-auto text-center">
-            <h2 className="text-2xl font-semibold mb-2">Ready to run your first agent?</h2>
-            <p className="text-muted font-light mb-8 max-w-md mx-auto text-sm">
+          <div className="max-w-7xl mx-auto px-6 py-20">
+            <h2 className="text-3xl font-light text-white mb-3">Take the next step</h2>
+            <p className="text-muted font-light mb-8 max-w-md text-sm leading-relaxed">
               Connect your ERP. Define your rules. Let the agent catch what your team catches manually.
             </p>
-            <button
-              onClick={() => { setMeetingModal(true); trackEvent('cta_click', { cta: 'request_meeting_bottom' }); }}
-              className="bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-8 py-3.5 transition-colors text-sm"
-            >
-              Request a meeting
-            </button>
-            <p className="text-xs text-muted font-light mt-3">
-              Takes ~30 minutes. Read-only first. Nothing changes until you approve.
-            </p>
+            <div className="flex flex-wrap gap-3">
+              <button
+                onClick={() => { setMeetingModal(true); trackEvent('cta_click', { cta: 'request_meeting_bottom' }); }}
+                className="flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-6 py-3 transition-colors text-sm"
+              >
+                Request a meeting
+                <ChevronRight size={14} />
+              </button>
+              <Link
+                to="/"
+                className="flex items-center gap-2 border border-ibm-blue text-ibm-blue-light hover:bg-ibm-blue/10 font-semibold px-6 py-3 transition-colors text-sm"
+              >
+                View the demo
+                <ChevronRight size={14} />
+              </Link>
+            </div>
+            <p className="text-xs text-muted font-light mt-4">Takes ~30 minutes. Read-only first. Nothing changes until you approve.</p>
           </div>
         </div>
+
       </div>
 
       <AnimatePresence>
