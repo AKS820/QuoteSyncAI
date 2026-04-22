@@ -214,17 +214,17 @@ export default function PricingSection() {
       <div className="mb-12">
         <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">Stage 4 — Pricing</div>
         <h2 className="text-3xl sm:text-4xl font-semibold mb-3 leading-tight">
-          This isn't a sync tool.<br />
-          <span className="font-light text-white/70">It's revenue protection.</span>
+          This isn't an RPA script.<br />
+          <span className="font-light text-white/70">It's an agentic ops team that never sleeps.</span>
         </h2>
         <p className="text-base font-semibold text-white mb-3">
-          Catch one $5K underpriced deal and this pays for itself.
+          Eliminate 15 hrs/week of manual reconciliation — most teams break even in under 4 months.
         </p>
         <p className="text-muted font-light max-w-xl mb-4">
-          Prices below are indicative — exact cost confirmed after we scope your stack. Fill out the form and we reply within 1 business day. No discovery call required.
+          Prices below are indicative — exact cost confirmed after we scope your stack and quote volume. Fill out the form and we reply within 1 business day. No discovery call required.
         </p>
         <div className="inline-flex items-center gap-2 border border-warning/30 bg-warning/5 px-3 py-2 text-xs text-warning/80 font-light">
-          Most teams find their first errors within 24 hours of connecting. Every day without it is another mispriced quote.
+          Most teams find their first missed pricing rule within 24 hours of connecting. Every day of manual reconciliation is ops time you won't recover.
         </div>
       </div>
 

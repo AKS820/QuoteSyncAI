@@ -127,8 +127,8 @@ export default function ROICalculator() {
     >
       {/* Header */}
       <div className="mb-10">
-        <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">Stage 3 — ROI Calculator</div>
-        <h2 className="text-3xl sm:text-4xl font-semibold mb-3 leading-tight">What's manual price reconciliation actually costing you?</h2>
+        <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">ROI Calculator</div>
+        <h2 className="text-3xl sm:text-4xl font-semibold mb-3 leading-tight">What's manual quote reconciliation actually costing you?</h2>
         <p className="text-muted font-light max-w-xl mb-2">Adjust the inputs to match your environment. Results update instantly.</p>
         <p className="text-xs text-dim font-light">Defaults based on typical teams managing 200+ quotes/month. Results are estimates — your actual ROI is scoped with real data after onboarding.</p>
       </div>
@@ -218,6 +218,18 @@ export default function ROICalculator() {
             )}
           </div>
         </div>
+      </div>
+
+      {/* Pricing CTA */}
+      <div className="mt-10 border border-ibm-blue/30 bg-ibm-blue/5 px-6 py-7 text-center">
+        <p className="text-sm font-semibold text-white mb-1">Ready to recover this value?</p>
+        <p className="text-xs text-muted font-light mb-5">See what it costs to automate this — most teams break even in under 4 months.</p>
+        <a
+          href="#pricing"
+          className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-6 py-3 transition-colors text-sm"
+        >
+          See pricing
+        </a>
       </div>
 
       {/* Email modal */}

@@ -1,6 +1,6 @@
 import { Check } from 'lucide-react';
 
-const STAGE_IDS = ['hero', 'demo', 'setup', 'roi', 'pricing'];
+const STAGE_IDS = ['hero', 'why', 'what', 'how', 'pricing'];
 
 export default function ProgressIndicator({ currentStage, visitedStages, labels = [] }) {
   return (
