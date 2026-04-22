@@ -2,13 +2,6 @@ import { motion } from 'framer-motion';
 import { ChevronRight, ShieldCheck } from 'lucide-react';
 import { useEventTracking } from '../hooks/useEventTracking.js';
 
-const DRIFT_TYPES = [
-  'ERP pricing is stale from last quarter',
-  'Tiered rules applied at wrong threshold',
-  'MOQ violation not flagged on close',
-  'Negotiated terms not reflected in ERP',
-];
-
 export default function Hero() {
   const { trackEvent } = useEventTracking();
 
@@ -16,7 +9,6 @@ export default function Hero() {
     <div className="min-h-[90vh] flex flex-col items-center justify-center pt-16 pb-12 px-6 bg-surface-2">
       <div className="w-full max-w-2xl mx-auto text-center">
 
-        {/* IBM badge */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -25,95 +17,53 @@ export default function Hero() {
         >
           <div className="inline-flex items-center gap-2 border border-ibm-blue/30 bg-ibm-blue-dim px-3 py-1.5">
             <ShieldCheck size={11} className="text-ibm-blue shrink-0" />
-            <span className="text-xs tracking-wide text-ibm-blue-light font-medium">Built on IBM watsonx — secure, enterprise-grade AI</span>
+            <span className="text-xs tracking-wide text-ibm-blue-light font-medium">Built on IBM watsonx</span>
           </div>
         </motion.div>
 
-        {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.05 }}
-          className="text-4xl sm:text-5xl lg:text-[3.5rem] leading-[1.08] tracking-tight mb-4"
+          className="text-4xl sm:text-5xl lg:text-[3.5rem] leading-[1.08] tracking-tight mb-5"
         >
-          <span className="font-semibold text-white">Your ERP is making pricing decisions</span>
+          <span className="font-semibold text-white">Your ERP is wrong</span>
           <br />
-          <span className="font-light text-white/60">on outdated data.</span>
+          <span className="font-light text-white/60">more often than you think.</span>
         </motion.h1>
 
-        {/* ICP line */}
-        <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.08 }}
-          className="text-xs text-muted font-light tracking-wide mb-4"
-        >
-          For ops and RevOps teams at B2B manufacturers
-        </motion.p>
-
-        {/* Urgency */}
         <motion.p
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, delay: 0.1 }}
-          className="text-sm font-light text-white/50 mb-8"
+          className="text-base font-light text-white/50 mb-10"
         >
-          Most teams don't find out until a deal closes wrong — or not at all.
+          We fix it before it costs you revenue.
         </motion.p>
 
-        {/* Error rate stat */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.11 }}
-          className="border-t border-b border-border py-5 mb-8"
-        >
-          <div className="flex items-center justify-center gap-4">
-            <span className="font-mono font-bold text-4xl text-white tracking-tight">3–8%</span>
-            <div className="text-left">
-              <p className="text-sm text-white/80 font-light leading-snug">of quotes contain pricing errors<br />against your own ERP rules</p>
-              <p className="text-[10px] text-muted font-light mt-1">most are caught only after orders close — or never</p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Drift type chips */}
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.14 }}
-          className="flex flex-wrap justify-center gap-2 mb-8"
-        >
-          {DRIFT_TYPES.map(t => (
-            <span key={t} className="text-[11px] border border-border px-2.5 py-1 text-muted font-light">{t}</span>
-          ))}
-        </motion.div>
-
-        {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.18 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10"
+          transition={{ duration: 0.45, delay: 0.16 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12"
         >
           <a
             href="#why"
-            onClick={() => trackEvent('cta_click', { cta: 'see_why', stage: 0 })}
+            onClick={() => trackEvent('cta_click', { cta: 'see_how', stage: 0 })}
             className="flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-7 py-3.5 transition-colors text-sm"
           >
-            See how this happens
+            See how it works
             <ChevronRight size={16} />
           </a>
           <a
             href="#pricing"
             onClick={() => trackEvent('cta_click', { cta: 'see_pricing', stage: 0 })}
-            className="flex items-center gap-2 border border-border hover:border-border-bright text-white font-light px-7 py-3.5 transition-colors text-sm"
+            className="text-sm text-muted hover:text-white font-light transition-colors px-4 py-3.5"
           >
-            See pricing
+            See pricing →
           </a>
         </motion.div>
 
-        {/* Logos */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
