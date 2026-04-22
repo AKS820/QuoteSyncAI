@@ -2,11 +2,11 @@ import { motion } from 'framer-motion';
 import { ChevronRight, ShieldCheck } from 'lucide-react';
 import { useEventTracking } from '../hooks/useEventTracking.js';
 
-const ERROR_TYPES = [
-  'Customer part # not matched in ERP',
-  'Tiered pricing rule not applied',
-  'MOQ violation missed',
-  'ERP not updated from signed quote',
+const DRIFT_TYPES = [
+  'ERP pricing is stale from last quarter',
+  'Tiered rules applied at wrong threshold',
+  'MOQ violation not flagged on close',
+  'Negotiated terms not reflected in ERP',
 ];
 
 export default function Hero() {
@@ -36,9 +36,9 @@ export default function Hero() {
           transition={{ duration: 0.45, delay: 0.05 }}
           className="text-4xl sm:text-5xl lg:text-[3.5rem] leading-[1.08] tracking-tight mb-4"
         >
-          <span className="font-semibold text-white">Your ops team processes customer quotes</span>
+          <span className="font-semibold text-white">Your ERP is making pricing decisions</span>
           <br />
-          <span className="font-light text-white/60">by hand. Every single one.</span>
+          <span className="font-light text-white/60">on outdated data.</span>
         </motion.h1>
 
         {/* ICP line */}
@@ -48,7 +48,7 @@ export default function Hero() {
           transition={{ duration: 0.35, delay: 0.08 }}
           className="text-xs text-muted font-light tracking-wide mb-4"
         >
-          For ops and RevOps teams at B2B manufacturers processing customer purchase orders
+          For ops and RevOps teams at B2B manufacturers
         </motion.p>
 
         {/* Urgency */}
@@ -58,10 +58,10 @@ export default function Hero() {
           transition={{ duration: 0.35, delay: 0.1 }}
           className="text-sm font-light text-white/50 mb-8"
         >
-          Every manual reconciliation is ops time — and a pricing rule that might not get enforced.
+          Most teams don't find out until a deal closes wrong — or not at all.
         </motion.p>
 
-        {/* Ops cost stat */}
+        {/* Error rate stat */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -69,22 +69,22 @@ export default function Hero() {
           className="border-t border-b border-border py-5 mb-8"
         >
           <div className="flex items-center justify-center gap-4">
-            <span className="font-mono font-bold text-4xl text-white tracking-tight">15 hrs</span>
+            <span className="font-mono font-bold text-4xl text-white tracking-tight">3–8%</span>
             <div className="text-left">
-              <p className="text-sm text-white/80 font-light leading-snug">per week the average ops team<br />spends on manual reconciliation</p>
-              <p className="text-[10px] text-muted font-light mt-1">3 staff × 5 hrs × $65/hr = $50,700/yr in labor alone</p>
+              <p className="text-sm text-white/80 font-light leading-snug">of quotes contain pricing errors<br />against your own ERP rules</p>
+              <p className="text-[10px] text-muted font-light mt-1">most are caught only after orders close — or never</p>
             </div>
           </div>
         </motion.div>
 
-        {/* Error type chips */}
+        {/* Drift type chips */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, delay: 0.14 }}
           className="flex flex-wrap justify-center gap-2 mb-8"
         >
-          {ERROR_TYPES.map(t => (
+          {DRIFT_TYPES.map(t => (
             <span key={t} className="text-[11px] border border-border px-2.5 py-1 text-muted font-light">{t}</span>
           ))}
         </motion.div>
@@ -101,7 +101,7 @@ export default function Hero() {
             onClick={() => trackEvent('cta_click', { cta: 'see_why', stage: 0 })}
             className="flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-7 py-3.5 transition-colors text-sm"
           >
-            See how much this is costing you
+            See how this happens
             <ChevronRight size={16} />
           </a>
           <a

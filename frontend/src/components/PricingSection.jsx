@@ -214,17 +214,17 @@ export default function PricingSection() {
       <div className="mb-12">
         <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">Stage 4 — Pricing</div>
         <h2 className="text-3xl sm:text-4xl font-semibold mb-3 leading-tight">
-          This isn't an RPA script.<br />
-          <span className="font-light text-white/70">It's an agentic ops team that never sleeps.</span>
+          Revenue integrity infrastructure.<br />
+          <span className="font-light text-white/70">Not another automation tool.</span>
         </h2>
         <p className="text-base font-semibold text-white mb-3">
-          Eliminate 15 hrs/week of manual reconciliation — most teams break even in under 4 months.
+          UIPath automates after your ERP is already wrong. We catch it first.
         </p>
         <p className="text-muted font-light max-w-xl mb-4">
           Prices below are indicative — exact cost confirmed after we scope your stack and quote volume. Fill out the form and we reply within 1 business day. No discovery call required.
         </p>
         <div className="inline-flex items-center gap-2 border border-warning/30 bg-warning/5 px-3 py-2 text-xs text-warning/80 font-light">
-          Most teams find their first missed pricing rule within 24 hours of connecting. Every day of manual reconciliation is ops time you won't recover.
+          Most teams find their first ERP/quote mismatch within 24 hours of connecting. Every day without it is another quote processed on wrong data.
         </div>
       </div>
 
