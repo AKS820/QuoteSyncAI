@@ -46,13 +46,13 @@ function Slider({ label, value, min, max, step = 1, onChange, format }) {
 const ANNUAL_CONTRACT = 26000;
 
 export default function ROICalculator() {
+  // Variables based on Incede deployment measurements
   const [inputs, setInputs] = useState({
-    quotesPerMonth: 200,
-    hoursPerWeek: 5,
-    hourlyRate: 65,
-    errorRate: 12,
-    avgDealSize: 18000,
-    staffCount: 3,
+    posPerMonth: 80,       // Customer POs processed per month
+    minutesPerPO: 30,      // Minutes per PO for manual cross-referencing
+    hourlyRate: 65,        // Ops staff hourly rate
+    violationRate: 6,      // % of POs with pricing rule violations
+    avgPoValue: 15000,     // Average PO contract value
   });
 
   const [emailModal, setEmailModal] = useState(false);
@@ -63,17 +63,17 @@ export default function ROICalculator() {
   const { trackEvent } = useEventTracking();
 
   const calc = useMemo(() => {
-    const annualHoursSaved  = inputs.hoursPerWeek * 52;
-    const laborSaved        = annualHoursSaved * inputs.hourlyRate * inputs.staffCount;
-    const revenueRecovered  = inputs.quotesPerMonth * inputs.avgDealSize * (inputs.errorRate / 100) * 0.4 * 12;
-    const rawTotal          = laborSaved + revenueRecovered;
+    const annualHoursSaved  = (inputs.posPerMonth * inputs.minutesPerPO / 60) * 12;
+    const laborSaved        = annualHoursSaved * inputs.hourlyRate;
+    const revenueProtected  = inputs.posPerMonth * 12 * inputs.avgPoValue * (inputs.violationRate / 100) * 0.4;
+    const rawTotal          = laborSaved + revenueProtected;
     const totalValue        = Math.min(rawTotal, 400000);
     const paybackMonths     = totalValue > 0 ? (ANNUAL_CONTRACT / totalValue) * 12 : 0;
     const roi               = totalValue > 0 ? ((totalValue - ANNUAL_CONTRACT) / ANNUAL_CONTRACT) * 100 : 0;
     return {
-      annualHoursSaved,
+      annualHoursSaved: Math.round(annualHoursSaved),
       laborSaved: Math.round(Math.min(laborSaved, 200000)),
-      revenueRecovered: Math.round(Math.min(revenueRecovered, 200000)),
+      revenueProtected: Math.round(Math.min(revenueProtected, 200000)),
       totalValue: Math.round(totalValue),
       paybackMonths: Math.round(paybackMonths * 10) / 10,
       roi: Math.round(roi),
@@ -88,11 +88,12 @@ export default function ROICalculator() {
 
   function set(key) { return v => setInputs(p => ({ ...p, [key]: v })); }
   function fmt$n(v) { return `$${v.toLocaleString()}`; }
+  function fmtMin(v) { return `${v} min`; }
   function fmtPct(v) { return `${v}%`; }
 
   const animHours   = useCountUp(calc.annualHoursSaved);
   const animLabor   = useCountUp(calc.laborSaved);
-  const animRevenue = useCountUp(calc.revenueRecovered);
+  const animRevenue = useCountUp(calc.revenueProtected);
   const animTotal   = useCountUp(calc.totalValue);
   const animRoi     = useCountUp(calc.roi);
 
@@ -111,10 +112,26 @@ export default function ROICalculator() {
   }
 
   const OUTPUT_ROWS = [
-    { label: 'Hours saved / year', value: `${animHours.toLocaleString()} hrs`, sub: `${inputs.hoursPerWeek} h/wk × 52 × ${inputs.staffCount} staff` },
-    { label: 'Labor cost saved', value: `$${animLabor.toLocaleString()}`, sub: `at $${inputs.hourlyRate}/hr` },
-    { label: 'Revenue recovered', value: `$${animRevenue.toLocaleString()}`, sub: '40% recovery on pricing errors' },
-    { label: 'ROI vs contract cost', value: `${animRoi}%`, sub: `vs. $${(ANNUAL_CONTRACT / 1000).toFixed(0)}K/yr contract` },
+    {
+      label: 'Hours saved / year',
+      value: `${animHours.toLocaleString()} hrs`,
+      sub: `${inputs.posPerMonth} POs × ${inputs.minutesPerPO} min × 12 months`,
+    },
+    {
+      label: 'Labor cost recovered',
+      value: `$${animLabor.toLocaleString()}`,
+      sub: `at $${inputs.hourlyRate}/hr`,
+    },
+    {
+      label: 'Revenue protected from violations',
+      value: `$${animRevenue.toLocaleString()}`,
+      sub: `${inputs.violationRate}% violation rate · 40% avg recovery`,
+    },
+    {
+      label: 'ROI vs contract cost',
+      value: `${animRoi}%`,
+      sub: `vs. $${(ANNUAL_CONTRACT / 1000).toFixed(0)}K/yr`,
+    },
   ];
 
   return (
@@ -125,12 +142,10 @@ export default function ROICalculator() {
       transition={{ duration: 0.5 }}
       className="py-24 px-6 max-w-6xl mx-auto"
     >
-      {/* Header */}
       <div className="mb-10">
         <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">ROI Calculator</div>
-        <h2 className="text-3xl sm:text-4xl font-semibold mb-3 leading-tight">What's manual quote reconciliation actually costing you?</h2>
-        <p className="text-muted font-light max-w-xl mb-2">Adjust the inputs to match your environment. Results update instantly.</p>
-        <p className="text-xs text-dim font-light">Defaults based on typical teams managing 200+ quotes/month. Results are estimates — your actual ROI is scoped with real data after onboarding.</p>
+        <h2 className="text-3xl sm:text-4xl font-semibold mb-2 leading-tight">What are your POs costing you to process manually?</h2>
+        <p className="text-xs text-dim font-light">Variables based on measurements from Incede manufacturing deployments. Adjust to your environment.</p>
       </div>
 
       <div className="grid lg:grid-cols-2 border border-border">
@@ -140,12 +155,11 @@ export default function ROICalculator() {
           <div className="px-4 py-2 border-b border-border bg-surface">
             <span className="text-[10px] tracking-label text-muted uppercase font-semibold">Your Environment</span>
           </div>
-          <Slider label="Quotes managed per month" value={inputs.quotesPerMonth} min={10} max={2000} step={10} onChange={set('quotesPerMonth')} format={v => v.toLocaleString()} />
-          <Slider label="Hours spent on manual price reconciliation per week" value={inputs.hoursPerWeek} min={1} max={40} onChange={set('hoursPerWeek')} format={v => `${v}h`} />
-          <Slider label="Average hourly cost of ops staff" value={inputs.hourlyRate} min={30} max={150} step={5} onChange={set('hourlyRate')} format={fmt$n} />
-          <Slider label="% of deals delayed due to pricing errors" value={inputs.errorRate} min={1} max={40} onChange={set('errorRate')} format={fmtPct} />
-          <Slider label="Average deal size" value={inputs.avgDealSize} min={1000} max={150000} step={1000} onChange={set('avgDealSize')} format={fmt$n} />
-          <Slider label="Sales ops staff touching quotes" value={inputs.staffCount} min={1} max={20} onChange={set('staffCount')} format={v => `${v} people`} />
+          <Slider label="Customer POs processed per month" value={inputs.posPerMonth} min={10} max={500} step={5} onChange={set('posPerMonth')} format={v => v.toLocaleString()} />
+          <Slider label="Minutes per PO — manual cross-referencing" value={inputs.minutesPerPO} min={5} max={120} step={5} onChange={set('minutesPerPO')} format={fmtMin} />
+          <Slider label="Ops staff hourly rate" value={inputs.hourlyRate} min={30} max={150} step={5} onChange={set('hourlyRate')} format={fmt$n} />
+          <Slider label="% of POs with pricing rule violations" value={inputs.violationRate} min={1} max={20} onChange={set('violationRate')} format={fmtPct} />
+          <Slider label="Average PO contract value" value={inputs.avgPoValue} min={1000} max={150000} step={1000} onChange={set('avgPoValue')} format={fmt$n} />
         </div>
 
         {/* Outputs */}
@@ -164,19 +178,17 @@ export default function ROICalculator() {
             </div>
           ))}
 
-          {/* Total */}
           <div className="flex items-center justify-between px-4 py-4 border-b border-border bg-ibm-blue/5">
             <div>
               <div className="text-sm font-semibold">Total annual value</div>
               <div className="text-[10px] text-muted font-light mt-0.5">Break-even: ~{calc.paybackMonths} months</div>
               {calc.capped && (
-                <div className="text-[10px] text-dim font-light mt-0.5">Capped at typical mid-market range ($150K–$400K)</div>
+                <div className="text-[10px] text-dim font-light mt-0.5">Capped at typical mid-market range</div>
               )}
             </div>
             <span className="font-mono font-bold text-2xl text-white">${animTotal.toLocaleString()}</span>
           </div>
 
-          {/* Payback bar */}
           <div className="px-4 py-4 border-b border-border">
             <div className="flex justify-between text-[10px] font-mono text-muted mb-1.5">
               <span>Break-even</span>
@@ -195,12 +207,10 @@ export default function ROICalculator() {
             </div>
           </div>
 
-          {/* Disclaimer */}
           <div className="px-4 py-2 border-b border-border">
-            <p className="text-[10px] text-dim font-light">Based on typical mid-market teams. Results vary by stack and error rate. Exact ROI scoped with your data after onboarding.</p>
+            <p className="text-[10px] text-dim font-light">Based on Incede deployment data. Exact ROI scoped with your stack after onboarding.</p>
           </div>
 
-          {/* Email CTA */}
           <div className="px-4 py-4">
             {submitted ? (
               <div className="flex items-center gap-2 text-success text-sm">
@@ -220,7 +230,6 @@ export default function ROICalculator() {
         </div>
       </div>
 
-      {/* Email modal */}
       {emailModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => setEmailModal(false)}>
           <motion.div

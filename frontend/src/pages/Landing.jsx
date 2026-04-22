@@ -108,9 +108,10 @@ function WhatSection() {
       <h2 className="text-3xl sm:text-4xl font-semibold mb-3 leading-tight">
         Every quote is a validation event.
       </h2>
-      <p className="text-sm text-muted font-light mb-12 max-w-lg">
-        Four agents run overnight. They compare what the quote says to what your ERP enforces — then fix it.
+      <p className="text-sm text-muted font-light mb-3 max-w-lg">
+        watsonx.AI extracts structured pricing data from any customer PO format — no templates, no manual mapping. Four autonomous Orchestrate agents then run overnight, comparing what each document says to what your ERP currently enforces, and correcting the gap.
       </p>
+      <p className="text-xs text-dim font-light mb-12 max-w-lg">Two sources of truth that drift apart. Agents that sync them.</p>
 
       <div className="border border-border mb-8">
         {[
@@ -144,12 +145,16 @@ function WhatSection() {
         </div>
       </div>
 
-      <button
-        onClick={() => setShowDemo(true)}
-        className="flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-6 py-3 transition-colors text-sm"
-      >
-        Try the live demo
-      </button>
+      <div className="border border-ibm-blue/40 bg-ibm-blue/5 px-6 py-8 text-center">
+        <p className="text-xs text-muted font-light mb-5">See the agents extract, validate, and correct a customer PO in real time.</p>
+        <button
+          onClick={() => setShowDemo(true)}
+          className="inline-flex items-center gap-3 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-10 py-4 transition-colors text-base"
+        >
+          <span className="w-2 h-2 rounded-full bg-white/70 animate-pulse shrink-0" />
+          Try the live demo
+        </button>
+      </div>
 
       <AnimatePresence>
         {showDemo && <DemoModal onClose={() => setShowDemo(false)} />}
