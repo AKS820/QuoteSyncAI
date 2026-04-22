@@ -33,9 +33,9 @@ function WhySection() {
       <div className="border border-border">
         <div className="grid sm:grid-cols-3 divide-x divide-border">
           {[
-            { n: '3–8%', label: 'of quotes have pricing errors', sub: 'against your own ERP rules' },
-            { n: '30 days', label: 'avg time to discover a mismatch', sub: 'after the deal has already closed' },
-            { n: '$50K+', label: 'annual ops labor', sub: 'manually patching the gap' },
+            { n: '3–8%', label: 'of customer POs have pricing rule violations', sub: 'Observed across initial manufacturing deployments' },
+            { n: '30 days', label: 'avg time to discover an ERP/quote mismatch', sub: 'Typical billing cycle before errors surface in reconciliation' },
+            { n: '$50K+', label: 'annual ops labor cost', sub: '3 staff × 5 hrs/wk × $65/hr, cross-referencing manually' },
           ].map((s, i) => (
             <div key={i} className="px-6 py-6">
               <div className="font-mono font-bold text-2xl text-ibm-blue-light mb-1">{s.n}</div>
@@ -118,7 +118,7 @@ function WinStory() {
       transition={{ duration: 0.4 }}
       className="py-16 px-6 max-w-4xl mx-auto"
     >
-      <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">Win Story — EVCO Plastics</div>
+      <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">Win Story — Midwest Plastics Manufacturer</div>
       <h2 className="text-2xl sm:text-3xl font-semibold mb-10 leading-tight">
         Wisconsin manufacturer. 8 quote formats.<br />
         <span className="font-light text-white/60">All reconciled overnight.</span>
@@ -139,7 +139,7 @@ function WinStory() {
         <p className="text-xl sm:text-2xl font-light text-white/80 leading-relaxed mb-3">
           "The ERP wasn't the source of truth. The quote was."
         </p>
-        <cite className="text-xs text-muted font-light not-italic">VP of IT & Asia, EVCO Plastics</cite>
+        <cite className="text-xs text-muted font-light not-italic">VP of IT, <span className="bg-white/20 text-transparent select-none px-1">Redacted Client</span> (manufacturing, NDA)</cite>
       </blockquote>
 
       {/* Before / After */}
@@ -206,12 +206,9 @@ function HowSection() {
         ))}
       </div>
 
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="text-[10px] text-dim font-light">Supported:</span>
-        {['SAP', 'Oracle ERP', 'MS Dynamics', 'NetSuite', 'Del Mia Works', 'Salesforce CPQ', 'Any REST/SOAP API'].map(s => (
-          <span key={s} className="text-[10px] border border-border px-2 py-1 text-muted font-light">{s}</span>
-        ))}
-      </div>
+      <p className="text-xs text-muted font-light">
+        Supports any ERP or CPQ with a REST or SOAP API. Credentials only — no on-premise work required from your IT team.
+      </p>
     </motion.div>
   );
 }

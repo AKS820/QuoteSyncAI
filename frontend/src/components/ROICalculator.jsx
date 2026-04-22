@@ -220,18 +220,6 @@ export default function ROICalculator() {
         </div>
       </div>
 
-      {/* Pricing CTA */}
-      <div className="mt-10 border border-ibm-blue/30 bg-ibm-blue/5 px-6 py-7 text-center">
-        <p className="text-sm font-semibold text-white mb-1">Ready to recover this value?</p>
-        <p className="text-xs text-muted font-light mb-5">See what it costs to automate this — most teams break even in under 4 months.</p>
-        <a
-          href="#pricing"
-          className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-6 py-3 transition-colors text-sm"
-        >
-          See pricing
-        </a>
-      </div>
-
       {/* Email modal */}
       {emailModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => setEmailModal(false)}>

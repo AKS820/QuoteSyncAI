@@ -12,15 +12,15 @@ const TIERS = [
     name: 'Starter',
     price: '~$1,500',
     period: '/month',
-    tagline: 'One ERP. One CPQ. Prove it works.',
-    priceNote: 'Most teams in this tier fall within this range.',
+    tagline: 'One plant. One ERP. Prove the agent works.',
+    priceNote: 'Most single-facility teams fall within this range.',
     features: [
       '1 ERP integration (SAP, Oracle, or Dynamics)',
-      '1 CPQ integration (Salesforce CPQ or HubSpot)',
-      'Up to 500 quotes/month',
-      'Continuous detection agent — runs 24/7',
+      'Up to 500 customer POs/month',
+      'Overnight agentic validation run',
+      'Tiered pricing + MOQ rule templates',
+      'Auto-correct or hold with email alert',
       'Email support (next business day)',
-      'Standard detection rule templates',
     ],
     cta: 'Get a quote for my stack',
     popular: false,
@@ -30,16 +30,16 @@ const TIERS = [
     name: 'Growth',
     price: '~$2,200',
     period: '/month',
-    tagline: 'Multiple integrations. Custom workflows.',
-    priceNote: 'Most mid-market teams fall within this range.',
+    tagline: 'Multi-plant. Custom rule logic. Full audit trail.',
+    priceNote: 'Most mid-market manufacturers fall within this range.',
     features: [
       '2 ERP integrations',
-      '2 CPQ integrations',
-      'Up to 2,000 quotes/month',
-      'Custom approval workflows',
+      'Up to 2,000 customer POs/month',
+      'Custom agent rule logic (pricing, MOQ, contract expiry)',
+      'Interactive mode — approval gates per agent',
+      'Pricing drift analytics dashboard',
+      'Executive email audit trail after each run',
       'Slack support',
-      'ROI dashboard + detection analytics',
-      'Custom detection rules',
     ],
     cta: 'Get a quote for my stack',
     popular: true,
@@ -49,17 +49,17 @@ const TIERS = [
     name: 'Enterprise',
     price: 'Custom',
     period: '',
-    tagline: 'Unlimited integrations. Dedicated engineer.',
+    tagline: 'Unlimited plants. Dedicated agent engineer.',
     priceNote: null,
     features: [
-      'Unlimited ERP + CPQ integrations',
-      'Unlimited quotes/month',
+      'Unlimited ERP integrations',
+      'Unlimited PO volume',
       'Dedicated agent configuration engineer',
-      'Custom detection rules & approval workflows',
+      'Custom rule logic for any manufacturing workflow',
+      'Human-in-the-loop approval routing',
       'SLA with guaranteed uptime',
-      'Quarterly business reviews',
-      'Custom onboarding & training',
       'SAML SSO + advanced security',
+      'Quarterly business reviews',
     ],
     cta: 'Talk to an engineer',
     popular: false,
@@ -214,17 +214,17 @@ export default function PricingSection() {
       <div className="mb-12">
         <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">Stage 4 — Pricing</div>
         <h2 className="text-3xl sm:text-4xl font-semibold mb-3 leading-tight">
-          Revenue integrity infrastructure.<br />
-          <span className="font-light text-white/70">Not another automation tool.</span>
+          Agents that catch pricing errors<br />
+          <span className="font-light text-white/70">before your shop floor does.</span>
         </h2>
         <p className="text-base font-semibold text-white mb-3">
-          UIPath automates after your ERP is already wrong. We catch it first.
+          Not a script. Not a batch job someone runs manually. A continuously operating agent that validates every customer PO against your ERP pricing rules — automatically, overnight, every night.
         </p>
         <p className="text-muted font-light max-w-xl mb-4">
-          Prices below are indicative — exact cost confirmed after we scope your stack and quote volume. Fill out the form and we reply within 1 business day. No discovery call required.
+          Prices below are indicative — confirmed after we scope your ERP, PO volume, and rule complexity. Reply within 1 business day. No discovery call required.
         </p>
         <div className="inline-flex items-center gap-2 border border-warning/30 bg-warning/5 px-3 py-2 text-xs text-warning/80 font-light">
-          Most teams find their first ERP/quote mismatch within 24 hours of connecting. Every day without it is another quote processed on wrong data.
+          Most manufacturers find their first tiered pricing or MOQ violation within 24 hours of connecting.
         </div>
       </div>
 
@@ -308,9 +308,9 @@ export default function PricingSection() {
 
       {/* Final CTA */}
       <div className="mt-16 border border-ibm-blue/30 bg-ibm-blue/5 px-8 py-10 text-center">
-        <h2 className="text-2xl font-semibold mb-2">Ready to protect your revenue?</h2>
+        <h2 className="text-2xl font-semibold mb-2">Ready to run your first agent?</h2>
         <p className="text-muted font-light mb-6 max-w-md mx-auto text-sm">
-          Join manufacturing teams that have already eliminated manual quote reconciliation.
+          Connect your ERP. Define your pricing rules. Let the agent catch what your team has been catching manually.
         </p>
         <button
           onClick={() => openModal(TIERS[1])}
