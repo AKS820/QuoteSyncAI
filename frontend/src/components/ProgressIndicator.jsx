@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom';
 import { Check } from 'lucide-react';
 
-const STAGE_IDS = ['hero', 'why', 'what', 'how', 'pricing'];
+const STAGE_IDS = ['hero', 'why', 'what', 'win-story'];
 
 export default function ProgressIndicator({ currentStage, visitedStages, labels = [] }) {
   return (
@@ -47,12 +48,12 @@ export default function ProgressIndicator({ currentStage, visitedStages, labels 
 
         {/* CTA — fixed width matching logo */}
         <div className="shrink-0 w-36 flex justify-end">
-          <a
-            href="#pricing"
+          <Link
+            to="/pricing"
             className="hidden sm:block bg-ibm-blue hover:bg-ibm-blue-hover text-white text-xs font-semibold px-3 py-1.5 transition-colors"
           >
-            Get Started
-          </a>
+            View pricing
+          </Link>
         </div>
 
       </div>

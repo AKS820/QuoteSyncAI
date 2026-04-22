@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { ChevronRight, ShieldCheck } from 'lucide-react';
 import { useEventTracking } from '../hooks/useEventTracking.js';
 
@@ -55,13 +56,13 @@ export default function Hero() {
             See how it works
             <ChevronRight size={16} />
           </a>
-          <a
-            href="#pricing"
+          <Link
+            to="/pricing"
             onClick={() => trackEvent('cta_click', { cta: 'see_pricing', stage: 0 })}
             className="text-sm text-muted hover:text-white font-light transition-colors px-4 py-3.5"
           >
             See pricing →
-          </a>
+          </Link>
         </motion.div>
 
         <motion.div
