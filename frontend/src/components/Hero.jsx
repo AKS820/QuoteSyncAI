@@ -18,7 +18,7 @@ export default function Hero() {
         >
           <div className="inline-flex items-center gap-2 border border-ibm-blue/30 bg-ibm-blue-dim px-3 py-1.5">
             <ShieldCheck size={11} className="text-ibm-blue shrink-0" />
-            <span className="text-xs tracking-wide text-ibm-blue-light font-medium">Built on IBM watsonx</span>
+            <span className="text-xs tracking-wide text-ibm-blue-light font-medium">Built using IBM watsonx</span>
           </div>
         </motion.div>
 

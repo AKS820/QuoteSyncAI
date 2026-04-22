@@ -281,6 +281,17 @@ export default function Landing() {
         </Link>
       </div>
 
+      <div className="border-t border-border">
+        <div className="max-w-4xl mx-auto px-6 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <p className="text-[10px] text-dim font-light leading-relaxed max-w-xl">
+            This is a custom demo created by an IBM representative to illustrate a concept. It is not an official IBM website or product.
+          </p>
+          <p className="text-[10px] text-dim font-light shrink-0">
+            Anonymous page views and clicks only. No personal data collected.
+          </p>
+        </div>
+      </div>
+
       <ChatWidget />
     </div>
   );
