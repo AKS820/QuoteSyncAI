@@ -181,13 +181,13 @@ function WinStory() {
         <span className="font-light text-white/60">All reconciled overnight.</span>
       </h2>
 
-      <div className="h-[260px] border border-dashed border-border/60 bg-surface flex items-center justify-center mb-10">
-        <div className="text-center opacity-40">
-          <div className="w-10 h-0.5 bg-border mx-auto mb-3" />
-          <div className="text-[11px] tracking-label font-medium text-muted uppercase">Architecture Diagram</div>
-          <div className="text-[10px] text-dim font-light mt-1">Coming soon</div>
-          <div className="w-10 h-0.5 bg-border mx-auto mt-3" />
-        </div>
+      <div className="border border-border mb-10 overflow-hidden">
+        <iframe
+          src="/arch-animation.html"
+          className="w-full block border-0"
+          style={{ height: '520px' }}
+          title="Agent Architecture Diagram"
+        />
       </div>
 
       <blockquote className="border-l-2 border-ibm-blue pl-6 mb-10">

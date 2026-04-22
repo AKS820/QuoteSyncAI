@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden}
+  #wrap{background:#07090f;font-family:'IBM Plex Sans',sans-serif;color:#e2e8f0;display:flex;flex-direction:column;height:100%}
+  #cv{display:block;width:100%;flex:1;min-height:0}
+  #log-box{background:#07090f;border-top:1px solid #0d1520;height:80px;overflow-y:auto;padding:6px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;flex-shrink:0}
+  .log-row{display:flex;gap:8px;line-height:1.7;border-bottom:1px solid #080e1a;padding:1px 0}
+  .log-ts{color:#1e2e45;flex-shrink:0}
+  .log-txt{color:#4a5a7a}.log-txt b{color:#8899b4;font-weight:500}
+  .log-txt .hi{color:#4f8ef7}.log-txt .erp{color:#34d399}.log-txt .warn{color:#fbbf24}
+  #bottom{background:#07090f;border-top:1px solid #0d1520;padding:6px 12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex-shrink:0}
+  #btn-run,#btn-reset{padding:4px 12px;border:1px solid #1a2640;border-radius:4px;background:#0e1525;color:#8899b4;font-family:'IBM Plex Mono',monospace;font-size:11px;cursor:pointer;transition:all .15s}
+  #btn-run:hover{border-color:#4f8ef7;color:#4f8ef7}
+  #btn-reset:hover{border-color:#fb7185;color:#fb7185}
+  #btn-run:disabled,#btn-reset:disabled{opacity:.3;cursor:default;pointer-events:none}
+  #erp-sel{padding:4px 8px;border:1px solid #1a2640;border-radius:4px;background:#0e1525;color:#8899b4;font-family:'IBM Plex Mono',monospace;font-size:11px}
+  #spd-wrap{display:flex;align-items:center;gap:6px;font-size:11px;color:#1e2e45;margin-left:auto;font-family:'IBM Plex Mono',monospace}
+  #spd{width:70px;accent-color:#4f8ef7}
+  #spd-out{color:#4f8ef7;min-width:26px}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <canvas id="cv"></canvas>
+  <div id="log-box"></div>
+  <div id="bottom">
+    <button id="btn-run">&#9654; Run</button>
+    <button id="btn-reset" disabled>&#8635; Reset</button>
+    <select id="erp-sel">
+      <option value="SAP">SAP S/4HANA</option>
+      <option value="Oracle">Oracle Fusion</option>
+      <option value="Generic">Generic ERP</option>
+    </select>
+    <div id="spd-wrap">speed <input type="range" id="spd" min="0.4" max="3" step="0.1" value="1"> <span id="spd-out">1.0x</span></div>
+  </div>
+</div>
+
+<script>
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+const logBox=document.getElementById('log-box');
+const btnRun=document.getElementById('btn-run'),btnReset=document.getElementById('btn-reset');
+const erpSel=document.getElementById('erp-sel'),spdEl=document.getElementById('spd'),spdOut=document.getElementById('spd-out');
+let dpr=window.devicePixelRatio||1,W,H,speed=1;
+let nodes={},packets=[],running=false,done=false,stepIdx=0,stepTimer=0,lastTs=null;
+
+spdEl.oninput=()=>{speed=parseFloat(spdEl.value);spdOut.textContent=speed.toFixed(1)+'x'};
+
+const ERP={
+  SAP:['BAPI_CUSTOMER_GETDETAIL','MM_ITEM_MASTER_READ','BAPI_PRICECOND_GET','BAPI_SALESORDER_CHANGE'],
+  Oracle:['AR_CUSTOMERS_V.GET','INV_ITEM_LOCATIONS.READ','QP_PRICE_LISTS.FETCH','OE_ORDER_LINES.PATCH'],
+  Generic:['GET /customers/{id}','GET /items/master','GET /pricing/tiers','PATCH /orders/{id}'],
+};
+
+function erpName(){return erpSel.value==='SAP'?'SAP S/4HANA':erpSel.value==='Oracle'?'Oracle Fusion':'ERP System'}
+
+function buildNodes(){
+  const s=W/dpr,h=H/dpr;
+  const cx=s/2;
+  const tier0Y=h*0.12;
+  const tier1Y=h*0.35;
+  const tier2Y=h*0.62;
+  const erpY=h*0.86;
+  const agentSpread=s*0.72;
+  const a1x=cx-agentSpread*0.375,a2x=cx-agentSpread*0.125,a3x=cx+agentSpread*0.125,a4x=cx+agentSpread*0.375;
+
+  nodes={
+    quote:{id:'quote',label:'Customer Quote',sub:'PDF · Email',x:cx,y:tier0Y,r:30,col:'#fbbf24',tCol:'#412402',active:false},
+    orch: {id:'orch', label:'Manager Agent',sub:'watsonx Orchestrate',x:cx,y:tier1Y,r:38,col:'#4f8ef7',tCol:'#042C53',active:false},
+    a1:   {id:'a1',  label:'Agent 01',sub:'Customer ID',x:a1x,y:tier2Y,r:26,col:'#c084fc',tCol:'#26215C',active:false},
+    a2:   {id:'a2',  label:'Agent 02',sub:'Quote Valid.',x:a2x,y:tier2Y,r:26,col:'#c084fc',tCol:'#26215C',active:false},
+    a3:   {id:'a3',  label:'Agent 03',sub:'Pricing',x:a3x,y:tier2Y,r:26,col:'#c084fc',tCol:'#26215C',active:false},
+    a4:   {id:'a4',  label:'Agent 04',sub:'Sales Order',x:a4x,y:tier2Y,r:26,col:'#c084fc',tCol:'#26215C',active:false},
+    erp:  {id:'erp', label:erpName(), sub:'Source of record',x:cx,y:erpY,r:32,col:'#34d399',tCol:'#04342C',active:false},
+  };
+}
+
+const STEPS=[
+  {from:'quote',to:'orch', col:'#fbbf24',erp:false,log:'<b>Quote</b> payload &rarr; <span class="hi">Manager Agent</span>'},
+  {from:'orch', to:'a1',   col:'#4f8ef7',erp:false,log:'<span class="hi">Manager Agent</span> delegates to <b>Agent 01</b> &rarr; Customer ID'},
+  {from:'a1',   to:'erp',  col:'#34d399',erp:0,    log:'<b>Agent 01</b> &rarr; <span class="erp">ERP</span>: cross-ref customer name + address'},
+  {from:'erp',  to:'a1',   col:'#34d399',erp:false,log:'<span class="erp">ERP</span> &rarr; Agent 01: match <span class="warn">98% confidence</span>'},
+  {from:'a1',   to:'orch', col:'#c084fc',erp:false,log:'<b>Agent 01</b> &rarr; <span class="hi">Manager Agent</span>: customer verified &#10003;'},
+  {from:'orch', to:'a2',   col:'#4f8ef7',erp:false,log:'<span class="hi">Manager Agent</span> delegates to <b>Agent 02</b> &rarr; Quote Validation'},
+  {from:'a2',   to:'erp',  col:'#34d399',erp:1,    log:'<b>Agent 02</b> &rarr; <span class="erp">ERP</span>: fetch item master + AKA refs'},
+  {from:'erp',  to:'a2',   col:'#34d399',erp:false,log:'<span class="erp">ERP</span> &rarr; Agent 02: part numbers confirmed'},
+  {from:'a2',   to:'orch', col:'#c084fc',erp:false,log:'<b>Agent 02</b> &rarr; <span class="hi">Manager Agent</span>: quote validated &#10003;'},
+  {from:'orch', to:'a3',   col:'#4f8ef7',erp:false,log:'<span class="hi">Manager Agent</span> delegates to <b>Agent 03</b> &rarr; Pricing'},
+  {from:'a3',   to:'erp',  col:'#34d399',erp:2,    log:'<b>Agent 03</b> &rarr; <span class="erp">ERP</span>: fetch price tiers + MOQ rules'},
+  {from:'erp',  to:'a3',   col:'#34d399',erp:false,log:'<span class="erp">ERP</span> &rarr; Agent 03: <span class="warn">$1.45 vs $1.35</span> discrepancy'},
+  {from:'a3',   to:'orch', col:'#c084fc',erp:false,log:'<b>Agent 03</b> &rarr; <span class="hi">Manager Agent</span>: pricing discrepancy flagged'},
+  {from:'orch', to:'a4',   col:'#4f8ef7',erp:false,log:'<span class="hi">Manager Agent</span> delegates to <b>Agent 04</b> &rarr; Sales Order'},
+  {from:'a4',   to:'erp',  col:'#34d399',erp:3,    log:'<b>Agent 04</b> &rarr; <span class="erp">ERP</span>: auto-update price tiers'},
+  {from:'erp',  to:'a4',   col:'#34d399',erp:false,log:'<span class="erp">ERP</span>: SO-6002, SO-6003 updated &#10003;'},
+  {from:'a4',   to:'orch', col:'#c084fc',erp:false,log:'<b>Agent 04</b> &rarr; <span class="hi">Manager Agent</span>: report ready'},
+  {from:'orch', to:'quote',col:'#fbbf24',erp:false,log:'<span class="hi">Manager Agent</span> &rarr; <b>Quote</b>: comparison report + audit trail'},
+];
+
+function resize(){
+  const rect=document.getElementById('wrap').getBoundingClientRect();
+  const canvasH=Math.max(300, rect.height - 80 - 38);
+  W=Math.round(rect.width*dpr);
+  H=Math.round(canvasH*dpr);
+  cv.width=W;cv.height=H;cv.style.height=canvasH+'px';
+  buildNodes();
+}
+
+function ease(t){return t<.5?2*t*t:-1+(4-2*t)*t}
+function gn(id){return nodes[id]}
+
+function addLog(html){
+  const d=document.createElement('div');d.className='log-row';
+  const now=new Date();
+  const ts=now.toLocaleTimeString('en',{hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  d.innerHTML=`<span class="log-ts">${ts}</span><span class="log-txt">${html}</span>`;
+  logBox.append(d);logBox.scrollTop=logBox.scrollHeight;
+}
+
+function drawGrid(){
+  ctx.save();
+  const gs=28*dpr;
+  ctx.strokeStyle='#0b1018';ctx.lineWidth=1;
+  for(let x=0;x<W;x+=gs){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
+  for(let y=0;y<H;y+=gs){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+  ctx.restore();
+}
+
+function drawEdge(a,b,active,col){
+  const ax=a.x*dpr,ay=a.y*dpr,bx=b.x*dpr,by=b.y*dpr;
+  ctx.save();
+  if(active){
+    ctx.strokeStyle=col+'55';ctx.lineWidth=1.5*dpr;
+  } else {
+    ctx.setLineDash([3*dpr,7*dpr]);ctx.strokeStyle='#111e33';ctx.lineWidth=1*dpr;
+  }
+  ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke();
+  ctx.restore();
+}
+
+function drawTierLabel(text,y){
+  ctx.save();
+  ctx.font=`400 ${9*dpr}px 'IBM Plex Mono',monospace`;
+  ctx.fillStyle='#1a2a3e';ctx.textAlign='left';ctx.textBaseline='middle';
+  ctx.fillText(text,8*dpr,y*dpr);ctx.restore();
+}
+
+function drawNode(n){
+  const x=n.x*dpr,y=n.y*dpr,r=n.r*dpr;
+  ctx.save();
+  if(n.active){
+    ctx.beginPath();ctx.arc(x,y,r*2.2,0,Math.PI*2);
+    ctx.fillStyle=n.col+'0d';ctx.fill();
+    ctx.beginPath();ctx.arc(x,y,r*1.55,0,Math.PI*2);
+    ctx.fillStyle=n.col+'15';ctx.fill();
+  }
+  ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);
+  ctx.fillStyle=n.active?n.col+'1a':'#0a111e';
+  ctx.fill();
+  ctx.lineWidth=(n.active?1.8:1)*dpr;
+  ctx.strokeStyle=n.active?n.col:n.col+'40';
+  ctx.stroke();
+
+  const fs=Math.max(r*0.36,9*dpr);
+  ctx.font=`500 ${fs}px 'IBM Plex Sans',sans-serif`;
+  ctx.fillStyle=n.active?n.col:'#2a3a55';
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(n.label,x,y-fs*0.35);
+  ctx.font=`${fs*0.66}px 'IBM Plex Mono',monospace`;
+  ctx.fillStyle=n.active?n.col+'88':'#1a2a3e';
+  ctx.fillText(n.sub,x,y+fs*0.75);
+  ctx.restore();
+}
+
+function drawPacket(p){
+  const x=p.x*dpr,y=p.y*dpr,r=6*dpr;
+  ctx.save();
+  ctx.globalAlpha=p.alpha;
+  for(let i=p.trail.length-1;i>=0;i--){
+    const pt=p.trail[i];
+    const ta=(i/p.trail.length)*0.3;
+    const tr=r*0.55*(i/p.trail.length);
+    ctx.beginPath();ctx.arc(pt.x*dpr,pt.y*dpr,tr,0,Math.PI*2);
+    ctx.fillStyle=p.col;ctx.globalAlpha=p.alpha*ta;ctx.fill();
+  }
+  ctx.globalAlpha=p.alpha;
+  ctx.beginPath();ctx.arc(x,y,r*1.9,0,Math.PI*2);
+  ctx.fillStyle=p.col+'20';ctx.fill();
+  ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);
+  ctx.fillStyle=p.col;ctx.fill();
+  if(p.erpLabel){
+    ctx.font=`${8*dpr}px 'IBM Plex Mono',monospace`;
+    ctx.fillStyle=p.col;ctx.globalAlpha=p.alpha*0.65;
+    ctx.textAlign='center';ctx.textBaseline='bottom';
+    const lbl=p.erpLabel.length>20?p.erpLabel.slice(0,19)+'…':p.erpLabel;
+    ctx.fillText(lbl,x,y-r*1.8);
+  }
+  ctx.restore();
+}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#07090f';ctx.fillRect(0,0,W,H);
+  drawGrid();
+
+  const h=H/dpr;
+  drawTierLabel('TIER 0 · input',h*0.12-10);
+  drawTierLabel('TIER 1 · manager agent',h*0.35-10);
+  drawTierLabel('TIER 2 · sub-agents',h*0.62-10);
+  drawTierLabel('DATA LAYER · erp',h*0.86-10);
+
+  const n=nodes;
+  const activeStep=stepIdx>0?STEPS[stepIdx-1]:null;
+  const isActive=(a,b)=>activeStep&&((activeStep.from===a&&activeStep.to===b)||(activeStep.from===b&&activeStep.to===a));
+
+  drawEdge(n.quote,n.orch,isActive('quote','orch'),activeStep?.col||'#4f8ef7');
+  ['a1','a2','a3','a4'].forEach(id=>{
+    drawEdge(n.orch,nodes[id],isActive('orch',id),activeStep?.col||'#4f8ef7');
+    drawEdge(nodes[id],n.erp,isActive(id,'erp'),'#34d399');
+  });
+
+  Object.values(nodes).forEach(drawNode);
+  packets.forEach(drawPacket);
+}
+
+function spawnPacket(step){
+  const f=gn(step.from),t=gn(step.to);
+  if(!f||!t) return;
+  f.active=true;t.active=true;
+  let erpLabel='';
+  if(step.erp!==false){const c=ERP[erpSel.value];erpLabel=c[step.erp]||''}
+  addLog(step.log);
+  packets.push({sx:f.x,sy:f.y,tx:t.x,ty:t.y,x:f.x,y:f.y,col:step.col,t:0,dur:0.7,done:false,alpha:1,erpLabel,trail:[]});
+}
+
+function tick(ts){
+  if(!running) return;
+  if(!lastTs) lastTs=ts;
+  const dt=Math.min((ts-lastTs)/1000,0.1)*speed;lastTs=ts;
+  if(!done){
+    stepTimer-=dt;
+    if(stepTimer<=0&&stepIdx<STEPS.length){spawnPacket(STEPS[stepIdx]);stepIdx++;stepTimer=0.52;if(stepIdx>=STEPS.length)done=true;}
+  }
+  packets=packets.filter(p=>p.alpha>0.01);
+  packets.forEach(p=>{
+    if(p.done){p.alpha-=dt*3;return}
+    p.t=Math.min(p.t+dt/p.dur,1);
+    const e=ease(p.t);
+    p.trail.unshift({x:p.x,y:p.y});if(p.trail.length>14)p.trail.pop();
+    p.x=p.sx+(p.tx-p.sx)*e;p.y=p.sy+(p.ty-p.sy)*e;
+    if(p.t>=1)p.done=true;
+  });
+  draw();
+  if(done&&packets.every(p=>p.alpha<=0.01)){
+    running=false;btnRun.disabled=false;btnReset.disabled=false;btnRun.textContent='&#9654; Run again';return;
+  }
+  requestAnimationFrame(tick);
+}
+
+function reset(){
+  cancelAnimationFrame(0);running=false;done=false;packets=[];stepIdx=0;stepTimer=0;lastTs=null;
+  logBox.innerHTML='';buildNodes();btnRun.disabled=false;btnReset.disabled=true;btnRun.textContent='&#9654; Run';draw();
+}
+
+btnRun.onclick=()=>{reset();running=true;stepTimer=0.2;btnRun.disabled=true;btnReset.disabled=false;requestAnimationFrame(tick)};
+btnReset.onclick=reset;
+erpSel.onchange=reset;
+window.addEventListener('resize',()=>{resize();draw()});
+resize();draw();
+</script>
+</body>
+</html>
