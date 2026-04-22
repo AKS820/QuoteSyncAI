@@ -324,7 +324,7 @@ export default function Pricing() {
               </div>
               <h1 className="text-5xl sm:text-6xl font-light text-white mb-6 leading-none tracking-tight">Pricing</h1>
               <p className="text-base text-muted font-light max-w-sm leading-relaxed">
-                Not a script. Not a batch job. An agent that validates every customer PO against your ERP pricing rules — automatically, overnight, every night.
+                Pricing and order entry still require manual validation, cross-referencing, and coordination. That's where time gets lost — and where billing errors cost Operations and Sales both.
               </p>
             </div>
             {/* Right — IBM logo */}

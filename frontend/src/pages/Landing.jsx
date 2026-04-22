@@ -3,6 +3,7 @@ import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { X, ChevronRight } from 'lucide-react';
 import { useScrollStage } from '../hooks/useScrollStage.js';
+import { useEventTracking } from '../hooks/useEventTracking.js';
 import ProgressIndicator from '../components/ProgressIndicator.jsx';
 import Hero from '../components/Hero.jsx';
 import ChatWidget from '../components/ChatWidget.jsx';
@@ -67,7 +68,7 @@ function WhySection() {
         <br /><span className="font-light text-white/60">The quote is.</span>
       </h2>
       <p className="text-sm text-muted font-light mb-12 max-w-lg">
-        Every expired contract and pricing rule that doesn't make it back into the ERP is a future billing error.
+        Most manufacturers have strong ERP systems — but pricing and order entry still require manual validation, cross-referencing, and coordination. That's where time gets lost, and where billing errors are born.
       </p>
 
       <div className="border border-border">
@@ -75,7 +76,7 @@ function WhySection() {
           {[
             { n: '3–8%', label: 'of customer POs have pricing rule violations', sub: 'Observed across initial manufacturing deployments' },
             { n: '30 days', label: 'avg time to discover an ERP/quote mismatch', sub: 'Typical billing cycle before errors surface in reconciliation' },
-            { n: '$50K+', label: 'annual ops labor cost', sub: '3 staff × 5 hrs/wk × $65/hr, cross-referencing manually' },
+            { n: '$120K+', label: 'annual ops labor cost', sub: '10 staff touching manual validation, cross-referencing daily' },
           ].map((s, i) => (
             <div key={i} className="px-6 py-6">
               <div className="font-mono font-bold text-2xl text-ibm-blue-light mb-1">{s.n}</div>
@@ -95,6 +96,7 @@ function WhatSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
   const [showDemo, setShowDemo] = useState(false);
+  const { trackEvent } = useEventTracking();
   return (
     <motion.div
       ref={ref}
@@ -147,7 +149,7 @@ function WhatSection() {
       <div className="border border-ibm-blue/40 bg-ibm-blue/5 px-6 py-8 text-center">
         <p className="text-xs text-muted font-light mb-5">Watch the agents handle a real customer PO end-to-end.</p>
         <button
-          onClick={() => setShowDemo(true)}
+          onClick={() => { setShowDemo(true); trackEvent('demo_start'); }}
           className="inline-flex items-center gap-3 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-10 py-4 transition-colors text-base"
         >
           <span className="w-2 h-2 rounded-full bg-white/70 animate-pulse shrink-0" />
@@ -176,10 +178,24 @@ function WinStory() {
       className="py-16 px-6 max-w-4xl mx-auto"
     >
       <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">Win Story — Midwest Plastics Manufacturer</div>
-      <h2 className="text-2xl sm:text-3xl font-semibold mb-10 leading-tight">
+      <h2 className="text-2xl sm:text-3xl font-semibold mb-6 leading-tight">
         Wisconsin manufacturer. 8 quote formats.<br />
         <span className="font-light text-white/60">All reconciled overnight.</span>
       </h2>
+
+      <div className="grid sm:grid-cols-3 gap-0 border border-border mb-10">
+        {[
+          { n: '3,000+', label: 'active quotes in flight at any time', sub: 'Across all open customer POs' },
+          { n: '20/day', label: 'pricing rule updates hitting the ERP', sub: 'Each one a potential mismatch with open quotes' },
+          { n: '10 staff', label: 'touching manual validation daily', sub: 'Max 3 concurrent — a hard throughput ceiling' },
+        ].map((s, i) => (
+          <div key={i} className="px-5 py-5 border-r border-border last:border-r-0">
+            <div className="font-mono font-bold text-xl text-ibm-blue-light mb-1">{s.n}</div>
+            <div className="text-xs font-medium text-white/80">{s.label}</div>
+            <div className="text-[10px] text-dim font-light mt-0.5">{s.sub}</div>
+          </div>
+        ))}
+      </div>
 
       <div className="border border-border mb-10 overflow-hidden">
         <iframe

@@ -28,9 +28,9 @@ export default function Hero() {
           transition={{ duration: 0.45, delay: 0.05 }}
           className="text-4xl sm:text-5xl lg:text-[3.5rem] leading-[1.08] tracking-tight mb-5"
         >
-          <span className="font-semibold text-white">Your ERP is wrong</span>
+          <span className="font-semibold text-white">Every quote has a pricing rule.</span>
           <br />
-          <span className="font-light text-white/60">more often than you think.</span>
+          <span className="font-light text-white/60">Most have a violation.</span>
         </motion.h1>
 
         <motion.p
@@ -39,7 +39,7 @@ export default function Hero() {
           transition={{ duration: 0.35, delay: 0.1 }}
           className="text-base font-light text-white/50 mb-10"
         >
-          We fix it before it costs you revenue.
+          Your ERP and your quotes drift apart every day. That's where revenue gets lost — and where we fix it.
         </motion.p>
 
         <motion.div

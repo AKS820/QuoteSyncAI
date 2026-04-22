@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { Users, Zap, Calculator, CreditCard, MessageSquare, RefreshCw, Lock, ShieldCheck } from 'lucide-react';
+import { Users, Zap, Calendar, CreditCard, MessageSquare, RefreshCw, Lock, ShieldCheck } from 'lucide-react';
 
 const ADMIN_PASSWORD = 'quoteguard-admin';
 
-const STAGE_LABELS = ['Overview', 'Demo', 'Setup', 'ROI', 'Pricing'];
+const STAGE_LABELS = ['Overview', 'Why', 'What', 'Win Story'];
 
 function MetricCard({ icon: Icon, label, value, sub, accent = false }) {
   return (
@@ -139,11 +139,11 @@ export default function Dashboard() {
             {/* Top metrics */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-0 border border-border mb-8">
               {[
-                { icon: Users,         label: 'Unique Visitors',    value: data.totalUsers,                  sub: null,                                        accent: false },
-                { icon: Zap,           label: 'Demo Runs',          value: data.demo.starts,                 sub: `${data.demo.completionRate}% completion`,    accent: true  },
-                { icon: Calculator,    label: 'ROI Calculations',   value: data.roi.totalCalculations,       sub: `Avg ROI: ${data.roi.avgRoiPct}%`,           accent: false },
-                { icon: CreditCard,    label: 'Purchase Intents',   value: data.purchaseIntents.total,       sub: null,                                        accent: true  },
-                { icon: MessageSquare, label: 'Agent Questions',    value: data.agentQuestions.total,        sub: null,                                        accent: false },
+                { icon: Users,         label: 'Unique Visitors',    value: data.totalUsers,               sub: null,                                     accent: false },
+                { icon: Zap,           label: 'Demo Opens',         value: data.demo.starts,              sub: null,                                     accent: true  },
+                { icon: Calendar,      label: 'Meeting Requests',   value: data.meetingRequests,          sub: null,                                     accent: true  },
+                { icon: CreditCard,    label: 'Quote Requests',     value: data.purchaseIntents.total,    sub: null,                                     accent: false },
+                { icon: MessageSquare, label: 'Agent Questions',    value: data.agentQuestions.total,     sub: null,                                     accent: false },
               ].map((m, i) => (
                 <div key={i} className={`border-r border-border last:border-r-0 ${i > 2 ? 'border-t border-t-border md:border-t-0' : ''}`}>
                   <MetricCard {...m} />
@@ -187,6 +187,25 @@ export default function Dashboard() {
                     </BarChart>
                   </ResponsiveContainer>
                 )}
+              </div>
+            </div>
+
+            {/* CTA clicks breakdown */}
+            <div className="border border-border mb-8">
+              <div className="px-4 py-2 border-b border-border bg-surface">
+                <span className="text-[10px] tracking-label text-muted uppercase font-semibold">CTA Clicks</span>
+              </div>
+              <div className="divide-y divide-border">
+                {Object.entries(data.ctaClicks?.byCta || {}).length === 0 ? (
+                  <p className="text-muted text-xs font-light px-4 py-4">No CTA clicks yet</p>
+                ) : Object.entries(data.ctaClicks.byCta)
+                    .sort(([,a],[,b]) => b - a)
+                    .map(([cta, count]) => (
+                  <div key={cta} className="flex items-center justify-between px-4 py-3">
+                    <span className="text-xs text-muted font-mono">{cta}</span>
+                    <span className="font-mono font-semibold text-sm text-ibm-blue-light">{count}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
