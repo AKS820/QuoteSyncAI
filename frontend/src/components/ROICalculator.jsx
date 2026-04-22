@@ -67,17 +67,19 @@ export default function ROICalculator() {
     const laborSaved        = annualHoursSaved * inputs.hourlyRate;
     const revenueProtected  = inputs.posPerMonth * 12 * inputs.avgPoValue * (inputs.violationRate / 100) * 0.4;
     const rawTotal          = laborSaved + revenueProtected;
+    const capped            = rawTotal > 400000;
+    const scale             = capped ? 400000 / rawTotal : 1;
     const totalValue        = Math.min(rawTotal, 400000);
     const paybackMonths     = totalValue > 0 ? (ANNUAL_CONTRACT / totalValue) * 12 : 0;
     const roi               = totalValue > 0 ? ((totalValue - ANNUAL_CONTRACT) / ANNUAL_CONTRACT) * 100 : 0;
     return {
       annualHoursSaved: Math.round(annualHoursSaved),
-      laborSaved: Math.round(Math.min(laborSaved, 200000)),
-      revenueProtected: Math.round(Math.min(revenueProtected, 200000)),
+      laborSaved: Math.round(laborSaved * scale),
+      revenueProtected: Math.round(revenueProtected * scale),
       totalValue: Math.round(totalValue),
       paybackMonths: Math.round(paybackMonths * 10) / 10,
       roi: Math.round(roi),
-      capped: rawTotal > 400000,
+      capped,
     };
   }, [inputs]);
 
@@ -145,7 +147,7 @@ export default function ROICalculator() {
       <div className="mb-10">
         <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">ROI Calculator</div>
         <h2 className="text-3xl sm:text-4xl font-semibold mb-2 leading-tight">What are your POs costing you to process manually?</h2>
-        <p className="text-xs text-dim font-light">Variables based on measurements from Incede manufacturing deployments. Adjust to your environment.</p>
+        <p className="text-xs text-dim font-light">Based on Incede deployment measurements. Adjust to your environment.</p>
       </div>
 
       <div className="grid lg:grid-cols-2 border border-border">

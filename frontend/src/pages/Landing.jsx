@@ -68,7 +68,7 @@ function WhySection() {
         <br /><span className="font-light text-white/60">The quote is.</span>
       </h2>
       <p className="text-sm text-muted font-light mb-12 max-w-lg">
-        Every negotiated deal, expired contract, and changed pricing rule that doesn't make it back into the ERP is a future error waiting to happen.
+        Every expired contract and pricing rule that doesn't make it back into the ERP is a future billing error.
       </p>
 
       <div className="border border-border">
@@ -109,7 +109,7 @@ function WhatSection() {
         Every quote is a validation event.
       </h2>
       <p className="text-sm text-muted font-light mb-3 max-w-lg">
-        watsonx.AI extracts structured pricing data from any customer PO format — no templates, no manual mapping. Four autonomous Orchestrate agents then run overnight, comparing what each document says to what your ERP currently enforces, and correcting the gap.
+        watsonx.AI extracts structured pricing data from any customer PO — no templates, no mapping. Four agents run overnight, comparing each document against your ERP and correcting the gap.
       </p>
       <p className="text-xs text-dim font-light mb-12 max-w-lg">Two sources of truth that drift apart. Agents that sync them.</p>
 
@@ -146,7 +146,7 @@ function WhatSection() {
       </div>
 
       <div className="border border-ibm-blue/40 bg-ibm-blue/5 px-6 py-8 text-center">
-        <p className="text-xs text-muted font-light mb-5">See the agents extract, validate, and correct a customer PO in real time.</p>
+        <p className="text-xs text-muted font-light mb-5">Watch the agents handle a real customer PO end-to-end.</p>
         <button
           onClick={() => setShowDemo(true)}
           className="inline-flex items-center gap-3 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-10 py-4 transition-colors text-base"
@@ -265,7 +265,7 @@ function HowSection() {
       </div>
 
       <p className="text-xs text-muted font-light">
-        Supports any ERP or CPQ with a REST or SOAP API. Credentials only — no on-premise work required from your IT team.
+        Any ERP or CPQ with a REST or SOAP API. Credentials only — no on-premise work.
       </p>
     </motion.div>
   );

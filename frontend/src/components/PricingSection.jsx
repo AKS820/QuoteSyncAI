@@ -67,14 +67,14 @@ const TIERS = [
 ];
 
 const FAQS = [
-  { q: 'Our customers send POs in completely different formats. Can the agent handle that?', a: 'Yes — that\'s the core capability. watsonx.AI extracts structured pricing data from any customer PO format without templates or manual field mapping. One of our initial deployments handled 8 distinct formats from a single customer base. You don\'t need to standardize anything on your end.' },
-  { q: 'Does the agent make changes automatically, or does a human approve?', a: 'It depends on the violation type. Tiered pricing discrepancies below your configured threshold are auto-corrected and logged. MOQ violations and anything above your variance threshold are held and routed to the appropriate approver. You set the thresholds — the agent enforces them.' },
-  { q: 'How long does setup take?', a: 'Most of the time is waiting for your IT team to generate API credentials in your ERP — the configuration itself is fast. Once credentials are in, we run a dry-run overnight against a real subset of your POs before anything goes live. We\'ll scope a realistic timeline with you before you commit.' },
-  { q: 'What ERP and CPQ systems do you support?', a: 'SAP, Oracle ERP, Microsoft Dynamics 365, NetSuite, Del Mia Works, Salesforce CPQ, HubSpot, Conga, DealHub, and any platform with a REST or SOAP API. Tell us what you\'re running and we\'ll confirm before you sign anything.' },
-  { q: 'Can we configure the rules the agent enforces?', a: 'Yes. You define price variance thresholds (e.g., auto-correct ≤ 3%, flag for approval > 3%), MOQ routing logic, contract expiry handling, and approval hierarchy. Rules are configured during onboarding and can be updated at any time.' },
-  { q: 'Is there a dry run before the agent goes live?', a: 'Always. The first run is read-only — the agent surfaces every discrepancy it would have corrected, but changes nothing. You review the findings and approve before any ERP writes happen. Nothing goes live until you\'ve seen exactly what it would do.' },
-  { q: 'Is our pricing data secure?', a: 'All data is encrypted in transit (TLS 1.3) and at rest (AES-256). Your pricing data is never used for model training or shared with any third party. Compliance documentation available on request.' },
-  { q: 'Do we need IT involvement?', a: 'Yes, but minimally. Your IT team generates API credentials in your ERP — typically under an hour. No on-premise installation, no firewall exceptions beyond standard API access, no database access required. We\'re available to support your team throughout.' },
+  { q: 'Our customers send POs in completely different formats. Can the agent handle that?', a: 'Yes — that\'s the core of it. watsonx.AI extracts pricing data from any PO format without templates or manual mapping. One initial deployment handled 8 distinct formats from a single customer. No standardization needed on your end.' },
+  { q: 'Does the agent make changes automatically, or does a human approve?', a: 'Depends on the violation. Tiered pricing discrepancies below your threshold are auto-corrected. MOQ violations and anything above the threshold are held and routed for approval. You set the thresholds.' },
+  { q: 'How long does setup take?', a: 'Most of the time is waiting for API credentials to be generated — the configuration is fast. We run a dry-run overnight before anything goes live. We\'ll scope a timeline before you commit.' },
+  { q: 'What ERP and CPQ systems do you support?', a: 'SAP, Oracle ERP, Dynamics 365, NetSuite, Del Mia Works, Salesforce CPQ, HubSpot, Conga, DealHub — and any platform with a REST or SOAP API. Tell us what you\'re running and we\'ll confirm.' },
+  { q: 'Can we configure the rules the agent enforces?', a: 'Yes. You set price variance thresholds, MOQ routing logic, contract expiry handling, and approval hierarchy. Rules are configured during onboarding and can be updated anytime.' },
+  { q: 'Is there a dry run before the agent goes live?', a: 'Always. The first run is read-only — the agent surfaces every discrepancy but changes nothing. You review and approve before any ERP writes happen.' },
+  { q: 'Is our pricing data secure?', a: 'Encrypted in transit (TLS 1.3) and at rest (AES-256). Never used for model training or shared with third parties. Compliance docs available on request.' },
+  { q: 'Do we need IT involvement?', a: 'Yes, but minimal. IT generates API credentials in your ERP — typically under an hour. No on-premise install, no firewall exceptions, no database access. We\'re available throughout.' },
 ];
 
 function FaqItem({ faq }) {
@@ -139,7 +139,7 @@ function PurchaseModal({ tier, onClose }) {
           <div>
             <h3 className="font-semibold text-base">{isEnterprise ? 'Talk to an engineer' : `Get a quote — ${tier.name}`}</h3>
             <p className="text-muted text-sm font-light mt-0.5">
-              We'll reply within 1 business day with a real price scoped to your stack. No discovery call required.
+              Real price scoped to your stack within 1 business day. No discovery call.
             </p>
           </div>
           <button onClick={onClose} className="text-muted hover:text-white transition-colors p-1"><X size={16} /></button>
@@ -152,7 +152,7 @@ function PurchaseModal({ tier, onClose }) {
             </div>
             <h4 className="font-semibold text-base mb-2">Request received!</h4>
             <p className="text-muted text-sm font-light">
-              We'll reach out to {email} within 1 business day to walk through your stack and get you set up.
+              We'll reach out to {email} within 1 business day.
             </p>
           </div>
         ) : (
@@ -182,7 +182,7 @@ function PurchaseModal({ tier, onClose }) {
               {isEnterprise ? 'Talk to an engineer' : 'Start protecting my quotes'}
             </button>
             <p className="text-center text-xs text-muted font-light mt-3">
-              First run is read-only — nothing changes until you approve. Reply within 1 business day.
+              Read-only first. Nothing changes until you approve.
             </p>
           </>
         )}
@@ -218,10 +218,10 @@ export default function PricingSection() {
           <span className="font-light text-white/70">before your shop floor does.</span>
         </h2>
         <p className="text-base font-semibold text-white mb-3">
-          Not a script. Not a batch job someone runs manually. A continuously operating agent that validates every customer PO against your ERP pricing rules — automatically, overnight, every night.
+          Not a script. Not a batch job. An agent that validates every customer PO against your ERP pricing rules — automatically, overnight, every night.
         </p>
         <p className="text-muted font-light max-w-xl mb-4">
-          Prices below are indicative — confirmed after we scope your ERP, PO volume, and rule complexity. Reply within 1 business day. No discovery call required.
+          Prices are indicative — confirmed after we scope your stack. Reply within 1 business day. No discovery call.
         </p>
         <div className="inline-flex items-center gap-2 border border-warning/30 bg-warning/5 px-3 py-2 text-xs text-warning/80 font-light">
           Most manufacturers find their first tiered pricing or MOQ violation within 24 hours of connecting.
@@ -310,7 +310,7 @@ export default function PricingSection() {
       <div className="mt-16 border border-ibm-blue/30 bg-ibm-blue/5 px-8 py-10 text-center">
         <h2 className="text-2xl font-semibold mb-2">Ready to run your first agent?</h2>
         <p className="text-muted font-light mb-6 max-w-md mx-auto text-sm">
-          Connect your ERP. Define your pricing rules. Let the agent catch what your team has been catching manually.
+          Connect your ERP. Define your rules. Let the agent catch what your team catches manually.
         </p>
         <button
           onClick={() => openModal(TIERS[1])}
