@@ -70,13 +70,13 @@ function buildNodes(){
   const a1x=cx-agentSpread*0.375,a2x=cx-agentSpread*0.125,a3x=cx+agentSpread*0.125,a4x=cx+agentSpread*0.375;
 
   nodes={
-    quote:{id:'quote',label:'Customer Quote',sub:'PDF · Email',x:cx,y:tier0Y,r:30,col:'#fbbf24',tCol:'#412402',active:false},
-    orch: {id:'orch', label:'Manager Agent',sub:'watsonx Orchestrate',x:cx,y:tier1Y,r:38,col:'#4f8ef7',tCol:'#042C53',active:false},
-    a1:   {id:'a1',  label:'Agent 01',sub:'Customer ID',x:a1x,y:tier2Y,r:26,col:'#c084fc',tCol:'#26215C',active:false},
-    a2:   {id:'a2',  label:'Agent 02',sub:'Quote Valid.',x:a2x,y:tier2Y,r:26,col:'#c084fc',tCol:'#26215C',active:false},
-    a3:   {id:'a3',  label:'Agent 03',sub:'Pricing',x:a3x,y:tier2Y,r:26,col:'#c084fc',tCol:'#26215C',active:false},
-    a4:   {id:'a4',  label:'Agent 04',sub:'Sales Order',x:a4x,y:tier2Y,r:26,col:'#c084fc',tCol:'#26215C',active:false},
-    erp:  {id:'erp', label:erpName(), sub:'Source of record',x:cx,y:erpY,r:32,col:'#34d399',tCol:'#04342C',active:false},
+    quote:{id:'quote',label:'Customer Quote',sub:'PDF · Email',x:cx,y:tier0Y,r:20,col:'#fbbf24',tCol:'#412402',active:false},
+    orch: {id:'orch', label:'Manager Agent',sub:'watsonx Orchestrate',x:cx,y:tier1Y,r:26,col:'#4f8ef7',tCol:'#042C53',active:false},
+    a1:   {id:'a1',  label:'Agent 01',sub:'Customer ID',x:a1x,y:tier2Y,r:17,col:'#c084fc',tCol:'#26215C',active:false},
+    a2:   {id:'a2',  label:'Agent 02',sub:'Quote Valid.',x:a2x,y:tier2Y,r:17,col:'#c084fc',tCol:'#26215C',active:false},
+    a3:   {id:'a3',  label:'Agent 03',sub:'Pricing',x:a3x,y:tier2Y,r:17,col:'#c084fc',tCol:'#26215C',active:false},
+    a4:   {id:'a4',  label:'Agent 04',sub:'Sales Order',x:a4x,y:tier2Y,r:17,col:'#c084fc',tCol:'#26215C',active:false},
+    erp:  {id:'erp', label:erpName(), sub:'Source of record',x:cx,y:erpY,r:22,col:'#34d399',tCol:'#04342C',active:false},
   };
 }
 

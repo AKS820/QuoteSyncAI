@@ -36,7 +36,10 @@ export default {
         mono: ['"IBM Plex Mono"', 'monospace'],
       },
       fontSize: {
-        '2xs': '10px',
+        '2xs': '11px',
+        xs:   ['13px', { lineHeight: '1.5' }],
+        sm:   ['15px', { lineHeight: '1.6' }],
+        base: ['17px', { lineHeight: '1.7' }],
       },
       letterSpacing: {
         label: '0.1em',

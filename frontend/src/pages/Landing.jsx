@@ -40,8 +40,8 @@ function DemoModal({ onClose }) {
             <div className="w-8 h-8 border border-border flex items-center justify-center mb-4">
               <span className="text-ibm-blue font-bold text-xs">Q</span>
             </div>
-            <p className="text-sm font-medium mb-1">Demo agent not yet configured</p>
-            <p className="text-xs text-muted font-light max-w-xs">Set <code className="text-ibm-blue-light">VITE_ORCHESTRATE_AGENT_URL</code> in your environment to embed the live Orchestrate agent here.</p>
+            <p className="text-sm font-semibold mb-2">Live demo — work in progress</p>
+            <p className="text-xs text-muted font-light max-w-xs">The IBM watsonx Orchestrate agent is currently being configured. Check back soon.</p>
           </div>
         )}
       </motion.div>

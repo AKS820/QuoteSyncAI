@@ -327,12 +327,14 @@ export default function Pricing() {
                 Not a script. Not a batch job. An agent that validates every customer PO against your ERP pricing rules — automatically, overnight, every night.
               </p>
             </div>
-            {/* Right — product visual placeholder */}
-            <div className="hidden md:flex items-center justify-center h-48 border border-dashed border-border/50">
-              <div className="text-center opacity-30">
-                <div className="text-[11px] tracking-label font-medium text-muted uppercase">Product Visual</div>
-                <div className="text-[10px] text-dim font-light mt-1">Coming soon</div>
-              </div>
+            {/* Right — IBM logo */}
+            <div className="hidden md:flex items-center justify-center h-48">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg"
+                alt="IBM"
+                className="w-44 opacity-90"
+                style={{ filter: 'brightness(0) invert(1)' }}
+              />
             </div>
           </div>
         </div>
