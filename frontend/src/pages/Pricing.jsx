@@ -252,11 +252,23 @@ export default function Pricing() {
                   Orchestrate is billed on <span className="text-white">message volume</span> — each document extracted and each agent API call counts as a message.
                 </p>
                 <div className="border border-border px-5 py-5 mb-6">
-                  <div className="font-mono font-bold text-3xl text-ibm-blue-light mb-1">
-                    ~$500<span className="text-sm font-light text-muted">/month</span>
+                  <div className="text-[10px] text-muted font-semibold uppercase tracking-wide mb-3">Essentials Plan</div>
+                  <div className="font-mono font-bold text-3xl text-ibm-blue-light mb-4">
+                    from $530<span className="text-sm font-light text-muted">/month</span>
                   </div>
-                  <div className="text-xs text-white/70 font-medium mb-3">~60,000 messages/month</div>
-                  <div className="text-[11px] text-dim font-light leading-relaxed">
+                  <div className="space-y-2 mb-3">
+                    {[
+                      ['4,000', 'Monthly Active Users'],
+                      ['200,000', 'Messages / month'],
+                      ['10 GB', 'Document storage'],
+                    ].map(([val, label]) => (
+                      <div key={label} className="flex items-center justify-between">
+                        <span className="text-[11px] text-muted font-light">{label}</span>
+                        <span className="text-[11px] font-mono font-semibold text-white">{val}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="text-[11px] text-dim font-light leading-relaxed border-t border-border pt-3">
                     Document extraction and agent API calls both count toward your message total. Higher tiers available — your IBM rep sizes the right package.
                   </div>
                 </div>

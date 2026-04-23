@@ -29,37 +29,28 @@ export default function Hero() {
     <div className="min-h-[90vh] flex flex-col items-center justify-center pt-16 pb-12 px-6 bg-surface-2">
       <div className="w-full max-w-3xl mx-auto text-center">
 
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35 }}
-          className="flex justify-center mb-10"
-        >
-          <div className="inline-flex items-center gap-2 border border-ibm-blue/30 bg-ibm-blue-dim px-3 py-1.5">
-            <ShieldCheck size={11} className="text-ibm-blue shrink-0" />
-            <span className="text-xs tracking-wide text-ibm-blue-light font-medium">IBM watsonx Orchestrate</span>
-          </div>
-        </motion.div>
-
         <motion.h1
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.05 }}
-          className="text-4xl sm:text-5xl lg:text-[2.75rem] leading-[1.08] tracking-tight mb-5"
+          className="text-4xl sm:text-5xl lg:text-[2.75rem] leading-[1.08] tracking-tight mb-6"
         >
-          <span className="font-semibold text-white">Order processing.</span>
+          <span className="font-semibold text-white">Agentic Order Processing.</span>
           <br />
           <span className="font-light text-white/60">No manual work.</span>
         </motion.h1>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, delay: 0.1 }}
-          className="text-base font-light text-white/50 mb-10"
+          className="flex justify-center mb-10"
         >
-          Any format, any ERP — AI agents handle pricing validation, part cross-referencing, and order entry in one coordinated run.
-        </motion.p>
+          <div className="inline-flex items-center gap-2 border border-ibm-blue/30 bg-ibm-blue-dim px-3 py-1.5">
+            <ShieldCheck size={11} className="text-ibm-blue shrink-0" />
+            <span className="text-xs tracking-wide text-ibm-blue-light font-medium">Powered by IBM watsonx Orchestrate</span>
+          </div>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 12 }}

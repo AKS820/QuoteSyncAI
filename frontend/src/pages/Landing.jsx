@@ -100,17 +100,23 @@ function WinStory() {
       transition={{ duration: 0.4 }}
       className="py-16 px-6 max-w-4xl mx-auto"
     >
-      <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">Win Story — Midwest Plastics Manufacturer</div>
-      <h2 className="text-2xl sm:text-3xl font-semibold mb-6 leading-tight">
-        Wisconsin manufacturer. 8 quote formats.<br />
-        <span className="font-light text-white/60">All reconciled overnight.</span>
-      </h2>
+      <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-6">Win Story — Midwest Plastics Manufacturer</div>
 
-      <div className="grid sm:grid-cols-3 gap-0 border border-border mb-10">
+      <blockquote className="mb-10">
+        <p className="text-2xl sm:text-3xl font-semibold text-white leading-tight mb-3">
+          "The ERP wasn't the source of truth.<br />The quote was."
+        </p>
+        <cite className="text-xs text-muted font-light not-italic">— VP of IT, Manufacturing Client</cite>
+      </blockquote>
+
+      <h2 className="text-xl sm:text-2xl font-semibold mb-6 leading-tight">Wisconsin manufacturer.</h2>
+
+      <div className="grid sm:grid-cols-4 gap-0 border border-border mb-10">
         {[
-          { n: '3,000+', label: 'active quotes in flight at any time', sub: 'Across all open customer POs' },
-          { n: '20/day', label: 'pricing rule updates hitting the ERP', sub: 'Each one a potential mismatch with open quotes' },
-          { n: '10 staff', label: 'touching manual validation daily', sub: 'Max 3 concurrent — a hard throughput ceiling' },
+          { n: '3,000+', label: 'active quotes in flight', sub: 'Across all open customer POs' },
+          { n: '8', label: 'distinct customer PO formats', sub: 'Each requiring different extraction logic' },
+          { n: '20/day', label: 'ERP pricing rule updates', sub: 'Each one a potential mismatch with open quotes' },
+          { n: '10 staff', label: 'on manual validation daily', sub: 'Max 3 concurrent — a hard throughput ceiling' },
         ].map((s, i) => (
           <div key={i} className="px-5 py-5 border-r border-border last:border-r-0">
             <div className="font-mono font-bold text-xl text-ibm-blue-light mb-1">{s.n}</div>
@@ -120,8 +126,9 @@ function WinStory() {
         ))}
       </div>
 
-      <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-3">What they built with IBM watsonx Orchestrate</div>
-      <div className="border border-border mb-10">
+      <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-2">What they built with IBM watsonx Orchestrate</div>
+      <p className="text-xs text-muted font-light mb-4 max-w-xl">Orchestrate Flow handles document extraction from any PO format — no templates, no mapping. Four agents are then configured against your ERP constraints and run automatically.</p>
+      <div className="border border-border mb-4">
         {[
           { n: 1, name: 'Customer Agent', desc: 'Identifies the customer and matches against ERP master data.' },
           { n: 2, name: 'Pricing Agent', desc: 'Compares quoted prices to tiered rules in the ERP. Surfaces every discrepancy.' },
@@ -138,12 +145,18 @@ function WinStory() {
         ))}
       </div>
 
-      <blockquote className="border-l-2 border-ibm-blue pl-6 mb-10">
-        <p className="text-xl sm:text-2xl font-light text-white/80 leading-relaxed mb-3">
-          "The ERP wasn't the source of truth. The quote was."
-        </p>
-        <cite className="text-xs text-muted font-light not-italic">VP of IT, Manufacturing Client</cite>
-      </blockquote>
+      <div className="grid sm:grid-cols-2 gap-0 border border-border mb-10">
+        <div className="px-5 py-5 border-r border-border">
+          <div className="text-[10px] text-success font-semibold uppercase tracking-wide mb-2">Autonomous</div>
+          <div className="text-sm font-medium mb-1">Runs overnight — no supervision needed</div>
+          <div className="text-xs text-muted font-light">Corrections applied automatically. Full audit trail emailed to leadership after each run.</div>
+        </div>
+        <div className="px-5 py-5">
+          <div className="text-[10px] text-ibm-blue-light font-semibold uppercase tracking-wide mb-2">Human-in-the-loop</div>
+          <div className="text-sm font-medium mb-1">Approval gates at every exception</div>
+          <div className="text-xs text-muted font-light">MOQ violations and threshold breaches are held for human review. Approve or override at each step.</div>
+        </div>
+      </div>
 
       <div className="border border-border mb-8">
         <div className="grid sm:grid-cols-2 divide-x divide-border">
