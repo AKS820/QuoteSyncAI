@@ -49,20 +49,22 @@ export default function Hero() {
           className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12"
         >
           <a
-            href="#why"
-            onClick={() => trackEvent('cta_click', { cta: 'see_how', stage: 0 })}
+            href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/products/watsonx-orchestrate/pricing'}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackEvent('cta_click', { cta: 'start_trial', stage: 0 })}
             className="flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-7 py-3.5 transition-colors text-sm"
           >
-            See how it works
+            Start free trial
             <ChevronRight size={16} />
           </a>
-          <Link
-            to="/pricing"
-            onClick={() => trackEvent('cta_click', { cta: 'see_pricing', stage: 0 })}
+          <a
+            href="#why"
+            onClick={() => trackEvent('cta_click', { cta: 'see_how', stage: 0 })}
             className="text-sm text-muted hover:text-white font-light transition-colors px-4 py-3.5"
           >
-            See pricing →
-          </Link>
+            See how it works →
+          </a>
         </motion.div>
 
         <motion.div

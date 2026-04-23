@@ -271,14 +271,25 @@ export default function Landing() {
       </section>
 
       <div className="border-t border-border py-16 px-6 text-center">
-        <p className="text-sm text-muted font-light mb-5">See plans, setup steps, and what it costs.</p>
-        <Link
-          to="/pricing"
-          className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-7 py-3.5 transition-colors text-sm"
-        >
-          View pricing
-          <ChevronRight size={14} />
-        </Link>
+        <p className="text-sm text-muted font-light mb-2">Ready to try it on your own POs?</p>
+        <p className="text-xs text-dim font-light mb-7">Start free on IBM's site — or see the pricing breakdown first.</p>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/products/watsonx-orchestrate/pricing'}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-7 py-3.5 transition-colors text-sm"
+          >
+            Start free trial
+            <ChevronRight size={14} />
+          </a>
+          <Link
+            to="/pricing"
+            className="text-sm text-muted hover:text-white font-light transition-colors px-4 py-3.5"
+          >
+            View pricing →
+          </Link>
+        </div>
       </div>
 
       <div className="border-t border-border">

@@ -34,7 +34,7 @@ export default function ProgressIndicator({ currentStage, visitedStages, labels 
         <div className="h-4 w-px bg-border shrink-0 mx-2" />
 
         {/* Scroll stage dots */}
-        <div className="hidden md:flex items-center">
+        <div className="hidden md:flex items-center flex-1">
           {labels.map((label, i) => {
             const isActive = currentStage === i;
             const isVisited = visitedStages.has(i) && i < currentStage;
@@ -56,6 +56,16 @@ export default function ProgressIndicator({ currentStage, visitedStages, labels 
             );
           })}
         </div>
+
+        {/* Trial CTA */}
+        <a
+          href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/products/watsonx-orchestrate/pricing'}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden sm:flex items-center gap-1.5 bg-ibm-blue hover:bg-ibm-blue-hover text-white text-xs font-semibold px-3 py-1.5 transition-colors shrink-0"
+        >
+          Start free trial
+        </a>
 
       </div>
     </nav>
