@@ -78,25 +78,9 @@ function WhySection() {
         The documents are unstructured.
         <br /><span className="font-light text-white/60">The ERP rules are not.</span>
       </h2>
-      <p className="text-sm text-muted font-light mb-12 max-w-lg">
+      <p className="text-sm text-muted font-light max-w-lg">
         Most manufacturers have strong ERP systems — but customer POs arrive in any format, and validating them manually against ERP pricing rules is where time gets lost and billing errors are born.
       </p>
-
-      <div className="border border-border">
-        <div className="grid sm:grid-cols-3 divide-x divide-border">
-          {[
-            { n: '3–8%', label: 'of customer POs have pricing rule violations', sub: 'Observed across initial manufacturing deployments' },
-            { n: '30 days', label: 'avg time to discover an ERP/quote mismatch', sub: 'Typical billing cycle before errors surface in reconciliation' },
-            { n: '$120K+', label: 'annual ops labor cost', sub: '10 staff touching manual validation, cross-referencing daily' },
-          ].map((s, i) => (
-            <div key={i} className="px-6 py-6">
-              <div className="font-mono font-bold text-2xl text-ibm-blue-light mb-1">{s.n}</div>
-              <div className="text-xs font-medium text-white/80">{s.label}</div>
-              <div className="text-[10px] text-dim font-light mt-0.5">{s.sub}</div>
-            </div>
-          ))}
-        </div>
-      </div>
     </motion.div>
   );
 }
