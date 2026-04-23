@@ -18,7 +18,7 @@ export default function Hero() {
         >
           <div className="inline-flex items-center gap-2 border border-ibm-blue/30 bg-ibm-blue-dim px-3 py-1.5">
             <ShieldCheck size={11} className="text-ibm-blue shrink-0" />
-            <span className="text-xs tracking-wide text-ibm-blue-light font-medium">Built using IBM watsonx</span>
+            <span className="text-xs tracking-wide text-ibm-blue-light font-medium">IBM watsonx Orchestrate</span>
           </div>
         </motion.div>
 
@@ -28,9 +28,9 @@ export default function Hero() {
           transition={{ duration: 0.45, delay: 0.05 }}
           className="text-4xl sm:text-5xl lg:text-[3.5rem] leading-[1.08] tracking-tight mb-5"
         >
-          <span className="font-semibold text-white">Every quote has a pricing rule.</span>
+          <span className="font-semibold text-white">Got unstructured documents?</span>
           <br />
-          <span className="font-light text-white/60">Most have a violation.</span>
+          <span className="font-light text-white/60">Orchestrate has agents for that.</span>
         </motion.h1>
 
         <motion.p
@@ -39,7 +39,7 @@ export default function Hero() {
           transition={{ duration: 0.35, delay: 0.1 }}
           className="text-base font-light text-white/50 mb-10"
         >
-          Your ERP and your quotes drift apart every day. That's where revenue gets lost — and where we fix it.
+          Extract, validate, and reconcile across any system — ERP, CPQ, or otherwise. Overnight, automatically, without templates.
         </motion.p>
 
         <motion.div

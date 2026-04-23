@@ -12,7 +12,7 @@ const SETUP_STEPS = [
 ];
 
 const FAQS = [
-  { q: 'Our customers send POs in completely different formats. Can the agent handle that?', a: 'Yes — that\'s the core of it. watsonx.AI extracts pricing data from any PO format without templates or manual mapping. One initial deployment handled 8 distinct formats from a single customer. No standardization needed on your end.' },
+  { q: 'Our customers send POs in completely different formats. Can the agent handle that?', a: 'Yes — that\'s the core of it. Document extraction runs within Orchestrate Flow, pulling structured pricing data from any PO format without templates or manual mapping. One deployment handled 8 distinct formats from a single customer. No standardization needed on your end.' },
   { q: 'Does the agent make changes automatically, or does a human approve?', a: 'Depends on the violation. Tiered pricing discrepancies below your threshold are auto-corrected. MOQ violations and anything above the threshold are held and routed for approval. You set the thresholds.' },
   { q: 'How long does setup take?', a: 'Most of the time is waiting for API credentials to be generated — the configuration itself is fast. A dry-run runs overnight before anything goes live. Your IBM rep will scope a timeline before anything is committed.' },
   { q: 'What ERP and CPQ systems do you support?', a: 'SAP, Oracle ERP, Dynamics 365, NetSuite, Del Mia Works, Salesforce CPQ, HubSpot, Conga, DealHub — and any platform with a REST or SOAP API. Tell us what you\'re running and we\'ll confirm.' },
@@ -149,13 +149,13 @@ export default function Pricing() {
               </div>
               <h1 className="text-5xl sm:text-6xl font-light text-white mb-6 leading-none tracking-tight">Pricing</h1>
               <p className="text-base text-muted font-light max-w-sm leading-relaxed">
-                This solution is built on IBM watsonx Orchestrate and IBM watsonx.ai. Licensing is handled directly through IBM — your rep coordinates everything.
+                This solution runs on IBM watsonx Orchestrate — document extraction, agent orchestration, and ERP connectivity in one platform. Licensing is handled directly through IBM.
               </p>
             </div>
             {/* Right — attribution */}
             <div className="hidden md:flex flex-col items-end justify-center h-48 gap-2">
               <div className="text-[10px] tracking-label text-muted uppercase font-semibold">Built using</div>
-              <div className="text-2xl font-light text-white/70 tracking-tight">IBM watsonx</div>
+              <div className="text-2xl font-light text-white/70 tracking-tight">IBM watsonx Orchestrate</div>
               <div className="text-[11px] text-dim font-light text-right max-w-[220px] leading-relaxed">
                 Custom demo by an IBM representative.<br />Not an official IBM product.
               </div>
@@ -166,51 +166,83 @@ export default function Pricing() {
         {/* ── IBM products ──────────────────────────────────────────────────── */}
         <div className="max-w-7xl mx-auto px-6 py-20">
           <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">The platform</div>
-          <h2 className="text-3xl font-light text-white mb-3">Built on IBM watsonx</h2>
+          <h2 className="text-3xl font-light text-white mb-3">IBM watsonx Orchestrate</h2>
           <p className="text-muted font-light text-sm mb-12 max-w-lg">
-            Two IBM products power this solution. Licensing goes through IBM — your rep handles everything. Implementation is coordinated through IBM's partner network.
+            One platform. Document extraction, multi-agent orchestration, and ERP connectivity — all within Orchestrate. Licensing through IBM; your rep scopes the right tier for your PO volume.
           </p>
 
-          <div className="grid md:grid-cols-2 gap-0 border border-border mb-6">
-            {/* Orchestrate */}
-            <div className="flex flex-col border-r border-border">
-              <div className="h-1 bg-ibm-blue w-full" />
-              <div className="px-8 py-8 flex flex-col flex-1">
-                <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-3">IBM watsonx Orchestrate</div>
-                <h3 className="text-xl font-medium text-white mb-3">The agent layer</h3>
-                <p className="text-sm text-muted font-light leading-relaxed mb-8 flex-1">
-                  Orchestrates the four agents — Customer, Pricing, Inventory, Sales Order. Handles approval routing, audit trails, and the step-through interactive mode your director uses.
-                </p>
+          {/* Main product card */}
+          <div className="border border-border mb-6">
+            <div className="h-1 bg-ibm-blue w-full" />
+            <div className="grid md:grid-cols-2 gap-0">
+              <div className="px-8 py-8 border-r border-border">
+                <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-3">What it does</div>
+                <ul className="space-y-3 mb-8">
+                  {[
+                    'Extracts structured data from any PO format — via Orchestrate Flow, no separate AI platform',
+                    'Connects agents to your ERP (SAP, Oracle, Dynamics, Del Mia Works, and more)',
+                    'Runs four validation agents overnight: Customer, Pricing, Inventory, Sales Order',
+                    'Auto-corrects tiered pricing discrepancies; routes MOQ violations for approval',
+                    'Full audit trail emailed to executives after each run',
+                  ].map((f, i) => (
+                    <li key={i} className="flex items-start gap-2.5">
+                      <Check size={12} className="text-ibm-blue-light shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted font-light leading-snug">{f}</span>
+                    </li>
+                  ))}
+                </ul>
                 <a
                   href="https://www.ibm.com/products/watsonx-orchestrate/pricing"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackEvent('cta_click', { cta: 'orchestrate_pricing' })}
-                  className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-5 py-3 transition-colors text-sm w-fit"
+                  className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-5 py-3 transition-colors text-sm"
                 >
                   View Orchestrate pricing
                   <ChevronRight size={14} />
                 </a>
               </div>
-            </div>
-
-            {/* watsonx.ai */}
-            <div className="flex flex-col">
-              <div className="h-1 w-full" />
-              <div className="px-8 py-8 flex flex-col flex-1">
-                <div className="text-[10px] tracking-label text-muted font-semibold uppercase mb-3">IBM watsonx.ai</div>
-                <h3 className="text-xl font-medium text-white mb-3">The intelligence layer</h3>
-                <p className="text-sm text-muted font-light leading-relaxed mb-8 flex-1">
-                  Extracts structured pricing data from any customer PO format — no templates, no manual mapping. Powers the accuracy of the Customer and Pricing agents across all 8 quote formats.
+              <div className="px-8 py-8">
+                <div className="text-[10px] tracking-label text-muted font-semibold uppercase mb-3">How it's priced</div>
+                <p className="text-sm text-muted font-light leading-relaxed mb-6">
+                  Orchestrate is billed on <span className="text-white">message volume</span> — each document extracted and each agent API call counts as a message. Entry-level plans cover roughly 60,000 messages per month.
                 </p>
+                <div className="border border-border px-5 py-4 mb-6">
+                  <div className="font-mono font-bold text-2xl text-ibm-blue-light mb-0.5">~$500<span className="text-sm font-light text-muted">/mo</span></div>
+                  <div className="text-xs text-muted font-light">Starting reference — ~60K messages/month</div>
+                  <div className="text-[10px] text-dim font-light mt-2 leading-relaxed">Documents extracted + agent API calls both count toward your message total. Your IBM rep will scope the right tier based on your monthly PO volume and ERP call patterns.</div>
+                </div>
+                <button
+                  onClick={() => { setOutreachModal('Talk through the right tier'); trackEvent('cta_click', { cta: 'scope_tier' }); }}
+                  className="inline-flex items-center gap-2 border border-ibm-blue text-ibm-blue-light hover:bg-ibm-blue/10 font-semibold px-5 py-3 transition-colors text-sm"
+                >
+                  Talk through the right tier
+                  <ChevronRight size={14} />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* watsonx.data add-on */}
+          <div className="border border-border flex items-stretch mb-6">
+            <div className="w-1 bg-border shrink-0" />
+            <div className="px-6 py-5 flex-1">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="text-[10px] tracking-label text-muted font-semibold uppercase mb-1">Optional add-on — IBM watsonx.data</div>
+                  <div className="text-sm font-medium text-white mb-1">No place to store unstructured documents?</div>
+                  <p className="text-sm text-muted font-light leading-relaxed max-w-xl">
+                    If your team doesn't have existing infrastructure for storing POs and contracts, watsonx.data handles it. Agents query documents directly from there — no separate file management needed.
+                  </p>
+                </div>
                 <a
-                  href="https://www.ibm.com/products/watsonx-ai"
+                  href="https://www.ibm.com/products/watsonx-data"
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => trackEvent('cta_click', { cta: 'watsonxai_page' })}
-                  className="inline-flex items-center gap-2 border border-border hover:border-border-bright text-white font-semibold px-5 py-3 transition-colors text-sm w-fit"
+                  onClick={() => trackEvent('cta_click', { cta: 'watsonxdata_page' })}
+                  className="inline-flex items-center gap-2 border border-border hover:border-border-bright text-white font-semibold px-4 py-2.5 transition-colors text-sm shrink-0"
                 >
-                  View watsonx.ai
+                  Learn more
                   <ChevronRight size={14} />
                 </a>
               </div>
@@ -223,7 +255,7 @@ export default function Pricing() {
             <div className="px-6 py-5">
               <div className="text-sm font-medium text-white mb-1">Implementation</div>
               <p className="text-sm text-muted font-light leading-relaxed max-w-2xl">
-                Handled through IBM's partner network. Your IBM rep coordinates the setup — typically ERP API credentials plus a configuration session to define your pricing rules, MOQ thresholds, and approval hierarchy.
+                Handled through IBM's partner network. Your IBM rep coordinates setup — typically ERP API credentials plus a configuration session to define pricing rules, MOQ thresholds, and approval hierarchy.
               </p>
             </div>
           </div>
@@ -233,7 +265,7 @@ export default function Pricing() {
         <div className="border-t border-border">
           <div className="max-w-7xl mx-auto px-6 py-6">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {['IBM watsonx Orchestrate + watsonx.ai', 'SAP · Oracle · Dynamics · Del Mia Works', 'Licensed directly through IBM', 'Implementation via partner network'].map((t, i) => (
+              {['IBM watsonx Orchestrate', 'SAP · Oracle · Dynamics · Del Mia Works', 'Licensed directly through IBM', 'Implementation via partner network'].map((t, i) => (
                 <div key={i} className="flex items-center gap-2">
                   <Check size={10} className="text-success shrink-0" />
                   <span className="text-[11px] text-muted font-light">{t}</span>

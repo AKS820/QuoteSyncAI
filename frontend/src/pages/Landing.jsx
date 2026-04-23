@@ -64,11 +64,11 @@ function WhySection() {
       className="py-16 px-6 max-w-4xl mx-auto"
     >
       <h2 className="text-3xl sm:text-4xl font-semibold mb-3 leading-tight">
-        The ERP is not the source of truth.
-        <br /><span className="font-light text-white/60">The quote is.</span>
+        The documents are unstructured.
+        <br /><span className="font-light text-white/60">The ERP rules are not.</span>
       </h2>
       <p className="text-sm text-muted font-light mb-12 max-w-lg">
-        Most manufacturers have strong ERP systems — but pricing and order entry still require manual validation, cross-referencing, and coordination. That's where time gets lost, and where billing errors are born.
+        Most manufacturers have strong ERP systems — but customer POs arrive in any format, and validating them manually against ERP pricing rules is where time gets lost and billing errors are born.
       </p>
 
       <div className="border border-border">
@@ -107,12 +107,12 @@ function WhatSection() {
     >
       <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">How it works</div>
       <h2 className="text-3xl sm:text-4xl font-semibold mb-3 leading-tight">
-        Every quote is a validation event.
+        Orchestrate agents connect to any system.
       </h2>
       <p className="text-sm text-muted font-light mb-3 max-w-lg">
-        watsonx.AI extracts structured pricing data from any customer PO — no templates, no mapping. Four agents run overnight, comparing each document against your ERP and correcting the gap.
+        Unstructured customer POs go in. Orchestrate Flow extracts the structured data — no templates, no mapping. Four agents then run overnight, each connecting to your ERP and correcting the gap.
       </p>
-      <p className="text-xs text-dim font-light mb-12 max-w-lg">Two sources of truth that drift apart. Agents that sync them.</p>
+      <p className="text-xs text-dim font-light mb-12 max-w-lg">Document extraction built into Orchestrate. No separate AI platform needed.</p>
 
       <div className="border border-border mb-8">
         {[
