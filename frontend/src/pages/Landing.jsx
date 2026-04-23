@@ -110,7 +110,7 @@ function WhatSection() {
 
       <div className="border border-border mb-8">
         {[
-          { n: 1, name: 'Customer Agent', desc: 'Identifies the customer, matches against ERP master (98%+ accuracy).' },
+          { n: 1, name: 'Customer Agent', desc: 'Identifies the customer and matches against ERP master data.' },
           { n: 2, name: 'Pricing Agent', desc: 'Compares quoted prices to tiered rules in the ERP. Surfaces every discrepancy.' },
           { n: 3, name: 'Inventory Agent', desc: 'Validates quantities against minimum order quantity (MOQ) constraints.' },
           { n: 4, name: 'Sales Order Agent', desc: 'Auto-corrects tiered pricing. Holds MOQ violations and routes for approval.' },
@@ -256,11 +256,11 @@ export default function Landing() {
       </section>
 
       <div className="border-t border-border py-16 px-6 text-center">
-        <p className="text-sm text-muted font-light mb-2">Ready to try it on your own POs?</p>
-        <p className="text-xs text-dim font-light mb-7">Start free on IBM's site — or see the pricing breakdown first.</p>
+        <p className="text-sm text-muted font-light mb-2">Start on IBM, get help with setup.</p>
+        <p className="text-xs text-dim font-light mb-7">Start a free trial directly on IBM's site. Implementation help is available if you need it.</p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <a
-            href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/products/watsonx-orchestrate/pricing'}
+            href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753'}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-7 py-3.5 transition-colors text-sm"
@@ -268,12 +268,12 @@ export default function Landing() {
             Start free trial
             <ChevronRight size={14} />
           </a>
-          <Link
-            to="/pricing"
+          <a
+            href={`mailto:${import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com'}?subject=Implementation help — Price List & Order Entry Agent`}
             className="text-sm text-muted hover:text-white font-light transition-colors px-4 py-3.5"
           >
-            View pricing →
-          </Link>
+            Get implementation help →
+          </a>
         </div>
       </div>
 

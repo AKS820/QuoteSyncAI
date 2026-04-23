@@ -43,12 +43,11 @@ router.post('/', async (req, res) => {
 
     const lastUserMessage = messages.filter(m => m.role === 'user').slice(-1)[0];
     if (lastUserMessage?.content) {
-      const sanitized = lastUserMessage.content.replace(/[\w.+-]+@[\w-]+\.[\w.]+/g, '[email]');
       await prisma.event.create({
         data: {
           user_id: user_id || null,
           event_type: 'agent_question',
-          metadata: { question: sanitized.slice(0, 200) }
+          metadata: {}
         }
       }).catch(() => {});
     }

@@ -28,9 +28,9 @@ export default function Hero() {
           transition={{ duration: 0.45, delay: 0.05 }}
           className="text-4xl sm:text-5xl lg:text-[3.5rem] leading-[1.08] tracking-tight mb-5"
         >
-          <span className="font-semibold text-white">Your ERP has pricing rules.</span>
+          <span className="font-semibold text-white">How many steps does it take</span>
           <br />
-          <span className="font-light text-white/60">Your customers ignore them.</span>
+          <span className="font-light text-white/60">to process an order?</span>
         </motion.h1>
 
         <motion.p
@@ -39,7 +39,7 @@ export default function Hero() {
           transition={{ duration: 0.35, delay: 0.1 }}
           className="text-base font-light text-white/50 mb-10"
         >
-          Extract, validate, and reconcile across any system — ERP, CPQ, or otherwise. Overnight, automatically, without templates.
+          Pricing lookups. ERP validation. Part number cross-referencing. Manual corrections. AI agents handle the entire flow — from order intake to ERP-ready in one coordinated run.
         </motion.p>
 
         <motion.div
@@ -49,7 +49,7 @@ export default function Hero() {
           className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12"
         >
           <a
-            href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/products/watsonx-orchestrate/pricing'}
+            href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753'}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackEvent('cta_click', { cta: 'start_trial', stage: 0 })}
@@ -59,11 +59,11 @@ export default function Hero() {
             <ChevronRight size={16} />
           </a>
           <a
-            href="#why"
-            onClick={() => trackEvent('cta_click', { cta: 'see_how', stage: 0 })}
+            href={`mailto:${import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com'}?subject=Implementation help — Price List & Order Entry Agent`}
+            onClick={() => trackEvent('cta_click', { cta: 'implementation_help', stage: 0 })}
             className="text-sm text-muted hover:text-white font-light transition-colors px-4 py-3.5"
           >
-            See how it works →
+            Get implementation help →
           </a>
         </motion.div>
 

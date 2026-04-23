@@ -6,9 +6,9 @@ import { useEventTracking } from '../hooks/useEventTracking.js';
 
 
 const SETUP_STEPS = [
-  { n: '01', time: 'Minutes', title: 'Start your free trial', desc: 'Sign up for IBM watsonx Orchestrate. No credit card required to explore. Your IBM rep activates your environment.' },
+  { n: '01', time: 'Minutes', title: 'Start your free trial', desc: 'Sign up for IBM watsonx Orchestrate directly on IBM\'s site. No credit card required to get started.' },
   { n: '02', time: '~30 min', title: 'Connect your ERP', desc: 'Have IT generate API credentials in your ERP — typically under an hour. No on-premise install, no firewall exceptions, no database access.' },
-  { n: '03', time: 'Overnight', title: 'Agents run, gaps surface', desc: 'Define your pricing thresholds and MOQ rules. The first run is read-only — every discrepancy surfaces before anything changes.' },
+  { n: '03', time: 'Overnight', title: 'Agents run, gaps surface', desc: 'Configure your pricing rules and MOQ thresholds, or let our implementation partner handle it. First run is read-only — every discrepancy surfaces before anything changes.' },
 ];
 
 const FAQS = [
@@ -54,6 +54,7 @@ function FaqItem({ faq }) {
 
 function OutreachModal({ title, onClose }) {
   const calendlyUrl = import.meta.env.VITE_CALENDLY_URL;
+  const contactEmail = import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com';
   const { trackEvent } = useEventTracking();
 
   return (
@@ -76,8 +77,8 @@ function OutreachModal({ title, onClose }) {
           Happy to show you what the agent actually catches — no forms, no commitment. Just a live walkthrough of the concept.
         </p>
         <a
-          href={calendlyUrl || 'mailto:abhi.surampudi@gmail.com'}
-          target={calendlyUrl ? '_blank' : undefined}
+          href={calendlyUrl || `mailto:${contactEmail}`}
+          target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackEvent('cta_click', { cta: 'book_meeting' })}
           className="w-full flex items-center justify-between px-4 py-3 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold text-sm transition-colors"
@@ -127,14 +128,15 @@ export default function Pricing() {
           <div className="flex-1" />
 
           <div className="hidden sm:flex items-center gap-2">
-            <button
-              onClick={() => { setOutreachModal('See it live — 15 min'); trackEvent('cta_click', { cta: 'nav_meeting' }); }}
+            <a
+              href={`mailto:${import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com'}?subject=Implementation help — Price List & Order Entry Agent`}
+              onClick={() => trackEvent('cta_click', { cta: 'nav_impl' })}
               className="text-xs text-muted hover:text-white font-light transition-colors px-3 py-1.5"
             >
-              Talk to a rep
-            </button>
+              Get implementation help
+            </a>
             <a
-              href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/products/watsonx-orchestrate/pricing'}
+              href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753'}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackEvent('cta_click', { cta: 'nav_trial' })}
@@ -160,13 +162,13 @@ export default function Pricing() {
               </div>
               <h1 className="text-5xl sm:text-6xl font-light text-white mb-6 leading-none tracking-tight">Pricing</h1>
               <p className="text-base text-muted font-light max-w-sm leading-relaxed">
-                This solution runs on IBM watsonx Orchestrate — document extraction, agent orchestration, and ERP connectivity in one platform. Licensing is handled directly through IBM.
+                Runs on IBM watsonx Orchestrate. Start a free trial directly on IBM's site — implementation help is available through our partner network if you need it.
               </p>
             </div>
             {/* Right — attribution */}
             <div className="hidden md:flex flex-col items-end justify-center h-48 gap-2">
               <div className="text-[10px] tracking-label text-muted uppercase font-semibold">Built using</div>
-              <div className="text-2xl font-light text-white/70 tracking-tight">IBM watsonx Orchestrate</div>
+              <div className="text-2xl font-light text-white/70 tracking-tight">IBM watsonx</div>
               <div className="text-[11px] text-dim font-light text-right max-w-[220px] leading-relaxed">
                 Custom demo by an IBM representative.<br />Not an official IBM product.
               </div>
@@ -174,24 +176,25 @@ export default function Pricing() {
           </div>
         </div>
 
-        {/* ── IBM products ──────────────────────────────────────────────────── */}
+        {/* ── IBM product ───────────────────────────────────────────────────── */}
         <div className="max-w-7xl mx-auto px-6 py-20">
           <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">The platform</div>
           <h2 className="text-3xl font-light text-white mb-3">IBM watsonx Orchestrate</h2>
           <p className="text-muted font-light text-sm mb-12 max-w-lg">
-            One platform. Document extraction, multi-agent orchestration, and ERP connectivity — all within Orchestrate. Licensing through IBM; your rep scopes the right tier for your PO volume.
+            One platform. Document extraction, multi-agent orchestration, and ERP connectivity — all within Orchestrate. Start a free trial on IBM's site, then get implementation help from our partner network.
           </p>
 
-          {/* Main product card */}
           <div className="border border-border mb-6">
             <div className="h-1 bg-ibm-blue w-full" />
             <div className="grid md:grid-cols-2 gap-0">
+
+              {/* What it does */}
               <div className="px-8 py-8 border-r border-border">
-                <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-3">What it does</div>
+                <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">What it does</div>
                 <ul className="space-y-3 mb-8">
                   {[
-                    'Extracts structured data from any PO format — via Orchestrate Flow, no separate AI platform',
-                    'Connects agents to your ERP (SAP, Oracle, Dynamics, Del Mia Works, and more)',
+                    'Extracts structured data from any PO format via Orchestrate Flow — no templates, no manual mapping',
+                    'Connects agents directly to your ERP (SAP, Oracle, Dynamics, Del Mia Works, and more)',
                     'Runs four validation agents overnight: Customer, Pricing, Inventory, Sales Order',
                     'Auto-corrects tiered pricing discrepancies; routes MOQ violations for approval',
                     'Full audit trail emailed to executives after each run',
@@ -204,44 +207,50 @@ export default function Pricing() {
                 </ul>
                 <div className="flex flex-wrap gap-3">
                   <a
-                    href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/products/watsonx-orchestrate/pricing'}
+                    href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753'}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => trackEvent('cta_click', { cta: 'start_trial_pricing' })}
+                    onClick={() => trackEvent('cta_click', { cta: 'start_trial_card' })}
                     className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-5 py-3 transition-colors text-sm"
                   >
                     Start free trial
                     <ChevronRight size={14} />
                   </a>
                   <a
-                    href="https://www.ibm.com/products/watsonx-orchestrate/pricing"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => trackEvent('cta_click', { cta: 'orchestrate_pricing' })}
+                    href={`mailto:${import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com'}?subject=Implementation help — Price List & Order Entry Agent`}
+                    onClick={() => trackEvent('cta_click', { cta: 'impl_help_card' })}
                     className="inline-flex items-center gap-2 border border-border hover:border-border-bright text-white font-semibold px-5 py-3 transition-colors text-sm"
                   >
-                    View pricing
+                    Get implementation help
                     <ChevronRight size={14} />
                   </a>
                 </div>
               </div>
+
+              {/* Pricing */}
               <div className="px-8 py-8">
-                <div className="text-[10px] tracking-label text-muted font-semibold uppercase mb-3">How it's priced</div>
+                <div className="text-[10px] tracking-label text-muted font-semibold uppercase mb-4">How it's priced</div>
                 <p className="text-sm text-muted font-light leading-relaxed mb-6">
-                  Orchestrate is billed on <span className="text-white">message volume</span> — each document extracted and each agent API call counts as a message. Entry-level plans cover roughly 60,000 messages per month.
+                  Orchestrate is billed on <span className="text-white">message volume</span> — each document extracted and each agent API call counts as a message.
                 </p>
-                <div className="border border-border px-5 py-4 mb-6">
-                  <div className="font-mono font-bold text-2xl text-ibm-blue-light mb-0.5">~$500<span className="text-sm font-light text-muted">/mo</span></div>
-                  <div className="text-xs text-muted font-light">Starting reference — ~60K messages/month</div>
-                  <div className="text-[10px] text-dim font-light mt-2 leading-relaxed">Documents extracted + agent API calls both count toward your message total. Your IBM rep will scope the right tier based on your monthly PO volume and ERP call patterns.</div>
+                <div className="border border-border px-5 py-5 mb-6">
+                  <div className="font-mono font-bold text-3xl text-ibm-blue-light mb-1">
+                    ~$500<span className="text-sm font-light text-muted">/month</span>
+                  </div>
+                  <div className="text-xs text-white/70 font-medium mb-3">~60,000 messages/month</div>
+                  <div className="text-[11px] text-dim font-light leading-relaxed">
+                    Documents extracted + agent API calls both count toward your message total. Need more volume? Higher tiers are available — your IBM rep sizes the right package.
+                  </div>
                 </div>
-                <button
-                  onClick={() => { setOutreachModal('Talk through the right tier'); trackEvent('cta_click', { cta: 'scope_tier' }); }}
-                  className="inline-flex items-center gap-2 border border-ibm-blue text-ibm-blue-light hover:bg-ibm-blue/10 font-semibold px-5 py-3 transition-colors text-sm"
+                <a
+                  href="https://www.ibm.com/products/watsonx-orchestrate/pricing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent('cta_click', { cta: 'orchestrate_pricing' })}
+                  className="inline-flex items-center gap-2 text-ibm-blue-light hover:text-white text-xs font-semibold transition-colors"
                 >
-                  Talk through the right tier
-                  <ChevronRight size={14} />
-                </button>
+                  View full Orchestrate pricing <ChevronRight size={12} />
+                </a>
               </div>
             </div>
           </div>
@@ -253,9 +262,9 @@ export default function Pricing() {
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <div className="text-[10px] tracking-label text-muted font-semibold uppercase mb-1">Optional add-on — IBM watsonx.data</div>
-                  <div className="text-sm font-medium text-white mb-1">No place to store unstructured documents?</div>
+                  <div className="text-sm font-medium text-white mb-1">No existing document storage?</div>
                   <p className="text-sm text-muted font-light leading-relaxed max-w-xl">
-                    If your team doesn't have existing infrastructure for storing POs and contracts, watsonx.data handles it. Agents query documents directly from there — no separate file management needed.
+                    If your team doesn't have infrastructure for storing POs and contracts, watsonx.data handles it. Agents query documents directly — no separate file management needed.
                   </p>
                 </div>
                 <a
@@ -265,8 +274,7 @@ export default function Pricing() {
                   onClick={() => trackEvent('cta_click', { cta: 'watsonxdata_page' })}
                   className="inline-flex items-center gap-2 border border-border hover:border-border-bright text-white font-semibold px-4 py-2.5 transition-colors text-sm shrink-0"
                 >
-                  Learn more
-                  <ChevronRight size={14} />
+                  Learn more <ChevronRight size={14} />
                 </a>
               </div>
             </div>
@@ -276,9 +284,9 @@ export default function Pricing() {
           <div className="border border-border flex items-stretch">
             <div className="w-1 bg-ibm-blue shrink-0" />
             <div className="px-6 py-5">
-              <div className="text-sm font-medium text-white mb-1">Implementation</div>
+              <div className="text-sm font-medium text-white mb-1">Need help with implementation?</div>
               <p className="text-sm text-muted font-light leading-relaxed max-w-2xl">
-                Handled through IBM's partner network. Your IBM rep coordinates setup — typically ERP API credentials plus a configuration session to define pricing rules, MOQ thresholds, and approval hierarchy.
+                Our partner network handles the full setup — ERP API credentials, agent configuration, pricing rules, MOQ thresholds, and approval routing. Reach out and we'll connect you with the right team.
               </p>
             </div>
           </div>
@@ -288,7 +296,7 @@ export default function Pricing() {
         <div className="border-t border-border">
           <div className="max-w-7xl mx-auto px-6 py-6">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {['IBM watsonx Orchestrate', 'SAP · Oracle · Dynamics · Del Mia Works', 'Licensed directly through IBM', 'Implementation via partner network'].map((t, i) => (
+              {['IBM watsonx Orchestrate', 'SAP · Oracle · Dynamics · Del Mia Works', 'Start free on IBM — no credit card', 'Implementation via partner network'].map((t, i) => (
                 <div key={i} className="flex items-center gap-2">
                   <Check size={10} className="text-success shrink-0" />
                   <span className="text-[11px] text-muted font-light">{t}</span>
@@ -302,7 +310,7 @@ export default function Pricing() {
         <div className="border-t border-border bg-surface">
           <div className="max-w-7xl mx-auto px-6 py-20">
             <h2 className="text-3xl font-light text-white mb-2">Start in three steps</h2>
-            <p className="text-muted font-light text-sm mb-12">No professional services required to get started. Any ERP with a REST or SOAP API.</p>
+            <p className="text-muted font-light text-sm mb-12">Self-serve or with implementation help. Any ERP with a REST or SOAP API.</p>
             <div className="grid md:grid-cols-3 gap-0 border border-border mb-8">
               {SETUP_STEPS.map((s, i) => (
                 <div key={i} className="px-6 py-8 border-r border-border last:border-r-0">
@@ -315,16 +323,26 @@ export default function Pricing() {
                 </div>
               ))}
             </div>
-            <a
-              href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/products/watsonx-orchestrate/pricing'}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackEvent('cta_click', { cta: 'start_trial_setup' })}
-              className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-6 py-3 transition-colors text-sm"
-            >
-              Start free trial
-              <ChevronRight size={14} />
-            </a>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753'}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackEvent('cta_click', { cta: 'start_trial_setup' })}
+                className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-6 py-3 transition-colors text-sm"
+              >
+                Start free trial
+                <ChevronRight size={14} />
+              </a>
+              <a
+                href={`mailto:${import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com'}?subject=Implementation help — Price List & Order Entry Agent`}
+                onClick={() => trackEvent('cta_click', { cta: 'impl_help_setup' })}
+                className="inline-flex items-center gap-2 border border-border hover:border-border-bright text-white font-semibold px-6 py-3 transition-colors text-sm"
+              >
+                Get implementation help
+                <ChevronRight size={14} />
+              </a>
+            </div>
           </div>
         </div>
 
@@ -341,13 +359,13 @@ export default function Pricing() {
         {/* ── Take the next step ────────────────────────────────────────────── */}
         <div className="border-t border-border bg-surface">
           <div className="max-w-7xl mx-auto px-6 py-20">
-            <h2 className="text-3xl font-light text-white mb-3">Ready to try it?</h2>
+            <h2 className="text-3xl font-light text-white mb-3">Ready to get started?</h2>
             <p className="text-muted font-light mb-8 max-w-md text-sm leading-relaxed">
-              Start a free trial directly on IBM's site — no credit card, no commitment. Or schedule 15 minutes if you'd rather see it live first.
+              Start a free trial on IBM's site — or reach out if you'd like help getting it configured for your ERP and pricing rules.
             </p>
             <div className="flex flex-wrap gap-3">
               <a
-                href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/products/watsonx-orchestrate/pricing'}
+                href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753'}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackEvent('cta_click', { cta: 'start_trial_bottom' })}
@@ -356,13 +374,14 @@ export default function Pricing() {
                 Start free trial
                 <ChevronRight size={14} />
               </a>
-              <button
-                onClick={() => { setOutreachModal('See it live — 15 min'); trackEvent('cta_click', { cta: 'request_meeting_bottom' }); }}
+              <a
+                href={`mailto:${import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com'}?subject=Implementation help — Price List & Order Entry Agent`}
+                onClick={() => trackEvent('cta_click', { cta: 'impl_help_bottom' })}
                 className="flex items-center gap-2 border border-border hover:border-border-bright text-white font-semibold px-6 py-3 transition-colors text-sm"
               >
-                See it live first
+                Get implementation help
                 <ChevronRight size={14} />
-              </button>
+              </a>
             </div>
             <p className="text-[10px] text-dim font-light mt-4">This is a demo built by an IBM representative to illustrate what's possible with watsonx Orchestrate. Not an official IBM product page.</p>
           </div>

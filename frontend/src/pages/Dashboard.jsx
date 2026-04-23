@@ -212,7 +212,7 @@ export default function Dashboard() {
             {/* Recent agent questions */}
             <div className="border border-border">
               <div className="px-4 py-2 border-b border-border bg-surface">
-                <span className="text-[10px] tracking-label text-muted uppercase font-semibold">Recent Agent Questions</span>
+                <span className="text-[10px] tracking-label text-muted uppercase font-semibold">Agent Questions</span>
               </div>
               <div className="divide-y divide-border">
                 {data.agentQuestions.recent.length === 0 ? (
@@ -221,7 +221,7 @@ export default function Dashboard() {
                   <div key={i} className="flex gap-4 px-4 py-3">
                     <span className="text-ibm-blue text-[10px] font-mono shrink-0 mt-0.5">Q</span>
                     <div>
-                      <p className="text-sm text-white/80">{q.question || '—'}</p>
+                      <p className="text-sm text-white/50 italic font-light">Question text not stored</p>
                       <p className="text-[10px] text-muted font-mono mt-0.5">{q.timestamp ? new Date(q.timestamp).toLocaleString() : ''}</p>
                     </div>
                   </div>
