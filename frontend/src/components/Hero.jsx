@@ -45,9 +45,9 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.05 }}
-          className="text-4xl sm:text-5xl lg:text-[2.75rem] leading-[1.08] tracking-tight mb-5"
+          className="text-4xl sm:text-5xl lg:text-[2.25rem] leading-[1.08] tracking-tight mb-5"
         >
-          <span className="font-semibold text-white">Order processing without the manual work.</span>
+          <span className="font-semibold text-white">Order processing. No manual work.</span>
           <br />
           <span className="font-light text-white/60">Any format. Any ERP. Done overnight.</span>
         </motion.h1>
