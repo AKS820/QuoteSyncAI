@@ -401,7 +401,6 @@ export default function Pricing() {
                 <ChevronRight size={14} />
               </a>
             </div>
-            <p className="text-[10px] text-dim font-light mt-4">This is a demo built by an IBM representative to illustrate what's possible with watsonx Orchestrate. Not an official IBM product page.</p>
           </div>
         </div>
 

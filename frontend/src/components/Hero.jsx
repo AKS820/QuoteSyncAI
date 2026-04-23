@@ -65,7 +65,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.16 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12"
         >
           <a
             href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753'}
@@ -85,9 +85,6 @@ export default function Hero() {
             Work with our implementation partner →
           </a>
         </motion.div>
-        <p className="text-[11px] text-dim font-light mb-10 -mt-8">
-          Implementation is partner-led — self-setup not yet available.
-        </p>
 
         <motion.div
           initial={{ opacity: 0 }}
