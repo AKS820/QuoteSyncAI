@@ -47,9 +47,9 @@ export default function Hero() {
           transition={{ duration: 0.45, delay: 0.05 }}
           className="text-4xl sm:text-5xl lg:text-[2.75rem] leading-[1.08] tracking-tight mb-5"
         >
-          <span className="font-semibold text-white">How many steps does it take</span>
+          <span className="font-semibold text-white">Order intake to ERP-ready.</span>
           <br />
-          <span className="font-light text-white/60">to process an order?</span>
+          <span className="font-light text-white/60">Without the manual steps.</span>
         </motion.h1>
 
         <motion.p
@@ -58,7 +58,7 @@ export default function Hero() {
           transition={{ duration: 0.35, delay: 0.1 }}
           className="text-base font-light text-white/50 mb-10"
         >
-          Pricing lookups. ERP validation. Part number cross-referencing. Manual corrections. AI agents handle the entire flow — from order intake to ERP-ready in one coordinated run.
+          Pricing validation, part cross-referencing, and order entry — AI agents handle the entire flow in one coordinated run.
         </motion.p>
 
         <motion.div

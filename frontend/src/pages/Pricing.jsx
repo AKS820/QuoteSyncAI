@@ -180,7 +180,7 @@ export default function Pricing() {
               </div>
               <h1 className="text-5xl sm:text-6xl font-light text-white mb-6 leading-none tracking-tight">Pricing</h1>
               <p className="text-base text-muted font-light max-w-sm leading-relaxed">
-                Runs on IBM watsonx Orchestrate. Start a free trial directly on IBM's site — implementation help is available through our partner network if you need it.
+                Runs on IBM watsonx Orchestrate. Trial starts on IBM's site. Implementation requires our partner network.
               </p>
             </div>
             {/* Right — attribution */}
@@ -199,7 +199,7 @@ export default function Pricing() {
           <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">The platform</div>
           <h2 className="text-3xl font-light text-white mb-3">IBM watsonx Orchestrate</h2>
           <p className="text-muted font-light text-sm mb-12 max-w-lg">
-            One platform. Document extraction, multi-agent orchestration, and ERP connectivity — all within Orchestrate. Start a free trial on IBM's site, then get implementation help from our partner network.
+            Document extraction, agent orchestration, and ERP connectivity — all within Orchestrate. Trial on IBM's site. Implementation through our partner network.
           </p>
 
           <div className="border border-border mb-6">
@@ -257,7 +257,7 @@ export default function Pricing() {
                   </div>
                   <div className="text-xs text-white/70 font-medium mb-3">~60,000 messages/month</div>
                   <div className="text-[11px] text-dim font-light leading-relaxed">
-                    Documents extracted + agent API calls both count toward your message total. Need more volume? Higher tiers are available — your IBM rep sizes the right package.
+                    Document extraction and agent API calls both count toward your message total. Higher tiers available — your IBM rep sizes the right package.
                   </div>
                 </div>
                 <a
@@ -379,7 +379,7 @@ export default function Pricing() {
           <div className="max-w-7xl mx-auto px-6 py-20">
             <h2 className="text-3xl font-light text-white mb-3">Ready to get started?</h2>
             <p className="text-muted font-light mb-8 max-w-md text-sm leading-relaxed">
-              Start a free trial on IBM's site — or reach out if you'd like help getting it configured for your ERP and pricing rules.
+              Trial is self-serve on IBM's site. Configuration and ERP setup requires working with our implementation partner.
             </p>
             <div className="flex flex-wrap gap-3">
               <a

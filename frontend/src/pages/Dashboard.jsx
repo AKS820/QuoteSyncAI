@@ -55,6 +55,20 @@ export default function Dashboard() {
     }
   }, []);
 
+  const resetStats = useCallback(async () => {
+    if (!window.confirm('Reset all analytics data to zero? This cannot be undone.')) return;
+    try {
+      await fetch('/api/analytics/reset', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: 'quoteguard-admin' }),
+      });
+      await loadData();
+    } catch (e) {
+      console.error(e);
+    }
+  }, [loadData]);
+
   useEffect(() => {
     if (!authed) return;
     loadData();
@@ -123,13 +137,21 @@ export default function Dashboard() {
               </p>
             </div>
           </div>
-          <button
-            onClick={loadData}
-            className="flex items-center gap-2 px-3 py-2 bg-surface border border-border text-xs hover:border-ibm-blue transition-colors"
-          >
-            <RefreshCw size={12} className={loading ? 'animate-spin' : ''} />
-            Refresh
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={loadData}
+              className="flex items-center gap-2 px-3 py-2 bg-surface border border-border text-xs hover:border-ibm-blue transition-colors"
+            >
+              <RefreshCw size={12} className={loading ? 'animate-spin' : ''} />
+              Refresh
+            </button>
+            <button
+              onClick={resetStats}
+              className="flex items-center gap-2 px-3 py-2 bg-surface border border-border text-xs hover:border-danger text-muted hover:text-danger transition-colors"
+            >
+              Reset stats
+            </button>
+          </div>
         </div>
 
         {!data ? (

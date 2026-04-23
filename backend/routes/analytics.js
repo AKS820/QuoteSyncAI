@@ -94,4 +94,18 @@ router.get('/summary', async (req, res) => {
   }
 });
 
+router.post('/reset', async (req, res) => {
+  if (req.body?.password !== 'quoteguard-admin') {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  try {
+    await prisma.event.deleteMany({});
+    await prisma.user.deleteMany({});
+    res.json({ ok: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
