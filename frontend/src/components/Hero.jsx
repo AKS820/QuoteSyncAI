@@ -26,14 +26,20 @@ export default function Hero() {
   const implHelpHref = `mailto:${contactEmail}?subject=${encodeURIComponent(IMPL_SUBJECT)}&body=${encodeURIComponent(IMPL_BODY)}`;
 
   return (
-    <div className="min-h-[90vh] flex flex-col items-center justify-center pt-16 pb-12 px-6 bg-surface-2">
-      <div className="w-full max-w-3xl mx-auto text-center">
+    <div
+      className="min-h-[90vh] flex flex-col items-center justify-center pt-16 pb-12 px-6 bg-surface-2"
+      style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20 L20 0 L40 20' fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='1'/%3E%3C/svg%3E")`,
+        backgroundRepeat: 'repeat',
+      }}
+    >
+      <div className="w-full max-w-4xl mx-auto text-center">
 
         <motion.h1
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.05 }}
-          className="text-4xl sm:text-5xl lg:text-[2.75rem] leading-[1.08] tracking-tight mb-6"
+          className="text-5xl sm:text-6xl lg:text-[3.5rem] leading-[1.08] tracking-tight mb-6"
         >
           <span className="font-semibold text-white">Agentic Order Processing.</span>
           <br />

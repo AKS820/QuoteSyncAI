@@ -102,16 +102,9 @@ function WinStory() {
     >
       <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-6">Win Story — Midwest Plastics Manufacturer</div>
 
-      <blockquote className="mb-10">
-        <p className="text-2xl sm:text-3xl font-semibold text-white leading-tight mb-3">
-          "The ERP wasn't the source of truth.<br />The quote was."
-        </p>
-        <cite className="text-xs text-muted font-light not-italic">— VP of IT, Manufacturing Client</cite>
-      </blockquote>
-
       <h2 className="text-xl sm:text-2xl font-semibold mb-6 leading-tight">Wisconsin manufacturer.</h2>
 
-      <div className="grid sm:grid-cols-4 gap-0 border border-border mb-10">
+      <div className="grid sm:grid-cols-4 gap-0 border border-border mb-8">
         {[
           { n: '3,000+', label: 'active quotes in flight', sub: 'Across all open customer POs' },
           { n: '8', label: 'distinct customer PO formats', sub: 'Each requiring different extraction logic' },
@@ -125,6 +118,13 @@ function WinStory() {
           </div>
         ))}
       </div>
+
+      <blockquote className="border-l-2 border-ibm-blue pl-6 mb-10">
+        <p className="text-2xl sm:text-3xl font-semibold text-white leading-tight mb-3">
+          "The ERP wasn't the source of truth.<br />The quote was."
+        </p>
+        <cite className="text-xs text-muted font-light not-italic">— VP of IT, Manufacturing Client</cite>
+      </blockquote>
 
       <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-2">What they built with IBM watsonx Orchestrate</div>
       <p className="text-xs text-muted font-light mb-4 max-w-xl">Orchestrate Flow handles document extraction from any PO format — no templates, no mapping. Four agents are then configured against your ERP constraints and run automatically.</p>
