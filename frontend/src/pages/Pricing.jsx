@@ -5,6 +5,23 @@ import { Link } from 'react-router-dom';
 import { useEventTracking } from '../hooks/useEventTracking.js';
 
 
+const IMPL_SUBJECT = 'Implementation help — Price List & Order Entry Agent';
+const IMPL_BODY = `Hi Abhi,
+
+I came across the QuoteGuard demo and I'm interested in learning more about implementing the Price List & Order Entry Agent for my team.
+
+Our situation:
+- ERP system: [SAP / Oracle / Dynamics 365 / Del Mia Works / Other]
+- Monthly PO volume: [approximate number]
+- Main challenge: [pricing validation / order entry errors / part cross-referencing / other]
+
+[Add any additional context here]
+
+---
+[Your name]
+[Company]
+[Phone]`;
+
 const SETUP_STEPS = [
   { n: '01', time: 'Minutes', title: 'Start your free trial', desc: 'Sign up for IBM watsonx Orchestrate directly on IBM\'s site. No credit card required to get started.' },
   { n: '02', time: '~30 min', title: 'Connect your ERP', desc: 'Have IT generate API credentials in your ERP — typically under an hour. No on-premise install, no firewall exceptions, no database access.' },
@@ -95,7 +112,8 @@ function OutreachModal({ title, onClose }) {
 export default function Pricing() {
   const [outreachModal, setOutreachModal] = useState(null);
   const { trackEvent } = useEventTracking();
-
+  const contactEmail = import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com';
+  const implHelpHref = `mailto:${contactEmail}?subject=${encodeURIComponent(IMPL_SUBJECT)}&body=${encodeURIComponent(IMPL_BODY)}`;
 
   return (
     <div className="min-h-screen bg-surface-2">
@@ -129,7 +147,7 @@ export default function Pricing() {
 
           <div className="hidden sm:flex items-center gap-2">
             <a
-              href={`mailto:${import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com'}?subject=Implementation help — Price List & Order Entry Agent`}
+              href={implHelpHref}
               onClick={() => trackEvent('cta_click', { cta: 'nav_impl' })}
               className="text-xs text-muted hover:text-white font-light transition-colors px-3 py-1.5"
             >
@@ -217,7 +235,7 @@ export default function Pricing() {
                     <ChevronRight size={14} />
                   </a>
                   <a
-                    href={`mailto:${import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com'}?subject=Implementation help — Price List & Order Entry Agent`}
+                    href={implHelpHref}
                     onClick={() => trackEvent('cta_click', { cta: 'impl_help_card' })}
                     className="inline-flex items-center gap-2 border border-border hover:border-border-bright text-white font-semibold px-5 py-3 transition-colors text-sm"
                   >
@@ -335,7 +353,7 @@ export default function Pricing() {
                 <ChevronRight size={14} />
               </a>
               <a
-                href={`mailto:${import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com'}?subject=Implementation help — Price List & Order Entry Agent`}
+                href={implHelpHref}
                 onClick={() => trackEvent('cta_click', { cta: 'impl_help_setup' })}
                 className="inline-flex items-center gap-2 border border-border hover:border-border-bright text-white font-semibold px-6 py-3 transition-colors text-sm"
               >
@@ -375,7 +393,7 @@ export default function Pricing() {
                 <ChevronRight size={14} />
               </a>
               <a
-                href={`mailto:${import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com'}?subject=Implementation help — Price List & Order Entry Agent`}
+                href={implHelpHref}
                 onClick={() => trackEvent('cta_click', { cta: 'impl_help_bottom' })}
                 className="flex items-center gap-2 border border-border hover:border-border-bright text-white font-semibold px-6 py-3 transition-colors text-sm"
               >

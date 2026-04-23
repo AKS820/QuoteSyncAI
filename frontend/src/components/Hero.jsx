@@ -3,8 +3,27 @@ import { Link } from 'react-router-dom';
 import { ChevronRight, ShieldCheck } from 'lucide-react';
 import { useEventTracking } from '../hooks/useEventTracking.js';
 
+const IMPL_SUBJECT = 'Implementation help — Price List & Order Entry Agent';
+const IMPL_BODY = `Hi Abhi,
+
+I came across the QuoteGuard demo and I'm interested in learning more about implementing the Price List & Order Entry Agent for my team.
+
+Our situation:
+- ERP system: [SAP / Oracle / Dynamics 365 / Del Mia Works / Other]
+- Monthly PO volume: [approximate number]
+- Main challenge: [pricing validation / order entry errors / part cross-referencing / other]
+
+[Add any additional context here]
+
+---
+[Your name]
+[Company]
+[Phone]`;
+
 export default function Hero() {
   const { trackEvent } = useEventTracking();
+  const contactEmail = import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com';
+  const implHelpHref = `mailto:${contactEmail}?subject=${encodeURIComponent(IMPL_SUBJECT)}&body=${encodeURIComponent(IMPL_BODY)}`;
 
   return (
     <div className="min-h-[90vh] flex flex-col items-center justify-center pt-16 pb-12 px-6 bg-surface-2">
@@ -59,7 +78,7 @@ export default function Hero() {
             <ChevronRight size={16} />
           </a>
           <a
-            href={`mailto:${import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com'}?subject=Implementation help — Price List & Order Entry Agent`}
+            href={implHelpHref}
             onClick={() => trackEvent('cta_click', { cta: 'implementation_help', stage: 0 })}
             className="text-sm text-muted hover:text-white font-light transition-colors px-4 py-3.5"
           >

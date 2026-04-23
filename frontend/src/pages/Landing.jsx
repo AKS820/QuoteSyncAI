@@ -10,6 +10,23 @@ import ChatWidget from '../components/ChatWidget.jsx';
 
 const STAGE_LABELS = ['Overview', 'Why', 'What', 'Win Story'];
 
+const IMPL_SUBJECT = 'Implementation help — Price List & Order Entry Agent';
+const IMPL_BODY = `Hi Abhi,
+
+I came across the QuoteGuard demo and I'm interested in learning more about implementing the Price List & Order Entry Agent for my team.
+
+Our situation:
+- ERP system: [SAP / Oracle / Dynamics 365 / Del Mia Works / Other]
+- Monthly PO volume: [approximate number]
+- Main challenge: [pricing validation / order entry errors / part cross-referencing / other]
+
+[Add any additional context here]
+
+---
+[Your name]
+[Company]
+[Phone]`;
+
 // ─── Demo Modal ───────────────────────────────────────────────────────────────
 
 function DemoModal({ onClose }) {
@@ -230,6 +247,8 @@ function WinStory() {
 
 export default function Landing() {
   const { currentStage, visitedStages } = useScrollStage(4);
+  const contactEmail = import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com';
+  const implHelpHref = `mailto:${contactEmail}?subject=${encodeURIComponent(IMPL_SUBJECT)}&body=${encodeURIComponent(IMPL_BODY)}`;
 
   return (
     <div className="min-h-screen bg-surface-2">
@@ -269,7 +288,7 @@ export default function Landing() {
             <ChevronRight size={14} />
           </a>
           <a
-            href={`mailto:${import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com'}?subject=Implementation help — Price List & Order Entry Agent`}
+            href={implHelpHref}
             className="text-sm text-muted hover:text-white font-light transition-colors px-4 py-3.5"
           >
             Get implementation help →
