@@ -146,7 +146,7 @@ function WhatSection() {
         </div>
       </div>
 
-      <div className="border border-ibm-blue/40 bg-ibm-blue/5 px-6 py-8 text-center">
+      <div className="border border-ibm-blue/40 bg-ibm-blue/5 px-6 py-8 text-center mb-8">
         <p className="text-xs text-muted font-light mb-5">Watch the agents handle a real customer PO end-to-end.</p>
         <button
           onClick={() => { setShowDemo(true); trackEvent('demo_start'); }}
@@ -155,6 +155,15 @@ function WhatSection() {
           <span className="w-2 h-2 rounded-full bg-white/70 animate-pulse shrink-0" />
           Try the live demo
         </button>
+      </div>
+
+      <div className="border border-border overflow-hidden">
+        <iframe
+          src="/arch-animation.html"
+          className="w-full block border-0"
+          style={{ height: '520px' }}
+          title="Agent Architecture Diagram"
+        />
       </div>
 
       <AnimatePresence>
@@ -195,15 +204,6 @@ function WinStory() {
             <div className="text-[10px] text-dim font-light mt-0.5">{s.sub}</div>
           </div>
         ))}
-      </div>
-
-      <div className="border border-border mb-10 overflow-hidden">
-        <iframe
-          src="/arch-animation.html"
-          className="w-full block border-0"
-          style={{ height: '520px' }}
-          title="Agent Architecture Diagram"
-        />
       </div>
 
       <blockquote className="border-l-2 border-ibm-blue pl-6 mb-10">

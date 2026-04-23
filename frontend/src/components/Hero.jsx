@@ -28,9 +28,9 @@ export default function Hero() {
           transition={{ duration: 0.45, delay: 0.05 }}
           className="text-4xl sm:text-5xl lg:text-[3.5rem] leading-[1.08] tracking-tight mb-5"
         >
-          <span className="font-semibold text-white">Got unstructured documents?</span>
+          <span className="font-semibold text-white">Your ERP has pricing rules.</span>
           <br />
-          <span className="font-light text-white/60">Orchestrate has agents for that.</span>
+          <span className="font-light text-white/60">Your customers ignore them.</span>
         </motion.h1>
 
         <motion.p
