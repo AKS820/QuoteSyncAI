@@ -37,13 +37,7 @@ function DemoModal({ onClose }) {
         {embedUrl ? (
           <iframe src={embedUrl} className="flex-1 w-full border-0" title="QuoteGuard Live Demo" />
         ) : (
-          <div className="flex-1 flex flex-col items-center justify-center text-center px-6">
-            <div className="w-8 h-8 border border-border flex items-center justify-center mb-4">
-              <span className="text-ibm-blue font-bold text-xs">Q</span>
-            </div>
-            <p className="text-sm font-semibold mb-2">Live demo — work in progress</p>
-            <p className="text-xs text-muted font-light max-w-xs">The IBM watsonx Orchestrate agent is currently being configured. Check back soon.</p>
-          </div>
+          <iframe src="/arch-animation.html" className="flex-1 w-full border-0" title="Agent Architecture Demo" />
         )}
       </motion.div>
     </div>
@@ -155,15 +149,6 @@ function WhatSection() {
           <span className="w-2 h-2 rounded-full bg-white/70 animate-pulse shrink-0" />
           Try the live demo
         </button>
-      </div>
-
-      <div className="border border-border overflow-hidden">
-        <iframe
-          src="/arch-animation.html"
-          className="w-full block border-0"
-          style={{ height: '520px' }}
-          title="Agent Architecture Diagram"
-        />
       </div>
 
       <AnimatePresence>
