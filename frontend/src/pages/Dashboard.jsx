@@ -4,7 +4,7 @@ import { Users, Zap, Calendar, CreditCard, MessageSquare, RefreshCw, Lock, Shiel
 
 const ADMIN_PASSWORD = 'quoteguard-admin';
 
-const STAGE_LABELS = ['Overview', 'Why', 'What', 'Win Story'];
+const STAGE_LABELS = ['Overview', 'Why', 'Win Story'];
 
 function MetricCard({ icon: Icon, label, value, sub, accent = false }) {
   return (

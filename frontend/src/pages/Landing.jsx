@@ -8,7 +8,7 @@ import ProgressIndicator from '../components/ProgressIndicator.jsx';
 import Hero from '../components/Hero.jsx';
 import ChatWidget from '../components/ChatWidget.jsx';
 
-const STAGE_LABELS = ['Overview', 'Why', 'What', 'Win Story'];
+const STAGE_LABELS = ['Overview', 'Why', 'Win Story'];
 
 const IMPL_SUBJECT = 'Implementation help — Price List & Order Entry Agent';
 const IMPL_BODY = `Hi Abhi,
@@ -101,85 +101,13 @@ function WhySection() {
   );
 }
 
-// ─── What ─────────────────────────────────────────────────────────────────────
-
-function WhatSection() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-80px' });
-  const [showDemo, setShowDemo] = useState(false);
-  const { trackEvent } = useEventTracking();
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 16 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.4 }}
-      className="py-16 px-6 max-w-4xl mx-auto"
-    >
-      <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">How it works</div>
-      <h2 className="text-3xl sm:text-4xl font-semibold mb-3 leading-tight">
-        Orchestrate agents connect to any system.
-      </h2>
-      <p className="text-sm text-muted font-light mb-3 max-w-lg">
-        Unstructured customer POs go in. Orchestrate Flow extracts the structured data — no templates, no mapping. Four agents then run overnight, each connecting to your ERP and correcting the gap.
-      </p>
-      <p className="text-xs text-dim font-light mb-12 max-w-lg">Document extraction built into Orchestrate. No separate AI platform needed.</p>
-
-      <div className="border border-border mb-8">
-        {[
-          { n: 1, name: 'Customer Agent', desc: 'Identifies the customer and matches against ERP master data.' },
-          { n: 2, name: 'Pricing Agent', desc: 'Compares quoted prices to tiered rules in the ERP. Surfaces every discrepancy.' },
-          { n: 3, name: 'Inventory Agent', desc: 'Validates quantities against minimum order quantity (MOQ) constraints.' },
-          { n: 4, name: 'Sales Order Agent', desc: 'Auto-corrects tiered pricing. Holds MOQ violations and routes for approval.' },
-        ].map((a) => (
-          <div key={a.n} className="flex items-start gap-4 px-5 py-4 border-b border-border last:border-b-0">
-            <div className="w-5 h-5 bg-ibm-blue flex items-center justify-center text-white text-[10px] font-semibold font-mono shrink-0 mt-0.5">{a.n}</div>
-            <div>
-              <span className="text-sm font-medium text-white">{a.name}</span>
-              <span className="text-xs text-muted font-light ml-2">{a.desc}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="border border-border mb-8">
-        <div className="grid sm:grid-cols-2 divide-x divide-border">
-          <div className="px-5 py-5">
-            <div className="text-[10px] text-success font-semibold uppercase tracking-wide mb-2">Automated</div>
-            <div className="text-sm font-medium mb-1">Overnight — no intervention needed</div>
-            <div className="text-xs text-muted font-light">Corrections applied automatically. Audit trail emailed to execs.</div>
-          </div>
-          <div className="px-5 py-5">
-            <div className="text-[10px] text-ibm-blue-light font-semibold uppercase tracking-wide mb-2">Interactive</div>
-            <div className="text-sm font-medium mb-1">Step-by-step with approval gates</div>
-            <div className="text-xs text-muted font-light">Director walks through findings. Approve or override at each step.</div>
-          </div>
-        </div>
-      </div>
-
-      <div className="border border-ibm-blue/40 bg-ibm-blue/5 px-6 py-8 text-center mb-8">
-        <p className="text-xs text-muted font-light mb-5">Watch the agents handle a real customer PO end-to-end.</p>
-        <button
-          onClick={() => { setShowDemo(true); trackEvent('demo_start'); }}
-          className="inline-flex items-center gap-3 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-10 py-4 transition-colors text-base"
-        >
-          <span className="w-2 h-2 rounded-full bg-white/70 animate-pulse shrink-0" />
-          Try the live demo
-        </button>
-      </div>
-
-      <AnimatePresence>
-        {showDemo && <DemoModal onClose={() => setShowDemo(false)} />}
-      </AnimatePresence>
-    </motion.div>
-  );
-}
-
 // ─── Win Story ────────────────────────────────────────────────────────────────
 
 function WinStory() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
+  const [showDemo, setShowDemo] = useState(false);
+  const { trackEvent } = useEventTracking();
   return (
     <motion.div
       ref={ref}
@@ -208,6 +136,24 @@ function WinStory() {
         ))}
       </div>
 
+      <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-3">What they built with IBM watsonx Orchestrate</div>
+      <div className="border border-border mb-10">
+        {[
+          { n: 1, name: 'Customer Agent', desc: 'Identifies the customer and matches against ERP master data.' },
+          { n: 2, name: 'Pricing Agent', desc: 'Compares quoted prices to tiered rules in the ERP. Surfaces every discrepancy.' },
+          { n: 3, name: 'Inventory Agent', desc: 'Validates quantities against minimum order quantity (MOQ) constraints.' },
+          { n: 4, name: 'Sales Order Agent', desc: 'Auto-corrects tiered pricing. Holds MOQ violations and routes for approval.' },
+        ].map((a) => (
+          <div key={a.n} className="flex items-start gap-4 px-5 py-4 border-b border-border last:border-b-0">
+            <div className="w-5 h-5 bg-ibm-blue flex items-center justify-center text-white text-[10px] font-semibold font-mono shrink-0 mt-0.5">{a.n}</div>
+            <div>
+              <span className="text-sm font-medium text-white">{a.name}</span>
+              <span className="text-xs text-muted font-light ml-2">{a.desc}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
       <blockquote className="border-l-2 border-ibm-blue pl-6 mb-10">
         <p className="text-xl sm:text-2xl font-light text-white/80 leading-relaxed mb-3">
           "The ERP wasn't the source of truth. The quote was."
@@ -215,7 +161,7 @@ function WinStory() {
         <cite className="text-xs text-muted font-light not-italic">VP of IT, Manufacturing Client</cite>
       </blockquote>
 
-      <div className="border border-border">
+      <div className="border border-border mb-8">
         <div className="grid sm:grid-cols-2 divide-x divide-border">
           <div className="px-5 py-5">
             <div className="text-[10px] text-danger font-semibold uppercase tracking-wide mb-3">Before</div>
@@ -239,6 +185,21 @@ function WinStory() {
           </div>
         </div>
       </div>
+
+      <div className="border border-ibm-blue/40 bg-ibm-blue/5 px-6 py-8 text-center">
+        <p className="text-xs text-muted font-light mb-5">Watch the agents handle a real customer PO end-to-end.</p>
+        <button
+          onClick={() => { setShowDemo(true); trackEvent('demo_start'); }}
+          className="inline-flex items-center gap-3 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-10 py-4 transition-colors text-base"
+        >
+          <span className="w-2 h-2 rounded-full bg-white/70 animate-pulse shrink-0" />
+          See their flow
+        </button>
+      </div>
+
+      <AnimatePresence>
+        {showDemo && <DemoModal onClose={() => setShowDemo(false)} />}
+      </AnimatePresence>
     </motion.div>
   );
 }
@@ -246,7 +207,7 @@ function WinStory() {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Landing() {
-  const { currentStage, visitedStages } = useScrollStage(4);
+  const { currentStage, visitedStages } = useScrollStage(3);
   const contactEmail = import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com';
   const implHelpHref = `mailto:${contactEmail}?subject=${encodeURIComponent(IMPL_SUBJECT)}&body=${encodeURIComponent(IMPL_BODY)}`;
 
@@ -266,11 +227,7 @@ export default function Landing() {
         <WhySection />
       </section>
 
-      <section id="what" data-stage="2" className="border-t border-border">
-        <WhatSection />
-      </section>
-
-      <section id="win-story" data-stage="3" className="border-t border-border bg-surface">
+      <section id="win-story" data-stage="2" className="border-t border-border bg-surface">
         <WinStory />
       </section>
 
