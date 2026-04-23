@@ -45,11 +45,11 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.05 }}
-          className="text-4xl sm:text-5xl lg:text-[2.25rem] leading-[1.08] tracking-tight mb-5"
+          className="text-4xl sm:text-5xl lg:text-[2.75rem] leading-[1.08] tracking-tight mb-5"
         >
-          <span className="font-semibold text-white">Order processing. No manual work.</span>
+          <span className="font-semibold text-white">Order processing.</span>
           <br />
-          <span className="font-light text-white/60">Any format. Any ERP. Done overnight.</span>
+          <span className="font-light text-white/60">No manual work.</span>
         </motion.h1>
 
         <motion.p
@@ -58,7 +58,7 @@ export default function Hero() {
           transition={{ duration: 0.35, delay: 0.1 }}
           className="text-base font-light text-white/50 mb-10"
         >
-          Pricing validation, part cross-referencing, and order entry — AI agents handle the entire flow in one coordinated run.
+          Any format, any ERP — AI agents handle pricing validation, part cross-referencing, and order entry in one coordinated run.
         </motion.p>
 
         <motion.div
