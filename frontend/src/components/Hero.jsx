@@ -27,7 +27,7 @@ export default function Hero() {
 
   return (
     <div className="min-h-[90vh] flex flex-col items-center justify-center pt-16 pb-12 px-6 bg-surface-2">
-      <div className="w-full max-w-2xl mx-auto text-center">
+      <div className="w-full max-w-3xl mx-auto text-center">
 
         <motion.div
           initial={{ opacity: 0, y: 8 }}
@@ -45,7 +45,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.05 }}
-          className="text-4xl sm:text-5xl lg:text-[3.5rem] leading-[1.08] tracking-tight mb-5"
+          className="text-4xl sm:text-5xl lg:text-[2.75rem] leading-[1.08] tracking-tight mb-5"
         >
           <span className="font-semibold text-white">How many steps does it take</span>
           <br />
@@ -65,7 +65,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.16 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-4"
         >
           <a
             href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753'}
@@ -82,9 +82,12 @@ export default function Hero() {
             onClick={() => trackEvent('cta_click', { cta: 'implementation_help', stage: 0 })}
             className="text-sm text-muted hover:text-white font-light transition-colors px-4 py-3.5"
           >
-            Get implementation help →
+            Work with our implementation partner →
           </a>
         </motion.div>
+        <p className="text-[11px] text-dim font-light mb-10 -mt-8">
+          Implementation is partner-led — self-setup not yet available.
+        </p>
 
         <motion.div
           initial={{ opacity: 0 }}

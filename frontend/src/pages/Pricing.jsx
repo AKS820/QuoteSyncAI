@@ -151,7 +151,7 @@ export default function Pricing() {
               onClick={() => trackEvent('cta_click', { cta: 'nav_impl' })}
               className="text-xs text-muted hover:text-white font-light transition-colors px-3 py-1.5"
             >
-              Get implementation help
+              Work with our implementation partner
             </a>
             <a
               href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753'}
@@ -239,7 +239,7 @@ export default function Pricing() {
                     onClick={() => trackEvent('cta_click', { cta: 'impl_help_card' })}
                     className="inline-flex items-center gap-2 border border-border hover:border-border-bright text-white font-semibold px-5 py-3 transition-colors text-sm"
                   >
-                    Get implementation help
+                    Work with our implementation partner
                     <ChevronRight size={14} />
                   </a>
                 </div>
@@ -357,7 +357,7 @@ export default function Pricing() {
                 onClick={() => trackEvent('cta_click', { cta: 'impl_help_setup' })}
                 className="inline-flex items-center gap-2 border border-border hover:border-border-bright text-white font-semibold px-6 py-3 transition-colors text-sm"
               >
-                Get implementation help
+                Work with our implementation partner
                 <ChevronRight size={14} />
               </a>
             </div>
@@ -397,7 +397,7 @@ export default function Pricing() {
                 onClick={() => trackEvent('cta_click', { cta: 'impl_help_bottom' })}
                 className="flex items-center gap-2 border border-border hover:border-border-bright text-white font-semibold px-6 py-3 transition-colors text-sm"
               >
-                Get implementation help
+                Work with our implementation partner
                 <ChevronRight size={14} />
               </a>
             </div>
