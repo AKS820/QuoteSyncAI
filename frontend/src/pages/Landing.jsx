@@ -102,7 +102,7 @@ function WinStory() {
     >
       <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-6">Win Story — Midwest Plastics Manufacturer</div>
 
-      <h2 className="text-xl sm:text-2xl font-semibold mb-6 leading-tight">Wisconsin manufacturer.</h2>
+      <h2 className="text-3xl sm:text-4xl font-semibold mb-6 leading-tight">Wisconsin manufacturer.</h2>
 
       <div className="grid sm:grid-cols-4 gap-0 border border-border mb-8">
         {[
@@ -121,7 +121,7 @@ function WinStory() {
 
       <blockquote className="border-l-2 border-ibm-blue pl-6 mb-10">
         <p className="text-2xl sm:text-3xl font-semibold text-white leading-tight mb-3">
-          "The ERP wasn't the source of truth.<br />The quote was."
+          "The ERP wasn't the source of truth. The quote was."
         </p>
         <cite className="text-xs text-muted font-light not-italic">— VP of IT, Manufacturing Client</cite>
       </blockquote>
