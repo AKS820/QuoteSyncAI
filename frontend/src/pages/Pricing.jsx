@@ -253,18 +253,18 @@ export default function Pricing() {
                 </p>
                 <div className="border border-border px-5 py-5 mb-6">
                   <div className="text-[10px] text-muted font-semibold uppercase tracking-wide mb-3">Essentials Plan</div>
-                  <div className="font-mono font-bold text-3xl text-ibm-blue-light mb-4">
+                  <div className="font-mono font-bold text-xl text-ibm-blue-light mb-4">
                     from $530<span className="text-sm font-light text-muted">/month</span>
                   </div>
-                  <div className="space-y-2 mb-3">
+                  <div className="space-y-3 mb-3">
                     {[
                       ['4,000', 'Monthly Active Users'],
                       ['200,000', 'Messages / month'],
                       ['10 GB', 'Document storage'],
                     ].map(([val, label]) => (
                       <div key={label} className="flex items-center justify-between">
-                        <span className="text-[11px] text-muted font-light">{label}</span>
-                        <span className="text-[11px] font-mono font-semibold text-white">{val}</span>
+                        <span className="text-sm text-muted font-light">{label}</span>
+                        <span className="text-base font-mono font-bold text-white">{val}</span>
                       </div>
                     ))}
                   </div>
