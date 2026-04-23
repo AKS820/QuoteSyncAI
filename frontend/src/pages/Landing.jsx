@@ -75,8 +75,8 @@ function WhySection() {
       className="py-16 px-6 max-w-4xl mx-auto"
     >
       <h2 className="text-3xl sm:text-4xl font-semibold mb-3 leading-tight">
-        The documents are unstructured.
-        <br /><span className="font-light text-white/60">The ERP rules are not.</span>
+        Invoices are structured.
+        <br /><span className="font-light text-white/60">The pricing rules behind them aren't.</span>
       </h2>
       <p className="text-sm text-muted font-light max-w-lg">
         Most manufacturers have strong ERP systems — but customer POs arrive in any format, and validating them manually against ERP pricing rules is where time gets lost and billing errors are born.
