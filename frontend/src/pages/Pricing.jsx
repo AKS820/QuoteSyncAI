@@ -12,8 +12,8 @@ I came across the QuoteGuard demo and I'm interested in learning more about impl
 
 Our situation:
 - ERP system: [SAP / Oracle / Dynamics 365 / Del Mia Works / Other]
-- Monthly PO volume: [approximate number]
-- Main challenge: [pricing validation / order entry errors / part cross-referencing / other]
+- Monthly quote volume: [approximate number]
+- Main challenge: [pricing validation / quote-to-ERP sync / part cross-referencing / other]
 
 [Add any additional context here]
 
@@ -29,7 +29,7 @@ const SETUP_STEPS = [
 ];
 
 const FAQS = [
-  { q: 'Our customers send POs in completely different formats. Can the agent handle that?', a: 'Yes — that\'s the core of it. Document extraction runs within Orchestrate Flow, pulling structured pricing data from any PO format without templates or manual mapping. One deployment handled 8 distinct formats from a single customer. No standardization needed on your end.' },
+  { q: 'Our quotes come in completely different formats. Can the agent handle that?', a: 'Yes — that\'s the core of it. Document extraction runs within Orchestrate Flow, pulling structured pricing data from any quote format without templates or manual mapping. One deployment handled 8 distinct formats from a single customer. No standardization needed on your end.' },
   { q: 'Does the agent make changes automatically, or does a human approve?', a: 'Depends on the violation. Tiered pricing discrepancies below your threshold are auto-corrected. MOQ violations and anything above the threshold are held and routed for approval. You set the thresholds.' },
   { q: 'How long does setup take?', a: 'Most of the time is waiting for API credentials to be generated — the configuration itself is fast. A dry-run runs overnight before anything goes live. Your IBM rep will scope a timeline before anything is committed.' },
   { q: 'What ERP and CPQ systems do you support?', a: 'SAP, Oracle ERP, Dynamics 365, NetSuite, Del Mia Works, Salesforce CPQ, HubSpot, Conga, DealHub — and any platform with a REST or SOAP API. Tell us what you\'re running and we\'ll confirm.' },
@@ -86,7 +86,7 @@ function OutreachModal({ title, onClose }) {
         <div className="flex items-start justify-between mb-5">
           <div>
             <h3 className="font-semibold text-base">{title}</h3>
-            <p className="text-muted text-sm font-light mt-0.5">15 minutes. I'll walk you through a real customer PO end-to-end.</p>
+            <p className="text-muted text-sm font-light mt-0.5">15 minutes. I'll walk you through a real customer quote end-to-end.</p>
           </div>
           <button onClick={onClose} className="text-muted hover:text-white transition-colors p-1"><X size={16} /></button>
         </div>
@@ -211,9 +211,9 @@ export default function Pricing() {
                 <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">What it does</div>
                 <ul className="space-y-3 mb-8">
                   {[
-                    'Extracts structured data from any PO format via Orchestrate Flow — no templates, no manual mapping',
+                    'Extracts structured data from any quote format via Orchestrate Flow — no templates, no manual mapping',
                     'Connects agents directly to your ERP (SAP, Oracle, Dynamics, Del Mia Works, and more)',
-                    'Runs four validation agents overnight: Customer, Pricing, Inventory, Sales Order',
+                    'Runs four agents overnight via a Manager Agent: Customer, Quote Validation, Pricing, Sales Order',
                     'Auto-corrects tiered pricing discrepancies; routes MOQ violations for approval',
                     'Full audit trail emailed to executives after each run',
                   ].map((f, i) => (
@@ -294,7 +294,7 @@ export default function Pricing() {
                   <div className="text-[10px] tracking-label text-muted font-semibold uppercase mb-1">Optional add-on — IBM watsonx.data</div>
                   <div className="text-sm font-medium text-white mb-1">No existing document storage?</div>
                   <p className="text-sm text-muted font-light leading-relaxed max-w-xl">
-                    If your team doesn't have infrastructure for storing POs and contracts, watsonx.data handles it. Agents query documents directly — no separate file management needed.
+                    If your team doesn't have infrastructure for storing quotes and contracts, watsonx.data handles it. Agents query documents directly — no separate file management needed.
                   </p>
                 </div>
                 <a

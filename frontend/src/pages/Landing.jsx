@@ -127,13 +127,13 @@ function WinStory() {
       </blockquote>
 
       <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-2">What they built with IBM watsonx Orchestrate</div>
-      <p className="text-xs text-muted font-light mb-4 max-w-xl">Orchestrate Flow handles document extraction from any quote format — no templates, no mapping. Four agents are then configured against your ERP constraints and run automatically.</p>
+      <p className="text-xs text-muted font-light mb-4 max-w-xl">A Manager Agent on watsonx Orchestrate coordinates four specialized sub-agents, running overnight against quote documents and ERP. Any quote format supported — no templates, no manual mapping.</p>
       <div className="border border-border mb-4">
         {[
-          { n: 1, name: 'Customer Agent', desc: 'Identifies the customer and matches against ERP master data.' },
-          { n: 2, name: 'Pricing Agent', desc: 'Compares quoted prices to tiered rules in the ERP. Surfaces every discrepancy.' },
-          { n: 3, name: 'Inventory Agent', desc: 'Validates quantities against minimum order quantity (MOQ) constraints.' },
-          { n: 4, name: 'Sales Order Agent', desc: 'Auto-corrects tiered pricing. Holds MOQ violations and routes for approval.' },
+          { n: 1, name: 'Customer Agent', desc: 'Cross-references customer name and address against ERP master data. Confirms match at 98%+ confidence.' },
+          { n: 2, name: 'Quote Validation Agent', desc: 'Fetches item master and AKA part references from ERP. Confirms all line items are valid.' },
+          { n: 3, name: 'Pricing Agent', desc: 'Compares quote pricing against ERP price tiers and MOQ rules. Surfaces every discrepancy.' },
+          { n: 4, name: 'Sales Order Agent', desc: 'Auto-corrects tiered pricing in ERP. Holds MOQ violations and routes for human approval.' },
         ].map((a) => (
           <div key={a.n} className="flex items-start gap-4 px-5 py-4 border-b border-border last:border-b-0">
             <div className="w-5 h-5 bg-ibm-blue flex items-center justify-center text-white text-[10px] font-semibold font-mono shrink-0 mt-0.5">{a.n}</div>
