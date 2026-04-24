@@ -75,11 +75,11 @@ function WhySection() {
       className="py-16 px-6 max-w-4xl mx-auto"
     >
       <h2 className="text-3xl sm:text-4xl font-semibold mb-3 leading-tight">
-        Invoices are structured.
+        Quotes are structured.
         <br /><span className="font-light text-white/60">The pricing rules behind them aren't.</span>
       </h2>
       <p className="text-sm text-muted font-light max-w-lg">
-        Most manufacturers have strong ERP systems — but customer POs arrive in any format, and validating them manually against ERP pricing rules is where time gets lost and billing errors are born.
+        Most manufacturers have strong ERP systems — but customer-specific quote pricing and ERP price lists drift apart constantly. Keeping them in sync manually is where time gets lost and pricing errors are born.
       </p>
     </motion.div>
   );
@@ -106,8 +106,8 @@ function WinStory() {
 
       <div className="grid sm:grid-cols-4 gap-0 border border-border mb-8">
         {[
-          { n: '3,000+', label: 'active quotes in flight', sub: 'Across all open customer POs' },
-          { n: '8', label: 'distinct customer PO formats', sub: 'Each requiring different extraction logic' },
+          { n: '3,000+', label: 'active quotes in flight', sub: 'Across all open customer agreements' },
+          { n: '8', label: 'distinct quote formats', sub: 'Each requiring different extraction logic' },
           { n: '20/day', label: 'ERP pricing rule updates', sub: 'Each one a potential mismatch with open quotes' },
           { n: '10 staff', label: 'on manual validation daily', sub: 'Max 3 concurrent — a hard throughput ceiling' },
         ].map((s, i) => (
@@ -127,7 +127,7 @@ function WinStory() {
       </blockquote>
 
       <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-2">What they built with IBM watsonx Orchestrate</div>
-      <p className="text-xs text-muted font-light mb-4 max-w-xl">Orchestrate Flow handles document extraction from any PO format — no templates, no mapping. Four agents are then configured against your ERP constraints and run automatically.</p>
+      <p className="text-xs text-muted font-light mb-4 max-w-xl">Orchestrate Flow handles document extraction from any quote format — no templates, no mapping. Four agents are then configured against your ERP constraints and run automatically.</p>
       <div className="border border-border mb-4">
         {[
           { n: 1, name: 'Customer Agent', desc: 'Identifies the customer and matches against ERP master data.' },
@@ -163,7 +163,7 @@ function WinStory() {
           <div className="px-5 py-5">
             <div className="text-[10px] text-danger font-semibold uppercase tracking-wide mb-3">Before</div>
             <ul className="space-y-2">
-              {['Manual PDF extraction (8 formats)', 'ERP cross-reference by hand', 'Tiered pricing updated manually', 'MOQ violations caught via email'].map((t, i) => (
+              {['Manual quote extraction (8 formats)', 'ERP cross-reference by hand', 'Tiered pricing updated manually', 'MOQ violations caught via email'].map((t, i) => (
                 <li key={i} className="text-xs text-muted font-light flex items-center gap-2">
                   <span className="text-danger shrink-0">×</span>{t}
                 </li>
@@ -173,7 +173,7 @@ function WinStory() {
           <div className="px-5 py-5">
             <div className="text-[10px] text-success font-semibold uppercase tracking-wide mb-3">After</div>
             <ul className="space-y-2">
-              {['Any PDF format handled automatically', 'Customer matched in seconds', 'ERP corrected overnight', 'MOQ violations routed automatically'].map((t, i) => (
+              {['Any quote format handled automatically', 'Customer matched in seconds', 'ERP corrected overnight', 'MOQ violations routed automatically'].map((t, i) => (
                 <li key={i} className="text-xs text-muted font-light flex items-center gap-2">
                   <span className="text-success shrink-0">✓</span>{t}
                 </li>
@@ -184,7 +184,7 @@ function WinStory() {
       </div>
 
       <div className="border border-ibm-blue/40 bg-ibm-blue/5 px-6 py-8 text-center">
-        <p className="text-xs text-muted font-light mb-5">Watch the agents handle a real customer PO end-to-end.</p>
+        <p className="text-xs text-muted font-light mb-5">Watch the agents handle a real customer quote end-to-end.</p>
         <button
           onClick={() => { setShowDemo(true); trackEvent('demo_start'); }}
           className="inline-flex items-center gap-3 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-10 py-4 transition-colors text-base"
