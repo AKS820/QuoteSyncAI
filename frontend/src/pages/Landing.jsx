@@ -76,7 +76,7 @@ function WhySection() {
     >
       <div className="grid lg:grid-cols-[2fr_3fr] gap-16 items-center">
         <div>
-          <h2 className="text-4xl sm:text-5xl font-semibold mb-4 leading-tight">
+          <h2 className="text-3xl sm:text-4xl font-semibold mb-4 leading-tight">
             Quotes are structured.
             <br /><span className="font-light text-white/60">Pricing rules aren't.</span>
           </h2>
@@ -91,8 +91,8 @@ function WhySection() {
             { n: '~60%', label: 'first-time accuracy', sub: 'In disconnected systems', src: 'Mobileforce / Cincom' },
           ].map((s, i) => (
             <div key={i} className="px-6 py-8 border-r border-border last:border-r-0">
-              <div className="font-mono font-bold text-5xl text-ibm-blue-light mb-2">{s.n}</div>
-              <div className="text-sm font-medium text-white/80">{s.label}</div>
+              <div className="font-mono font-bold text-3xl text-ibm-blue-light mb-2">{s.n}</div>
+              <div className="text-xs font-medium text-white/80">{s.label}</div>
               <div className="text-[10px] text-dim font-light mt-0.5">{s.sub}</div>
               <div className="text-[9px] text-dim font-light mt-2 opacity-60 italic">{s.src}</div>
             </div>
@@ -119,7 +119,7 @@ function WhatHappensToday() {
       <div className="grid lg:grid-cols-[1fr_2fr] gap-12 items-start">
         <div className="lg:pt-1">
           <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">What Happens Today</div>
-          <h3 className="text-3xl sm:text-4xl font-semibold leading-tight">Five steps.<br />Every quote.<br /><span className="font-light text-white/50">All manual.</span></h3>
+          <h3 className="text-2xl sm:text-3xl font-semibold leading-tight">Five steps.<br />Every quote.<br /><span className="font-light text-white/50">All manual.</span></h3>
         </div>
         <div className="border border-border">
         {[
@@ -327,8 +327,8 @@ function BusinessValue() {
           { n: '-30%', label: 'DSO reduction', sub: 'Fewer disputes, faster payment', src: 'Hackett / HighRadius' },
         ].map((s, i) => (
           <div key={i} className="px-6 py-8 border-r border-border last:border-r-0">
-            <div className="font-mono font-bold text-4xl text-ibm-blue-light mb-2">{s.n}</div>
-            <div className="text-sm font-medium text-white/80">{s.label}</div>
+            <div className="font-mono font-bold text-3xl text-ibm-blue-light mb-2">{s.n}</div>
+            <div className="text-xs font-medium text-white/80">{s.label}</div>
             <div className="text-[10px] text-dim font-light mt-0.5">{s.sub}</div>
             <div className="text-[9px] text-dim font-light mt-2 opacity-60 italic">{s.src}</div>
           </div>
