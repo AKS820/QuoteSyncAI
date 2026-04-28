@@ -373,7 +373,7 @@ export default function Landing() {
             rel="noopener noreferrer"
             className="text-sm text-muted hover:text-white font-light transition-colors px-4 py-3.5"
           >
-            Book a 30-min implementation call →
+            Work with an implementation partner →
           </a>
         </div>
       </div>

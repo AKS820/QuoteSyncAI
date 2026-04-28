@@ -177,7 +177,7 @@ export default function Pricing() {
                     onClick={() => trackEvent('cta_click', { cta: 'impl_help_card' })}
                     className="inline-flex items-center gap-2 border border-border hover:border-border-bright text-white font-semibold px-5 py-3 transition-colors text-sm"
                   >
-                    Book a 30-min call
+                    Work with an implementation partner
                     <ChevronRight size={14} />
                   </a>
                 </div>
@@ -339,7 +339,7 @@ export default function Pricing() {
                 onClick={() => trackEvent('cta_click', { cta: 'impl_help_bottom' })}
                 className="flex items-center gap-2 border border-border hover:border-border-bright text-white font-semibold px-6 py-3 transition-colors text-sm"
               >
-                Book a 30-min call
+                Work with an implementation partner
                 <ChevronRight size={14} />
               </a>
             </div>
