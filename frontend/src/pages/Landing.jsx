@@ -114,7 +114,7 @@ function WhatHappensToday() {
       initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.4 }}
-      className="py-8 px-8 max-w-6xl mx-auto"
+      className="py-4 px-8 max-w-6xl mx-auto"
     >
       <div className="grid lg:grid-cols-[1fr_2fr] gap-12 items-start">
         <div className="lg:pt-1">
@@ -129,11 +129,11 @@ function WhatHappensToday() {
           { n: 4, name: 'Correction', desc: 'Errors fixed. ERP re-keyed. Customer re-emailed.' },
           { n: 5, name: 'Sales order entered', desc: 'Days or weeks after it could have been.' },
         ].map((step) => (
-          <div key={step.n} className="flex items-center gap-4 px-5 py-4 border-b border-border last:border-b-0">
+          <div key={step.n} className="flex items-center gap-5 px-6 py-5 border-b border-border last:border-b-0">
             <div className="w-5 h-5 border border-border flex items-center justify-center text-dim text-[10px] font-mono shrink-0">{step.n}</div>
             <div>
-              <span className="text-sm font-medium text-white">{step.name}</span>
-              <span className="text-xs text-muted font-light ml-2">{step.desc}</span>
+              <span className="text-base font-semibold text-white">{step.name}</span>
+              <span className="text-sm text-muted font-light ml-3">{step.desc}</span>
             </div>
           </div>
         ))}
