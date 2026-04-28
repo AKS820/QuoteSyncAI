@@ -72,28 +72,32 @@ function WhySection() {
       initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.4 }}
-      className="py-16 px-6 max-w-4xl mx-auto"
+      className="py-16 px-8 max-w-6xl mx-auto"
     >
-      <h2 className="text-3xl sm:text-4xl font-semibold mb-3 leading-tight">
-        Quotes are structured.
-        <br /><span className="font-light text-white/60">The pricing rules behind them aren't.</span>
-      </h2>
-      <p className="text-sm text-muted font-light max-w-lg mb-10">
-        Most manufacturers have strong ERP systems — but customer-specific quote pricing and ERP price lists drift apart constantly. Keeping them in sync manually is where time gets lost and pricing errors are born.
-      </p>
-      <div className="grid sm:grid-cols-3 gap-0 border border-border">
-        {[
-          { n: '1–5%', label: 'EBITDA lost annually', sub: 'To quote-ERP pricing mismatches', src: 'EY / MGI Research' },
-          { n: '82%', label: 'of teams spend 1 day/week', sub: 'Fixing ERP data issues manually', src: 'McKinsey via Ultra Consultants' },
-          { n: '~60%', label: 'first-time quote accuracy', sub: 'In disconnected systems', src: 'Mobileforce / Cincom' },
-        ].map((s, i) => (
-          <div key={i} className="px-6 py-6 border-r border-border last:border-r-0">
-            <div className="font-mono font-bold text-2xl text-ibm-blue-light mb-1">{s.n}</div>
-            <div className="text-xs font-medium text-white/80">{s.label}</div>
-            <div className="text-[10px] text-dim font-light mt-0.5">{s.sub}</div>
-            <div className="text-[9px] text-dim font-light mt-1.5 opacity-60 italic">{s.src}</div>
-          </div>
-        ))}
+      <div className="grid lg:grid-cols-[2fr_3fr] gap-16 items-center">
+        <div>
+          <h2 className="text-3xl sm:text-4xl font-semibold mb-4 leading-tight">
+            Quotes are structured.
+            <br /><span className="font-light text-white/60">The pricing rules behind them aren't.</span>
+          </h2>
+          <p className="text-sm text-muted font-light">
+            Most manufacturers have strong ERP systems — but customer-specific quote pricing and ERP price lists drift apart constantly. Keeping them in sync manually is where time gets lost and pricing errors are born.
+          </p>
+        </div>
+        <div className="grid grid-cols-3 gap-0 border border-border">
+          {[
+            { n: '1–5%', label: 'EBITDA lost annually', sub: 'To quote-ERP pricing mismatches', src: 'EY / MGI Research' },
+            { n: '82%', label: 'of teams spend 1 day/week', sub: 'Fixing ERP data issues manually', src: 'McKinsey via Ultra Consultants' },
+            { n: '~60%', label: 'first-time quote accuracy', sub: 'In disconnected systems', src: 'Mobileforce / Cincom' },
+          ].map((s, i) => (
+            <div key={i} className="px-6 py-6 border-r border-border last:border-r-0">
+              <div className="font-mono font-bold text-2xl text-ibm-blue-light mb-1">{s.n}</div>
+              <div className="text-xs font-medium text-white/80">{s.label}</div>
+              <div className="text-[10px] text-dim font-light mt-0.5">{s.sub}</div>
+              <div className="text-[9px] text-dim font-light mt-1.5 opacity-60 italic">{s.src}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </motion.div>
   );
@@ -110,11 +114,14 @@ function WhatHappensToday() {
       initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.4 }}
-      className="py-8 px-6 max-w-4xl mx-auto"
+      className="py-8 px-8 max-w-6xl mx-auto"
     >
-      <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">What Happens Today</div>
-      <h3 className="text-xl font-semibold mb-6 leading-tight">Five manual steps. Every quote.</h3>
-      <div className="border border-border">
+      <div className="grid lg:grid-cols-[1fr_2fr] gap-12 items-start">
+        <div className="lg:pt-1">
+          <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">What Happens Today</div>
+          <h3 className="text-2xl font-semibold leading-tight">Five manual steps.<br />Every quote.</h3>
+        </div>
+        <div className="border border-border">
         {[
           { n: 1, name: 'Quote received', desc: 'Sales rep receives customer quote by email, PDF, or spreadsheet — in any format.' },
           { n: 2, name: 'Manual data extraction', desc: 'Rep keys line items, part numbers, and quantities into ERP by hand.' },
@@ -130,6 +137,7 @@ function WhatHappensToday() {
             </div>
           </div>
         ))}
+        </div>
       </div>
     </motion.div>
   );
@@ -146,7 +154,7 @@ function Outcomes() {
       initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.4 }}
-      className="py-8 px-6 max-w-4xl mx-auto pb-16"
+      className="py-8 px-8 max-w-6xl mx-auto pb-16"
     >
       <div className="text-[10px] tracking-label text-danger font-semibold uppercase mb-4">The Cost</div>
       <div className="grid sm:grid-cols-3 gap-0 border border-border">
@@ -191,7 +199,7 @@ function WinStory() {
       initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.4 }}
-      className="py-16 px-6 max-w-4xl mx-auto"
+      className="py-16 px-8 max-w-6xl mx-auto"
     >
       <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-6">Win Story — Midwest Plastics Manufacturer</div>
 
@@ -305,7 +313,7 @@ function BusinessValue() {
       initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.4 }}
-      className="py-16 px-6 max-w-4xl mx-auto"
+      className="py-16 px-8 max-w-6xl mx-auto"
     >
       <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">Business Value</div>
       <h2 className="text-3xl sm:text-4xl font-semibold mb-8 leading-tight">
@@ -386,7 +394,7 @@ export default function Landing() {
       </div>
 
       <div className="border-t border-border">
-        <div className="max-w-4xl mx-auto px-6 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div className="max-w-6xl mx-auto px-8 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <p className="text-[10px] text-dim font-light leading-relaxed max-w-xl">
             This is a custom demo created by an IBM representative to illustrate a concept. It is not an official IBM website or product.
           </p>
