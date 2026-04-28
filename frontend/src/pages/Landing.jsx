@@ -8,7 +8,7 @@ import ProgressIndicator from '../components/ProgressIndicator.jsx';
 import Hero from '../components/Hero.jsx';
 import ChatWidget from '../components/ChatWidget.jsx';
 
-const STAGE_LABELS = ['Overview', 'Why', 'Win Story'];
+const STAGE_LABELS = ['Overview', 'The Problem', 'Win Story', 'Business Value'];
 
 const IMPL_SUBJECT = 'Implementation help — Price List & Order Entry Agent';
 const IMPL_BODY = `Hi Abhi,
@@ -17,8 +17,8 @@ I came across the QuoteGuard demo and I'm interested in learning more about impl
 
 Our situation:
 - ERP system: [SAP / Oracle / Dynamics 365 / Del Mia Works / Other]
-- Monthly PO volume: [approximate number]
-- Main challenge: [pricing validation / order entry errors / part cross-referencing / other]
+- Monthly quote volume: [approximate number]
+- Main challenge: [pricing validation / quote-to-ERP sync / part cross-referencing / other]
 
 [Add any additional context here]
 
@@ -78,9 +78,102 @@ function WhySection() {
         Quotes are structured.
         <br /><span className="font-light text-white/60">The pricing rules behind them aren't.</span>
       </h2>
-      <p className="text-sm text-muted font-light max-w-lg">
+      <p className="text-sm text-muted font-light max-w-lg mb-10">
         Most manufacturers have strong ERP systems — but customer-specific quote pricing and ERP price lists drift apart constantly. Keeping them in sync manually is where time gets lost and pricing errors are born.
       </p>
+      <div className="grid sm:grid-cols-3 gap-0 border border-border">
+        {[
+          { n: '1–5%', label: 'EBITDA lost annually', sub: 'To quote-ERP pricing mismatches', src: 'EY / MGI Research' },
+          { n: '82%', label: 'of teams spend 1 day/week', sub: 'Fixing ERP data issues manually', src: 'McKinsey via Ultra Consultants' },
+          { n: '~60%', label: 'first-time quote accuracy', sub: 'In disconnected systems', src: 'Mobileforce / Cincom' },
+        ].map((s, i) => (
+          <div key={i} className="px-6 py-6 border-r border-border last:border-r-0">
+            <div className="font-mono font-bold text-2xl text-ibm-blue-light mb-1">{s.n}</div>
+            <div className="text-xs font-medium text-white/80">{s.label}</div>
+            <div className="text-[10px] text-dim font-light mt-0.5">{s.sub}</div>
+            <div className="text-[9px] text-dim font-light mt-1.5 opacity-60 italic">{s.src}</div>
+          </div>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
+// ─── What Happens Today ───────────────────────────────────────────────────────
+
+function WhatHappensToday() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-80px' });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 16 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.4 }}
+      className="py-8 px-6 max-w-4xl mx-auto"
+    >
+      <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">What Happens Today</div>
+      <h3 className="text-xl font-semibold mb-6 leading-tight">Five manual steps. Every quote.</h3>
+      <div className="border border-border">
+        {[
+          { n: 1, name: 'Quote received', desc: 'Sales rep receives customer quote by email, PDF, or spreadsheet — in any format.' },
+          { n: 2, name: 'Manual data extraction', desc: 'Rep keys line items, part numbers, and quantities into ERP by hand.' },
+          { n: 3, name: 'Manual validation', desc: 'Price check, part lookup, MOQ check, and ERP mismatch catch — all done manually.' },
+          { n: 4, name: 'Manual correction', desc: 'Rep corrects errors, re-keys ERP updates, and emails the customer revised pricing.' },
+          { n: 5, name: 'Sales order entered', desc: 'Order is finally entered — days or weeks after the quote was received.' },
+        ].map((step) => (
+          <div key={step.n} className="flex items-start gap-4 px-5 py-4 border-b border-border last:border-b-0">
+            <div className="w-5 h-5 border border-border flex items-center justify-center text-dim text-[10px] font-mono shrink-0 mt-0.5">{step.n}</div>
+            <div>
+              <span className="text-sm font-medium text-white">{step.name}</span>
+              <span className="text-xs text-muted font-light ml-2">{step.desc}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
+// ─── Outcomes ─────────────────────────────────────────────────────────────────
+
+function Outcomes() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-80px' });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 16 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.4 }}
+      className="py-8 px-6 max-w-4xl mx-auto pb-16"
+    >
+      <div className="text-[10px] tracking-label text-danger font-semibold uppercase mb-4">The Cost</div>
+      <div className="grid sm:grid-cols-3 gap-0 border border-border">
+        {[
+          {
+            label: 'Broken Customer Trust',
+            quote: '"You\'re trying to overcharge me."',
+            sub: 'Wrong pricing on confirmed quotes erodes the relationship before the order ships.',
+          },
+          {
+            label: 'Longer Cycle Time',
+            quote: '"We\'re still waiting on confirmation."',
+            sub: 'Every manual step adds days. Competitors who move faster win the order.',
+          },
+          {
+            label: 'Disgruntled Employees',
+            quote: '"I have to fix this manually again."',
+            sub: 'Reps spending a day a week on data entry instead of selling.',
+          },
+        ].map((o, i) => (
+          <div key={i} className="px-5 py-6 border-r border-border last:border-r-0">
+            <div className="text-[10px] text-danger font-semibold uppercase tracking-wide mb-3">{o.label}</div>
+            <p className="text-sm font-medium text-white mb-2 leading-snug">{o.quote}</p>
+            <p className="text-xs text-muted font-light">{o.sub}</p>
+          </div>
+        ))}
+      </div>
     </motion.div>
   );
 }
@@ -201,10 +294,46 @@ function WinStory() {
   );
 }
 
+// ─── Business Value ───────────────────────────────────────────────────────────
+
+function BusinessValue() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-80px' });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 16 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.4 }}
+      className="py-16 px-6 max-w-4xl mx-auto"
+    >
+      <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">Business Value</div>
+      <h2 className="text-3xl sm:text-4xl font-semibold mb-8 leading-tight">
+        What changes when pricing is automated.
+      </h2>
+      <div className="grid sm:grid-cols-4 gap-0 border border-border">
+        {[
+          { n: '1%→8%', label: 'price to profit', sub: 'Every corrected quote goes straight to margin', src: 'McKinsey / Bain' },
+          { n: '-28%', label: 'sales cycle', sub: 'Faster quotes, faster orders', src: 'Aberdeen CPQ Benchmark' },
+          { n: '+49%', label: 'rep productivity', sub: 'Time back from manual validation', src: 'Aberdeen CPQ Benchmark' },
+          { n: '-30%', label: 'DSO reduction', sub: 'Fewer disputes, faster payment', src: 'Hackett / HighRadius' },
+        ].map((s, i) => (
+          <div key={i} className="px-5 py-5 border-r border-border last:border-r-0">
+            <div className="font-mono font-bold text-xl text-ibm-blue-light mb-1">{s.n}</div>
+            <div className="text-xs font-medium text-white/80">{s.label}</div>
+            <div className="text-[10px] text-dim font-light mt-0.5">{s.sub}</div>
+            <div className="text-[9px] text-dim font-light mt-1.5 opacity-60 italic">{s.src}</div>
+          </div>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Landing() {
-  const { currentStage, visitedStages } = useScrollStage(3);
+  const { currentStage, visitedStages } = useScrollStage(4);
   const contactEmail = import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com';
   const implHelpHref = `mailto:${contactEmail}?subject=${encodeURIComponent(IMPL_SUBJECT)}&body=${encodeURIComponent(IMPL_BODY)}`;
 
@@ -220,12 +349,18 @@ export default function Landing() {
         <Hero />
       </section>
 
-      <section id="why" data-stage="1" className="border-t border-border bg-surface">
+      <section id="problem" data-stage="1" className="border-t border-border bg-surface">
         <WhySection />
+        <WhatHappensToday />
+        <Outcomes />
       </section>
 
       <section id="win-story" data-stage="2" className="border-t border-border bg-surface">
         <WinStory />
+      </section>
+
+      <section id="value" data-stage="3" className="border-t border-border bg-surface">
+        <BusinessValue />
       </section>
 
       <div className="border-t border-border py-16 px-6 text-center">

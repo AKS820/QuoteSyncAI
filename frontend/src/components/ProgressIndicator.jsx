@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Check } from 'lucide-react';
 
-const STAGE_IDS = ['hero', 'why', 'win-story'];
+const STAGE_IDS = ['hero', 'problem', 'win-story', 'value'];
 
 export default function ProgressIndicator({ currentStage, visitedStages, labels = [] }) {
   return (
