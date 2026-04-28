@@ -72,29 +72,29 @@ function WhySection() {
       initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.4 }}
-      className="py-16 px-8 max-w-6xl mx-auto"
+      className="py-12 px-8 max-w-6xl mx-auto"
     >
       <div className="grid lg:grid-cols-[2fr_3fr] gap-16 items-center">
         <div>
-          <h2 className="text-3xl sm:text-4xl font-semibold mb-4 leading-tight">
+          <h2 className="text-4xl sm:text-5xl font-semibold mb-4 leading-tight">
             Quotes are structured.
-            <br /><span className="font-light text-white/60">The pricing rules behind them aren't.</span>
+            <br /><span className="font-light text-white/60">Pricing rules aren't.</span>
           </h2>
           <p className="text-sm text-muted font-light">
-            Most manufacturers have strong ERP systems — but customer-specific quote pricing and ERP price lists drift apart constantly. Keeping them in sync manually is where time gets lost and pricing errors are born.
+            The price on the quote and the price in the ERP are often different. The ERP wins on the invoice — and margin disappears.
           </p>
         </div>
         <div className="grid grid-cols-3 gap-0 border border-border">
           {[
-            { n: '1–5%', label: 'EBITDA lost annually', sub: 'To quote-ERP pricing mismatches', src: 'EY / MGI Research' },
-            { n: '82%', label: 'of teams spend 1 day/week', sub: 'Fixing ERP data issues manually', src: 'McKinsey via Ultra Consultants' },
-            { n: '~60%', label: 'first-time quote accuracy', sub: 'In disconnected systems', src: 'Mobileforce / Cincom' },
+            { n: '1–5%', label: 'EBITDA lost annually', sub: 'To pricing mismatches', src: 'EY / MGI Research' },
+            { n: '82%', label: '1 day/week lost', sub: 'To ERP data issues', src: 'McKinsey / Ultra Consultants' },
+            { n: '~60%', label: 'first-time accuracy', sub: 'In disconnected systems', src: 'Mobileforce / Cincom' },
           ].map((s, i) => (
-            <div key={i} className="px-6 py-6 border-r border-border last:border-r-0">
-              <div className="font-mono font-bold text-2xl text-ibm-blue-light mb-1">{s.n}</div>
-              <div className="text-xs font-medium text-white/80">{s.label}</div>
+            <div key={i} className="px-6 py-8 border-r border-border last:border-r-0">
+              <div className="font-mono font-bold text-5xl text-ibm-blue-light mb-2">{s.n}</div>
+              <div className="text-sm font-medium text-white/80">{s.label}</div>
               <div className="text-[10px] text-dim font-light mt-0.5">{s.sub}</div>
-              <div className="text-[9px] text-dim font-light mt-1.5 opacity-60 italic">{s.src}</div>
+              <div className="text-[9px] text-dim font-light mt-2 opacity-60 italic">{s.src}</div>
             </div>
           ))}
         </div>
@@ -119,18 +119,18 @@ function WhatHappensToday() {
       <div className="grid lg:grid-cols-[1fr_2fr] gap-12 items-start">
         <div className="lg:pt-1">
           <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">What Happens Today</div>
-          <h3 className="text-2xl font-semibold leading-tight">Five manual steps.<br />Every quote.</h3>
+          <h3 className="text-3xl sm:text-4xl font-semibold leading-tight">Five steps.<br />Every quote.<br /><span className="font-light text-white/50">All manual.</span></h3>
         </div>
         <div className="border border-border">
         {[
-          { n: 1, name: 'Quote received', desc: 'Sales rep receives customer quote by email, PDF, or spreadsheet — in any format.' },
-          { n: 2, name: 'Manual data extraction', desc: 'Rep keys line items, part numbers, and quantities into ERP by hand.' },
-          { n: 3, name: 'Manual validation', desc: 'Price check, part lookup, MOQ check, and ERP mismatch catch — all done manually.' },
-          { n: 4, name: 'Manual correction', desc: 'Rep corrects errors, re-keys ERP updates, and emails the customer revised pricing.' },
-          { n: 5, name: 'Sales order entered', desc: 'Order is finally entered — days or weeks after the quote was received.' },
+          { n: 1, name: 'Quote received', desc: 'Email, PDF, or spreadsheet — any format.' },
+          { n: 2, name: 'Data extraction', desc: 'Every line item keyed into ERP by hand.' },
+          { n: 3, name: 'Validation', desc: 'Price, parts, MOQ — all checked manually.' },
+          { n: 4, name: 'Correction', desc: 'Errors fixed. ERP re-keyed. Customer re-emailed.' },
+          { n: 5, name: 'Sales order entered', desc: 'Days or weeks after it could have been.' },
         ].map((step) => (
-          <div key={step.n} className="flex items-start gap-4 px-5 py-4 border-b border-border last:border-b-0">
-            <div className="w-5 h-5 border border-border flex items-center justify-center text-dim text-[10px] font-mono shrink-0 mt-0.5">{step.n}</div>
+          <div key={step.n} className="flex items-center gap-4 px-5 py-4 border-b border-border last:border-b-0">
+            <div className="w-5 h-5 border border-border flex items-center justify-center text-dim text-[10px] font-mono shrink-0">{step.n}</div>
             <div>
               <span className="text-sm font-medium text-white">{step.name}</span>
               <span className="text-xs text-muted font-light ml-2">{step.desc}</span>
@@ -162,17 +162,17 @@ function Outcomes() {
           {
             label: 'Broken Customer Trust',
             quote: '"You\'re trying to overcharge me."',
-            sub: 'Wrong pricing on confirmed quotes erodes the relationship before the order ships.',
+            sub: 'A confirmed quote with wrong pricing breaks the relationship before the order ships.',
           },
           {
             label: 'Longer Cycle Time',
             quote: '"We\'re still waiting on confirmation."',
-            sub: 'Every manual step adds days. Competitors who move faster win the order.',
+            sub: 'Every manual step is a day lost. Faster competitors win the order.',
           },
           {
             label: 'Disgruntled Employees',
             quote: '"I have to fix this manually again."',
-            sub: 'Reps spending a day a week on data entry instead of selling.',
+            sub: 'A day a week on data entry instead of selling.',
           },
         ].map((o, i) => (
           <div key={i} className="px-5 py-6 border-r border-border last:border-r-0">
@@ -326,11 +326,11 @@ function BusinessValue() {
           { n: '+49%', label: 'rep productivity', sub: 'Time back from manual validation', src: 'Aberdeen CPQ Benchmark' },
           { n: '-30%', label: 'DSO reduction', sub: 'Fewer disputes, faster payment', src: 'Hackett / HighRadius' },
         ].map((s, i) => (
-          <div key={i} className="px-5 py-5 border-r border-border last:border-r-0">
-            <div className="font-mono font-bold text-xl text-ibm-blue-light mb-1">{s.n}</div>
-            <div className="text-xs font-medium text-white/80">{s.label}</div>
+          <div key={i} className="px-6 py-8 border-r border-border last:border-r-0">
+            <div className="font-mono font-bold text-4xl text-ibm-blue-light mb-2">{s.n}</div>
+            <div className="text-sm font-medium text-white/80">{s.label}</div>
             <div className="text-[10px] text-dim font-light mt-0.5">{s.sub}</div>
-            <div className="text-[9px] text-dim font-light mt-1.5 opacity-60 italic">{s.src}</div>
+            <div className="text-[9px] text-dim font-light mt-2 opacity-60 italic">{s.src}</div>
           </div>
         ))}
       </div>
