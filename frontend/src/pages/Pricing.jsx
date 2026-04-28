@@ -1,26 +1,11 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, ChevronDown, ChevronUp, X, ChevronRight } from 'lucide-react';
+import { Check, ChevronDown, ChevronUp, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useEventTracking } from '../hooks/useEventTracking.js';
 
 
-const IMPL_SUBJECT = 'Implementation help — Price List & Order Entry Agent';
-const IMPL_BODY = `Hi Abhi,
-
-I came across the QuoteGuard demo and I'm interested in learning more about implementing the Price List & Order Entry Agent for my team.
-
-Our situation:
-- ERP system: [SAP / Oracle / Dynamics 365 / Del Mia Works / Other]
-- Monthly quote volume: [approximate number]
-- Main challenge: [pricing validation / quote-to-ERP sync / part cross-referencing / other]
-
-[Add any additional context here]
-
----
-[Your name]
-[Company]
-[Phone]`;
+const IMPL_MEETING_URL = 'https://meetings.salesloft.com/ibmdigitalsales/abhisurampudi';
 
 const SETUP_STEPS = [
   { n: '01', time: 'Minutes', title: 'Start your free trial', desc: 'Sign up for IBM watsonx Orchestrate directly on IBM\'s site. No credit card required to get started.' },
@@ -69,51 +54,9 @@ function FaqItem({ faq }) {
   );
 }
 
-function OutreachModal({ title, onClose }) {
-  const calendlyUrl = import.meta.env.VITE_CALENDLY_URL;
-  const contactEmail = import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com';
-  const { trackEvent } = useEventTracking();
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={onClose}>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.97, y: 8 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.97 }}
-        className="bg-surface border border-border p-6 w-full max-w-md"
-        onClick={e => e.stopPropagation()}
-      >
-        <div className="flex items-start justify-between mb-5">
-          <div>
-            <h3 className="font-semibold text-base">{title}</h3>
-            <p className="text-muted text-sm font-light mt-0.5">15 minutes. I'll walk you through a real customer quote end-to-end.</p>
-          </div>
-          <button onClick={onClose} className="text-muted hover:text-white transition-colors p-1"><X size={16} /></button>
-        </div>
-        <p className="text-sm text-muted font-light mb-6 leading-relaxed">
-          Happy to show you what the agent actually catches — no forms, no commitment. Just a live walkthrough of the concept.
-        </p>
-        <a
-          href={calendlyUrl || `mailto:${contactEmail}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackEvent('cta_click', { cta: 'book_meeting' })}
-          className="w-full flex items-center justify-between px-4 py-3 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold text-sm transition-colors"
-        >
-          <span>{calendlyUrl ? 'Pick a time' : 'Send me an email'}</span>
-          <ChevronRight size={14} />
-        </a>
-        <p className="text-center text-[10px] text-dim font-light mt-3">No forms. No personal data collected.</p>
-      </motion.div>
-    </div>
-  );
-}
 
 export default function Pricing() {
-  const [outreachModal, setOutreachModal] = useState(null);
   const { trackEvent } = useEventTracking();
-  const contactEmail = import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com';
-  const implHelpHref = `mailto:${contactEmail}?subject=${encodeURIComponent(IMPL_SUBJECT)}&body=${encodeURIComponent(IMPL_BODY)}`;
 
   return (
     <div className="min-h-screen bg-surface-2">
@@ -146,13 +89,6 @@ export default function Pricing() {
           <div className="flex-1" />
 
           <div className="hidden sm:flex items-center gap-2">
-            <a
-              href={implHelpHref}
-              onClick={() => trackEvent('cta_click', { cta: 'nav_impl' })}
-              className="text-xs text-muted hover:text-white font-light transition-colors px-3 py-1.5"
-            >
-              Work with our implementation partner
-            </a>
             <a
               href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753'}
               target="_blank"
@@ -235,11 +171,13 @@ export default function Pricing() {
                     <ChevronRight size={14} />
                   </a>
                   <a
-                    href={implHelpHref}
+                    href={IMPL_MEETING_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     onClick={() => trackEvent('cta_click', { cta: 'impl_help_card' })}
                     className="inline-flex items-center gap-2 border border-border hover:border-border-bright text-white font-semibold px-5 py-3 transition-colors text-sm"
                   >
-                    Work with our implementation partner
+                    Book a 30-min call
                     <ChevronRight size={14} />
                   </a>
                 </div>
@@ -353,26 +291,16 @@ export default function Pricing() {
                 </div>
               ))}
             </div>
-            <div className="flex flex-wrap gap-3">
-              <a
-                href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753'}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackEvent('cta_click', { cta: 'start_trial_setup' })}
-                className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-6 py-3 transition-colors text-sm"
-              >
-                Start free trial
-                <ChevronRight size={14} />
-              </a>
-              <a
-                href={implHelpHref}
-                onClick={() => trackEvent('cta_click', { cta: 'impl_help_setup' })}
-                className="inline-flex items-center gap-2 border border-border hover:border-border-bright text-white font-semibold px-6 py-3 transition-colors text-sm"
-              >
-                Work with our implementation partner
-                <ChevronRight size={14} />
-              </a>
-            </div>
+            <a
+              href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753'}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackEvent('cta_click', { cta: 'start_trial_setup' })}
+              className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-6 py-3 transition-colors text-sm"
+            >
+              Start free trial
+              <ChevronRight size={14} />
+            </a>
           </div>
         </div>
 
@@ -405,11 +333,13 @@ export default function Pricing() {
                 <ChevronRight size={14} />
               </a>
               <a
-                href={implHelpHref}
+                href={IMPL_MEETING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => trackEvent('cta_click', { cta: 'impl_help_bottom' })}
                 className="flex items-center gap-2 border border-border hover:border-border-bright text-white font-semibold px-6 py-3 transition-colors text-sm"
               >
-                Work with our implementation partner
+                Book a 30-min call
                 <ChevronRight size={14} />
               </a>
             </div>
@@ -430,9 +360,6 @@ export default function Pricing() {
         </div>
       </div>
 
-      <AnimatePresence>
-        {outreachModal && <OutreachModal title={outreachModal} onClose={() => setOutreachModal(null)} />}
-      </AnimatePresence>
     </div>
   );
 }
