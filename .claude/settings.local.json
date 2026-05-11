@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "Bash(docker compose *)",
-      "Bash(node --input-type=module --eval ' *)"
+      "Bash(node --input-type=module --eval ' *)",
+      "Bash(ssh -i /Users/abhisurampudi/QuoteSync/MyKeyPair.pem -o StrictHostKeyChecking=no ubuntu@18.117.114.69 \"find / -name 'docker-compose.prod.yml' 2>/dev/null | head -5\")",
+      "Bash(ssh -i /Users/abhisurampudi/QuoteSync/MyKeyPair.pem -o StrictHostKeyChecking=no ubuntu@18.117.114.69 \"cd ~/quoteguard && docker compose -f docker-compose.prod.yml ps\")",
+      "Bash(ssh -i /Users/abhisurampudi/QuoteSync/MyKeyPair.pem -o StrictHostKeyChecking=no ubuntu@18.117.114.69 \"curl -s -o /dev/null -w '%{http_code}' http://localhost && echo && cd ~/quoteguard && git log --oneline -3\")",
+      "Bash(ssh -i /Users/abhisurampudi/QuoteSync/MyKeyPair.pem -o StrictHostKeyChecking=no ubuntu@18.117.114.69 \"curl -sk -o /dev/null -w '%{http_code}' https://quoteguardibm.com\")",
+      "Bash(ssh -i /Users/abhisurampudi/QuoteSync/MyKeyPair.pem -o StrictHostKeyChecking=no ubuntu@18.117.114.69 \"dig +short quoteguardibm.com && curl -sk -o /dev/null -w '%{http_code}' https://18.117.114.69 --resolve quoteguardibm.com:443:18.117.114.69\")"
     ]
   }
 }

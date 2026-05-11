@@ -8,7 +8,7 @@ import ProgressIndicator from '../components/ProgressIndicator.jsx';
 import Hero from '../components/Hero.jsx';
 import ChatWidget from '../components/ChatWidget.jsx';
 
-const STAGE_LABELS = ['Overview', 'The Problem', 'Win Story', 'Business Value'];
+const STAGE_LABELS = ['Overview', 'The Problem', 'Win Story'];
 
 const IMPL_MEETING_URL = 'https://meetings.salesloft.com/ibmdigitalsales/abhisurampudi';
 
@@ -287,46 +287,10 @@ function WinStory() {
   );
 }
 
-// ─── Business Value ───────────────────────────────────────────────────────────
-
-function BusinessValue() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-80px' });
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 16 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.4 }}
-      className="py-16 px-8 max-w-6xl mx-auto"
-    >
-      <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">Business Value</div>
-      <h2 className="text-3xl sm:text-4xl font-semibold mb-8 leading-tight">
-        What changes when pricing is automated.
-      </h2>
-      <div className="grid sm:grid-cols-4 gap-0 border border-border">
-        {[
-          { n: '1%→8%', label: 'price to profit', sub: 'Every corrected quote goes straight to margin', src: 'McKinsey / Bain' },
-          { n: '-28%', label: 'sales cycle', sub: 'Faster quotes, faster orders', src: 'Aberdeen CPQ Benchmark' },
-          { n: '+49%', label: 'rep productivity', sub: 'Time back from manual validation', src: 'Aberdeen CPQ Benchmark' },
-          { n: '-30%', label: 'DSO reduction', sub: 'Fewer disputes, faster payment', src: 'Hackett / HighRadius' },
-        ].map((s, i) => (
-          <div key={i} className="px-6 py-8 border-r border-border last:border-r-0">
-            <div className="font-mono font-bold text-3xl text-ibm-blue-light mb-2">{s.n}</div>
-            <div className="text-xs font-medium text-white/80">{s.label}</div>
-            <div className="text-[10px] text-dim font-light mt-0.5">{s.sub}</div>
-            <div className="text-[9px] text-dim font-light mt-2 opacity-60 italic">{s.src}</div>
-          </div>
-        ))}
-      </div>
-    </motion.div>
-  );
-}
-
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Landing() {
-  const { currentStage, visitedStages } = useScrollStage(4);
+  const { currentStage, visitedStages } = useScrollStage(3);
 
   return (
     <div className="min-h-screen bg-surface-2">
@@ -348,10 +312,6 @@ export default function Landing() {
 
       <section id="win-story" data-stage="2" className="border-t border-border bg-surface">
         <WinStory />
-      </section>
-
-      <section id="value" data-stage="3" className="border-t border-border bg-surface">
-        <BusinessValue />
       </section>
 
       <div className="border-t border-border py-16 px-6 text-center">
