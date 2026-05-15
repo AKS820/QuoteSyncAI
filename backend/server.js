@@ -27,6 +27,7 @@ app.use('/api/auth',      require('./routes/auth'));
 app.use('/api/analytics', require('./routes/analytics'));
 app.use('/api/chat',      require('./routes/chat'));
 app.use('/api/demo',      require('./routes/demo'));
+app.use('/api/agent',     require('./routes/agent'));
 
 app.get('/health', (_req, res) => res.json({ status: 'ok' }));
 

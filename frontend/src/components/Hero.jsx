@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { ChevronRight, ShieldCheck } from 'lucide-react';
 import { useEventTracking } from '../hooks/useEventTracking.js';
 
+const DEMO_MEETING_URL = 'https://meetings.salesloft.com/ibmdigitalsales/abhisurampudi';
+
 const IMPL_SUBJECT = 'Implementation help — Price List & Order Entry Agent';
 const IMPL_BODY = `Hi Abhi,
 
@@ -65,13 +67,13 @@ export default function Hero() {
           className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12"
         >
           <a
-            href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753'}
+            href={DEMO_MEETING_URL}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackEvent('cta_click', { cta: 'start_trial', stage: 0 })}
+            onClick={() => trackEvent('cta_click', { cta: 'book_demo', stage: 0 })}
             className="flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-7 py-3.5 transition-colors text-sm"
           >
-            Start free trial
+            Book a live demo
             <ChevronRight size={16} />
           </a>
           <a

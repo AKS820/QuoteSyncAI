@@ -90,13 +90,13 @@ export default function Pricing() {
 
           <div className="hidden sm:flex items-center gap-2">
             <a
-              href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753'}
+              href={IMPL_MEETING_URL}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => trackEvent('cta_click', { cta: 'nav_trial' })}
+              onClick={() => trackEvent('cta_click', { cta: 'nav_book_demo' })}
               className="flex items-center gap-1.5 bg-ibm-blue hover:bg-ibm-blue-hover text-white text-xs font-semibold px-3 py-1.5 transition-colors"
             >
-              Start free trial
+              Book a live demo
             </a>
           </div>
         </div>
@@ -161,13 +161,13 @@ export default function Pricing() {
                 </ul>
                 <div className="flex flex-wrap gap-3">
                   <a
-                    href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753'}
+                    href={IMPL_MEETING_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => trackEvent('cta_click', { cta: 'start_trial_card' })}
+                    onClick={() => trackEvent('cta_click', { cta: 'book_demo_card' })}
                     className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-5 py-3 transition-colors text-sm"
                   >
-                    Start free trial
+                    Book a live demo
                     <ChevronRight size={14} />
                   </a>
                   <a
@@ -292,13 +292,13 @@ export default function Pricing() {
               ))}
             </div>
             <a
-              href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753'}
+              href={IMPL_MEETING_URL}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => trackEvent('cta_click', { cta: 'start_trial_setup' })}
+              onClick={() => trackEvent('cta_click', { cta: 'book_demo_setup' })}
               className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-6 py-3 transition-colors text-sm"
             >
-              Start free trial
+              Book a live demo
               <ChevronRight size={14} />
             </a>
           </div>
@@ -323,13 +323,13 @@ export default function Pricing() {
             </p>
             <div className="flex flex-wrap gap-3">
               <a
-                href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753'}
+                href={IMPL_MEETING_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => trackEvent('cta_click', { cta: 'start_trial_bottom' })}
+                onClick={() => trackEvent('cta_click', { cta: 'book_demo_bottom' })}
                 className="flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-6 py-3 transition-colors text-sm"
               >
-                Start free trial
+                Book a live demo
                 <ChevronRight size={14} />
               </a>
               <a

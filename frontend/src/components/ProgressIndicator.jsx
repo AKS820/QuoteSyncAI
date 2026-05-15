@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Check } from 'lucide-react';
 
 const STAGE_IDS = ['hero', 'problem', 'win-story'];
+const DEMO_MEETING_URL = 'https://meetings.salesloft.com/ibmdigitalsales/abhisurampudi';
 
 export default function ProgressIndicator({ currentStage, visitedStages, labels = [] }) {
   return (
@@ -57,14 +58,14 @@ export default function ProgressIndicator({ currentStage, visitedStages, labels 
           })}
         </div>
 
-        {/* Trial CTA */}
+        {/* Demo CTA */}
         <a
-          href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753'}
+          href={DEMO_MEETING_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="hidden sm:flex items-center gap-1.5 bg-ibm-blue hover:bg-ibm-blue-hover text-white text-xs font-semibold px-3 py-1.5 transition-colors shrink-0"
         >
-          Start free trial
+          Book a live demo
         </a>
 
       </div>

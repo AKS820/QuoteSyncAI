@@ -314,17 +314,18 @@ export default function Landing() {
         <WinStory />
       </section>
 
+
       <div className="border-t border-border py-16 px-6 text-center">
-        <p className="text-sm text-muted font-light mb-2">Start on IBM, get help with setup.</p>
-        <p className="text-xs text-dim font-light mb-7">Start a free trial directly on IBM's site. Implementation help is available if you need it.</p>
+        <p className="text-sm text-muted font-light mb-2">See it live with your own quotes.</p>
+        <p className="text-xs text-dim font-light mb-7">Book a 30-minute demo and we'll run the agents against a real quote from your team.</p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <a
-            href={import.meta.env.VITE_IBM_TRIAL_URL || 'https://www.ibm.com/account/reg/us-en/signup?formid=urx-52753'}
+            href={IMPL_MEETING_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-7 py-3.5 transition-colors text-sm"
           >
-            Start free trial
+            Book a live demo
             <ChevronRight size={14} />
           </a>
           <a
