@@ -29,7 +29,7 @@ function DemoModal({ onClose }) {
       >
         <div className="flex items-center justify-between px-4 py-3 border-b border-border shrink-0">
           <div>
-            <span className="text-sm font-semibold">QuoteGuard — Live Agent</span>
+            <span className="text-sm font-semibold">DocFlow — Live Agent</span>
             <span className="text-xs text-muted font-light ml-3">IBM watsonx Orchestrate</span>
           </div>
           <button onClick={onClose} className="text-muted hover:text-white transition-colors p-1">
@@ -37,7 +37,7 @@ function DemoModal({ onClose }) {
           </button>
         </div>
         {embedUrl ? (
-          <iframe src={embedUrl} className="flex-1 w-full border-0" title="QuoteGuard Live Demo" />
+          <iframe src={embedUrl} className="flex-1 w-full border-0" title="DocFlow Live Demo" />
         ) : (
           <iframe src="/arch-animation.html" className="flex-1 w-full border-0" title="Agent Architecture Demo" />
         )}
@@ -62,22 +62,22 @@ function WhySection() {
       <div className="grid lg:grid-cols-[2fr_3fr] gap-16 items-center">
         <div>
           <h2 className="text-3xl sm:text-4xl font-semibold mb-4 leading-tight">
-            Quotes are structured.
-            <br /><span className="font-light text-white/60">Pricing rules aren't.</span>
+            RPA alone isn't enough.
+            <br /><span className="font-light text-[#161616]/60">Agents change the equation.</span>
           </h2>
           <p className="text-sm text-muted font-light">
-            The price on the quote and the price in the ERP are often different. The ERP wins on the invoice — and margin disappears.
+            Format changes require re-engineering. Edge cases burn hours. Disconnected systems leave no single source of truth. watsonx Orchestrate replaces templates and scripts with LLM-backed agents that handle any document format — automatically.
           </p>
         </div>
         <div className="grid grid-cols-3 gap-0 border border-border">
           {[
-            { n: '1–5%', label: 'EBITDA lost annually', sub: 'To pricing mismatches', src: 'EY / MGI Research' },
-            { n: '82%', label: '1 day/week lost', sub: 'To ERP data issues', src: 'McKinsey / Ultra Consultants' },
+            { n: '1–5%', label: 'EBITDA lost annually', sub: 'To document processing errors', src: 'EY / MGI Research' },
+            { n: '82%', label: '1 day/week lost', sub: 'Fixing data quality issues manually', src: 'McKinsey / Ultra Consultants' },
             { n: '~60%', label: 'first-time accuracy', sub: 'In disconnected systems', src: 'Mobileforce / Cincom' },
           ].map((s, i) => (
             <div key={i} className="px-6 py-8 border-r border-border last:border-r-0">
               <div className="font-mono font-bold text-3xl text-ibm-blue-light mb-2">{s.n}</div>
-              <div className="text-xs font-medium text-white/80">{s.label}</div>
+              <div className="text-xs font-medium text-[#161616]/80">{s.label}</div>
               <div className="text-[10px] text-dim font-light mt-0.5">{s.sub}</div>
               <div className="text-[9px] text-dim font-light mt-2 opacity-60 italic">{s.src}</div>
             </div>
@@ -103,21 +103,21 @@ function WhatHappensToday() {
     >
       <div className="grid lg:grid-cols-[1fr_2fr] gap-12 items-start">
         <div className="lg:pt-1">
-          <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">What Happens Today</div>
-          <h3 className="text-2xl sm:text-3xl font-semibold leading-tight">Five steps.<br />Every quote.<br /><span className="font-light text-white/50">All manual.</span></h3>
+          <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">What RPA Alone Looks Like</div>
+          <h3 className="text-2xl sm:text-3xl font-semibold leading-tight">Five steps.<br />Every document.<br /><span className="font-light text-[#161616]/50">All manual.</span></h3>
         </div>
         <div className="border border-border">
         {[
-          { n: 1, name: 'Quote received', desc: 'Email, PDF, or spreadsheet — any format.' },
-          { n: 2, name: 'Data extraction', desc: 'Every line item keyed into ERP by hand.' },
-          { n: 3, name: 'Validation', desc: 'Price, parts, MOQ — all checked manually.' },
-          { n: 4, name: 'Correction', desc: 'Errors fixed. ERP re-keyed. Customer re-emailed.' },
-          { n: 5, name: 'Sales order entered', desc: 'Days or weeks after it could have been.' },
+          { n: 1, name: 'Document arrives', desc: 'Email, PDF, spreadsheet — each format needs its own template.' },
+          { n: 2, name: 'Template-based extraction', desc: 'RPA scripts hand-mapped per format. Any change = re-engineer.' },
+          { n: 3, name: 'Edge case escalation', desc: 'Exceptions routed manually. No LLM fallback.' },
+          { n: 4, name: 'Cross-system re-keying', desc: 'Data reconciled by hand across disconnected systems.' },
+          { n: 5, name: 'Order entry', desc: 'Days or weeks after the document arrived.' },
         ].map((step) => (
           <div key={step.n} className="flex items-center gap-5 px-6 py-5 border-b border-border last:border-b-0">
             <div className="w-5 h-5 border border-border flex items-center justify-center text-dim text-[10px] font-mono shrink-0">{step.n}</div>
             <div>
-              <span className="text-base font-semibold text-white">{step.name}</span>
+              <span className="text-base font-semibold text-[#161616]">{step.name}</span>
               <span className="text-sm text-muted font-light ml-3">{step.desc}</span>
             </div>
           </div>
@@ -145,24 +145,24 @@ function Outcomes() {
       <div className="grid sm:grid-cols-3 gap-0 border border-border">
         {[
           {
-            label: 'Broken Customer Trust',
-            quote: '"You\'re trying to overcharge me."',
-            sub: 'A confirmed quote with wrong pricing breaks the relationship before the order ships.',
+            label: 'Broken Accuracy',
+            quote: '"The data still doesn\'t match."',
+            sub: 'Every format change breaks the extraction. Errors compound across systems.',
           },
           {
             label: 'Longer Cycle Time',
-            quote: '"We\'re still waiting on confirmation."',
+            quote: '"We\'re still waiting for this to process."',
             sub: 'Every manual step is a day lost. Faster competitors win the order.',
           },
           {
             label: 'Disgruntled Employees',
             quote: '"I have to fix this manually again."',
-            sub: 'A day a week on data entry instead of selling.',
+            sub: 'Hours spent on re-keying and exception handling instead of higher-value work.',
           },
         ].map((o, i) => (
           <div key={i} className="px-5 py-6 border-r border-border last:border-r-0">
             <div className="text-[10px] text-danger font-semibold uppercase tracking-wide mb-3">{o.label}</div>
-            <p className="text-sm font-medium text-white mb-2 leading-snug">{o.quote}</p>
+            <p className="text-sm font-medium mb-2 leading-snug">{o.quote}</p>
             <p className="text-xs text-muted font-light">{o.sub}</p>
           </div>
         ))}
@@ -186,34 +186,19 @@ function WinStory() {
       transition={{ duration: 0.4 }}
       className="py-16 px-8 max-w-6xl mx-auto"
     >
-      <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-6">Win Story — Midwest Plastics Manufacturer</div>
+      <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-6">Win Story — Midwest Components Manufacturer</div>
 
-      <h2 className="text-3xl sm:text-4xl font-semibold mb-6 leading-tight">Wisconsin manufacturer.</h2>
-
-      <div className="grid sm:grid-cols-4 gap-0 border border-border mb-8">
-        {[
-          { n: '3,000+', label: 'active quotes in flight', sub: 'Across all open customer agreements' },
-          { n: '8', label: 'distinct quote formats', sub: 'Each requiring different extraction logic' },
-          { n: '20/day', label: 'ERP pricing rule updates', sub: 'Each one a potential mismatch with open quotes' },
-          { n: '10 staff', label: 'on manual validation daily', sub: 'Max 3 concurrent — a hard throughput ceiling' },
-        ].map((s, i) => (
-          <div key={i} className="px-5 py-5 border-r border-border last:border-r-0">
-            <div className="font-mono font-bold text-xl text-ibm-blue-light mb-1">{s.n}</div>
-            <div className="text-xs font-medium text-white/80">{s.label}</div>
-            <div className="text-[10px] text-dim font-light mt-0.5">{s.sub}</div>
-          </div>
-        ))}
-      </div>
+      <h2 className="text-3xl sm:text-4xl font-semibold mb-6 leading-tight">Midwest components manufacturer.</h2>
 
       <blockquote className="border-l-2 border-ibm-blue pl-6 mb-10">
-        <p className="text-2xl sm:text-3xl font-semibold text-white leading-tight mb-3">
+        <p className="text-2xl sm:text-3xl font-semibold leading-tight mb-3">
           "The ERP wasn't the source of truth. The quote was."
         </p>
         <cite className="text-xs text-muted font-light not-italic">— VP of IT, Manufacturing Client</cite>
       </blockquote>
 
       <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-2">What they built with IBM watsonx Orchestrate</div>
-      <p className="text-xs text-muted font-light mb-4 max-w-xl">A Manager Agent on watsonx Orchestrate coordinates four specialized sub-agents, running overnight against quote documents and ERP. Any quote format supported — no templates, no manual mapping.</p>
+      <p className="text-xs text-muted font-light mb-4 max-w-xl">A Manager Agent on watsonx Orchestrate coordinates four specialized sub-agents. LLM-backed document extraction handles any quote format — no templates, no manual mapping. Each agent queries the ERP independently.</p>
       <div className="border border-border mb-4">
         {[
           { n: 1, name: 'Customer Agent', desc: 'Cross-references customer name and address against ERP master data. Confirms match at 98%+ confidence.' },
@@ -224,7 +209,7 @@ function WinStory() {
           <div key={a.n} className="flex items-start gap-4 px-5 py-4 border-b border-border last:border-b-0">
             <div className="w-5 h-5 bg-ibm-blue flex items-center justify-center text-white text-[10px] font-semibold font-mono shrink-0 mt-0.5">{a.n}</div>
             <div>
-              <span className="text-sm font-medium text-white">{a.name}</span>
+              <span className="text-sm font-medium">{a.name}</span>
               <span className="text-xs text-muted font-light ml-2">{a.desc}</span>
             </div>
           </div>
@@ -249,7 +234,7 @@ function WinStory() {
           <div className="px-5 py-5">
             <div className="text-[10px] text-danger font-semibold uppercase tracking-wide mb-3">Before</div>
             <ul className="space-y-2">
-              {['Manual quote extraction (8 formats)', 'ERP cross-reference by hand', 'Tiered pricing updated manually', 'MOQ violations caught via email'].map((t, i) => (
+              {['Manual document extraction per format', 'ERP cross-reference by hand', 'Tiered pricing updated manually', 'MOQ violations caught via email'].map((t, i) => (
                 <li key={i} className="text-xs text-muted font-light flex items-center gap-2">
                   <span className="text-danger shrink-0">×</span>{t}
                 </li>

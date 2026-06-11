@@ -28,7 +28,7 @@ export default function ImplementationGuide() {
       <div className="border border-border mb-8">
         {[
           { n: 1, time: '~30 min', title: 'Your IT team generates API credentials', body: 'One read-only API key from your ERP, one from your CPQ. No server access, no firewall rules, no on-premise install. We send your IT team a one-page checklist.' },
-          { n: 2, time: '~20 min', title: 'We connect and map your fields', body: 'Paste the credentials into QuoteGuard. We handle the connection and field mapping. Most customers use defaults with zero changes.' },
+          { n: 2, time: '~20 min', title: 'We connect and map your fields', body: 'Paste the credentials into DocFlow. We handle the connection and field mapping. Most customers use defaults with zero changes.' },
           { n: 3, time: '~10 min', title: 'Run a read-only detection dry run', body: 'We scan a subset of your active quotes. You see every error that would have shipped — before we touch anything live. Approve when ready.' },
         ].map(step => (
           <div key={step.n} className="flex gap-4 px-5 py-5 border-b border-border last:border-b-0">

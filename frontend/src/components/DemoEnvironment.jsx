@@ -40,7 +40,7 @@ function OrchestrateAgentOverlay({ onClose }) {
         <div className="flex items-center justify-between px-5 py-3 border-b border-border bg-surface shrink-0">
           <div className="flex items-center gap-2.5">
             <span className="w-1.5 h-1.5 bg-ibm-blue rounded-full animate-pulse-dot" />
-            <span className="text-sm font-semibold">QuoteGuard — Live Agent</span>
+            <span className="text-sm font-semibold">DocFlow — Live Agent</span>
             <span className="text-[10px] text-muted border border-border px-2 py-0.5 font-light">IBM watsonx Orchestrate</span>
           </div>
           <button onClick={onClose} className="text-muted hover:text-white transition-colors p-1">
@@ -53,7 +53,7 @@ function OrchestrateAgentOverlay({ onClose }) {
             <iframe
               src={ORCHESTRATE_AGENT_URL}
               className="w-full h-full border-0"
-              title="QuoteGuard — watsonx Orchestrate Agent"
+              title="DocFlow — watsonx Orchestrate Agent"
               allow="clipboard-write"
             />
           ) : (
@@ -169,10 +169,10 @@ export default function DemoEnvironment() {
             <span className="text-[10px] tracking-label text-muted uppercase font-semibold">Scenario</span>
           </div>
           <div className="px-4 py-2 border-l border-border">
-            <span className="text-[10px] tracking-label text-danger uppercase font-semibold">Without QuoteGuard</span>
+            <span className="text-[10px] tracking-label text-danger uppercase font-semibold">Without DocFlow</span>
           </div>
           <div className="px-4 py-2 border-l border-border">
-            <span className="text-[10px] tracking-label text-success uppercase font-semibold">With QuoteGuard</span>
+            <span className="text-[10px] tracking-label text-success uppercase font-semibold">With DocFlow</span>
           </div>
         </div>
 

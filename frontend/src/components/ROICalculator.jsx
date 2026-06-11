@@ -241,7 +241,7 @@ export default function ROICalculator() {
             onClick={e => e.stopPropagation()}
           >
             <h3 className="font-semibold text-base mb-1">Email ROI Report</h3>
-            <p className="text-muted text-sm font-light mb-5">We'll send your ROI summary with a QuoteGuard fit assessment.</p>
+            <p className="text-muted text-sm font-light mb-5">We'll send your ROI summary with a DocFlow fit assessment.</p>
             <input
               type="email"
               value={email}

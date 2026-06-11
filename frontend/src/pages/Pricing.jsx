@@ -67,9 +67,9 @@ export default function Pricing() {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 shrink-0 mr-6">
             <div className="w-6 h-6 bg-ibm-blue flex items-center justify-center">
-              <span className="text-white font-bold text-xs">Q</span>
+              <span className="text-white font-bold text-xs">D</span>
             </div>
-            <span className="font-semibold text-sm tracking-tight">QuoteGuard</span>
+            <span className="font-semibold text-sm tracking-tight">DocFlow</span>
           </Link>
 
           {/* Divider */}
@@ -110,7 +110,7 @@ export default function Pricing() {
             <div>
               {/* Breadcrumb */}
               <div className="flex items-center gap-1.5 text-[11px] text-muted font-light mb-8">
-                <Link to="/" className="hover:text-white transition-colors">QuoteGuard</Link>
+                <Link to="/" className="hover:text-white transition-colors">DocFlow</Link>
                 <span>/</span>
                 <span className="text-white">Pricing</span>
               </div>

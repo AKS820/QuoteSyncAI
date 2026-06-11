@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, X, Send, Bot, ChevronDown, Loader } from 'lucide-react';
 import { useEventTracking } from '../hooks/useEventTracking.js';
 
-const WELCOME = "Hi! I'm Quinn, your QuoteGuard assistant. Ask me anything about how this works, pricing, or whether it's right for your team.";
+const WELCOME = "Hi! I'm Quinn, your DocFlow assistant. Ask me anything about how this works, pricing, or whether it's right for your team.";
 const QUICK_QUESTIONS = [
   'How long does setup take?',
   'What systems do you support?',
@@ -125,7 +125,7 @@ export default function ChatWidget() {
                 </div>
                 <div>
                   <div className="text-sm font-semibold leading-tight">Quinn</div>
-                  <div className="text-[10px] text-muted font-light">QuoteGuard Assistant</div>
+                  <div className="text-[10px] text-muted font-light">DocFlow Assistant</div>
                 </div>
               </div>
               <button onClick={() => setOpen(false)} className="text-muted hover:text-white transition-colors p-1">
@@ -179,7 +179,7 @@ export default function ChatWidget() {
                   {loading ? <Loader size={11} className="animate-spin text-white" /> : <Send size={11} className="text-white" />}
                 </button>
               </div>
-              <p className="text-center text-[10px] text-dim font-light mt-2">Powered by Claude · QuoteGuard</p>
+              <p className="text-center text-[10px] text-dim font-light mt-2">Powered by Claude · DocFlow</p>
             </div>
           </motion.div>
         )}

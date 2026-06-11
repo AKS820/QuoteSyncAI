@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { Users, Zap, Calendar, CreditCard, MessageSquare, RefreshCw, Lock, ShieldCheck } from 'lucide-react';
 
-const ADMIN_PASSWORD = 'quoteguard-admin';
+const ADMIN_PASSWORD = 'docflow-admin';
 
 const STAGE_LABELS = ['Overview', 'Why', 'Win Story'];
 
@@ -61,7 +61,7 @@ export default function Dashboard() {
       await fetch('/api/analytics/reset', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: 'quoteguard-admin' }),
+        body: JSON.stringify({ password: 'docflow-admin' }),
       });
       await loadData();
     } catch (e) {
@@ -92,7 +92,7 @@ export default function Dashboard() {
           <div className="w-8 h-8 bg-ibm-blue flex items-center justify-center mb-6">
             <Lock size={14} className="text-white" />
           </div>
-          <h1 className="text-lg font-semibold mb-1">QuoteGuard Analytics</h1>
+          <h1 className="text-lg font-semibold mb-1">DocFlow Analytics</h1>
           <p className="text-muted text-xs font-light mb-6">Admin access only</p>
           <input
             type="password"
@@ -131,7 +131,7 @@ export default function Dashboard() {
               <ShieldCheck size={14} className="text-white" />
             </div>
             <div>
-              <h1 className="text-base font-semibold">QuoteGuard — Analytics</h1>
+              <h1 className="text-base font-semibold">DocFlow — Analytics</h1>
               <p className="text-[10px] text-muted font-light font-mono mt-0.5">
                 {lastRefresh ? `Updated ${lastRefresh.toLocaleTimeString()}` : 'Loading...'}
               </p>

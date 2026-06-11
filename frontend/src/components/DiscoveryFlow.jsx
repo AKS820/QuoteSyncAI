@@ -34,12 +34,12 @@ function PersonalizedHeadline({ answers }) {
   const role = answers.role || 'your team';
   const painLabel = PAINS.find(p => (answers.pains || []).includes(p.id))?.label?.toLowerCase();
   if (systemNames.length >= 2) {
-    return `Here's how QuoteSync AI eliminates manual ${systemNames[0]} + ${systemNames[1]} sync for ${role.toLowerCase() === 'cro' ? 'your revenue team' : role}`;
+    return `Here's how DocFlow eliminates manual ${systemNames[0]} + ${systemNames[1]} sync for ${role.toLowerCase() === 'cro' ? 'your revenue team' : role}`;
   }
   if (systemNames.length === 1) {
-    return `Here's how QuoteSync AI eliminates manual ${systemNames[0]} sync for ${role}`;
+    return `Here's how DocFlow eliminates manual ${systemNames[0]} sync for ${role}`;
   }
-  return `Here's how QuoteSync AI eliminates ${painLabel || 'manual quote sync'} for ${role.toLowerCase() === 'cro' ? 'your revenue team' : role}`;
+  return `Here's how DocFlow eliminates ${painLabel || 'manual quote sync'} for ${role.toLowerCase() === 'cro' ? 'your revenue team' : role}`;
 }
 
 const questions = [
@@ -83,7 +83,7 @@ export default function DiscoveryFlow() {
       const finalAnswers = { ...answers, volume: sliderValue };
       setCompleted(true);
       trackEvent('discovery_complete', { role: finalAnswers.role, pains: finalAnswers.pains, volume: finalAnswers.volume, systems: finalAnswers.systems });
-      fetch('/api/users', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: `anon_${Date.now()}@quotesync.demo`, role: finalAnswers.role }) }).catch(() => {});
+      fetch('/api/users', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: `anon_${Date.now()}@docflow.demo`, role: finalAnswers.role }) }).catch(() => {});
     }
   }
 
@@ -102,7 +102,7 @@ export default function DiscoveryFlow() {
               {PersonalizedHeadline({ answers })}
             </h2>
             <p className="text-muted font-light mb-8 max-w-lg mx-auto text-sm">
-              Based on your answers, QuoteSync AI is a strong fit. See the live demo below — then request access to get your custom setup guide.
+              Based on your answers, DocFlow is a strong fit. See the live demo below — then request access to get your custom setup guide.
             </p>
             <div className="flex flex-wrap justify-center gap-2 mb-8">
               {answers.role && (

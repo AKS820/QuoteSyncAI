@@ -12,9 +12,9 @@ export default function ProgressIndicator({ currentStage, visitedStages, labels 
         {/* Logo */}
         <a href="/" className="flex items-center gap-2.5 shrink-0 mr-6">
           <div className="w-6 h-6 bg-ibm-blue flex items-center justify-center">
-            <span className="text-white font-bold text-xs">Q</span>
+            <span className="text-white font-bold text-xs">D</span>
           </div>
-          <span className="font-semibold text-sm tracking-tight">QuoteGuard</span>
+          <span className="font-semibold text-sm tracking-tight">DocFlow</span>
         </a>
 
         {/* Divider */}

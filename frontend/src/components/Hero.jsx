@@ -1,37 +1,17 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import { ChevronRight, ShieldCheck } from 'lucide-react';
 import { useEventTracking } from '../hooks/useEventTracking.js';
 
-const DEMO_MEETING_URL = 'https://meetings.salesloft.com/ibmdigitalsales/abhisurampudi';
-
-const IMPL_SUBJECT = 'Implementation help — Price List & Order Entry Agent';
-const IMPL_BODY = `Hi Abhi,
-
-I came across the QuoteGuard demo and I'm interested in learning more about implementing the Price List & Order Entry Agent for my team.
-
-Our situation:
-- ERP system: [SAP / Oracle / Dynamics 365 / Del Mia Works / Other]
-- Monthly PO volume: [approximate number]
-- Main challenge: [pricing validation / order entry errors / part cross-referencing / other]
-
-[Add any additional context here]
-
----
-[Your name]
-[Company]
-[Phone]`;
+const IMPL_MEETING_URL = 'https://meetings.salesloft.com/ibmdigitalsales/abhisurampudi';
 
 export default function Hero() {
   const { trackEvent } = useEventTracking();
-  const contactEmail = import.meta.env.VITE_CONTACT_EMAIL || 'abhi.surampudi@ibm.com';
-  const implHelpHref = `mailto:${contactEmail}?subject=${encodeURIComponent(IMPL_SUBJECT)}&body=${encodeURIComponent(IMPL_BODY)}`;
 
   return (
     <div
       className="min-h-[90vh] flex flex-col items-center justify-center pt-16 pb-12 px-6 bg-surface-2"
       style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20 L20 0 L40 20' fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='1'/%3E%3C/svg%3E")`,
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20 L20 0 L40 20' fill='none' stroke='rgba(0,0,0,0.04)' stroke-width='1'/%3E%3C/svg%3E")`,
         backgroundRepeat: 'repeat',
       }}
     >
@@ -43,9 +23,9 @@ export default function Hero() {
           transition={{ duration: 0.45, delay: 0.05 }}
           className="text-5xl sm:text-6xl lg:text-[3.5rem] leading-[1.08] tracking-tight mb-6"
         >
-          <span className="font-semibold text-white">Agentic Order Processing.</span>
+          <span className="font-semibold text-[#161616]">Agentic Document Processing.</span>
           <br />
-          <span className="font-light text-white/60">No manual work.</span>
+          <span className="font-light text-[#161616]/60">Built for manufacturing.</span>
         </motion.h1>
 
         <motion.div
@@ -56,7 +36,7 @@ export default function Hero() {
         >
           <div className="inline-flex items-center gap-2 border border-ibm-blue/30 bg-ibm-blue-dim px-3 py-1.5">
             <ShieldCheck size={11} className="text-ibm-blue shrink-0" />
-            <span className="text-xs tracking-wide text-ibm-blue-light font-medium">Powered by IBM watsonx Orchestrate</span>
+            <span className="text-xs tracking-wide text-ibm-blue font-medium">Powered by IBM watsonx Orchestrate</span>
           </div>
         </motion.div>
 
@@ -67,7 +47,7 @@ export default function Hero() {
           className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12"
         >
           <a
-            href={DEMO_MEETING_URL}
+            href={IMPL_MEETING_URL}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackEvent('cta_click', { cta: 'book_demo', stage: 0 })}
@@ -77,11 +57,11 @@ export default function Hero() {
             <ChevronRight size={16} />
           </a>
           <a
-            href={implHelpHref}
+            href={IMPL_MEETING_URL}
             onClick={() => trackEvent('cta_click', { cta: 'implementation_help', stage: 0 })}
-            className="text-sm text-muted hover:text-white font-light transition-colors px-4 py-3.5"
+            className="text-sm text-muted hover:text-[#161616] font-light transition-colors px-4 py-3.5"
           >
-            Work with our implementation partner →
+            Work with an implementation partner →
           </a>
         </motion.div>
 

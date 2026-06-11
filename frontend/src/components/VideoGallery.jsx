@@ -17,7 +17,7 @@ const PERSONAS = [
       { metric: '3 weeks', desc: 'average deployment — no SI engagement' },
       { metric: '< 10 sec', desc: 'automated sync cycle, 24/7' },
     ],
-    quote: '"We were losing $40K a quarter to stale pricing in CPQ. QuoteSync automated the sync on Week 3 and we haven\'t had a pricing dispute since."',
+    quote: '"We were losing $40K a quarter to stale pricing in CPQ. DocFlow automated the sync on Week 3 and we haven\'t had a pricing dispute since."',
     attribution: '— VP of Sales, Industrial Equipment Manufacturer',
   },
   {
@@ -121,7 +121,7 @@ export default function VideoGallery() {
             {/* Before */}
             <div className="border-r border-border">
               <div className="px-4 py-2 border-b border-border bg-surface">
-                <span className="text-[10px] tracking-label text-danger uppercase font-semibold">Before QuoteSync</span>
+                <span className="text-[10px] tracking-label text-danger uppercase font-semibold">Before DocFlow</span>
               </div>
               <div className="divide-y divide-border">
                 {persona.before.map((item, i) => (
@@ -136,7 +136,7 @@ export default function VideoGallery() {
             {/* After */}
             <div>
               <div className="px-4 py-2 border-b border-border bg-surface">
-                <span className="text-[10px] tracking-label text-success uppercase font-semibold">After QuoteSync</span>
+                <span className="text-[10px] tracking-label text-success uppercase font-semibold">After DocFlow</span>
               </div>
               <div className="divide-y divide-border">
                 {persona.after.map((item, i) => (
