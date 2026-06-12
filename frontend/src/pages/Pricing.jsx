@@ -152,7 +152,7 @@ export default function Pricing() {
                     'Human-in-the-loop review for low-confidence fields before downstream systems are updated',
                     'Multi-agent orchestration validates extracted data against ERP master records',
                     'Full audit trail and observability via Orchestrate Control Plane',
-                  ]}.map((f, i) => (
+                  ].map((f, i) => (
                     <li key={i} className="flex items-start gap-2.5">
                       <Check size={12} className="text-ibm-blue-light shrink-0 mt-0.5" />
                       <span className="text-sm text-muted font-light leading-snug">{f}</span>
