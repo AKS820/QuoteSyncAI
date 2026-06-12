@@ -10,8 +10,8 @@
   }
 
   body {
-    background-color: #06060f;
-    color: #FFFFFF;
+    background-color: #f4f4f4;
+    color: #161616;
     font-family: 'IBM Plex Sans', Inter, system-ui, sans-serif;
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
@@ -19,8 +19,8 @@
   }
 
   ::-webkit-scrollbar { width: 4px; height: 4px; }
-  ::-webkit-scrollbar-track { background: #06060f; }
-  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 0; }
+  ::-webkit-scrollbar-track { background: #f4f4f4; }
+  ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 0; }
   ::-webkit-scrollbar-thumb:hover { background: #0F62FE; }
 }
 

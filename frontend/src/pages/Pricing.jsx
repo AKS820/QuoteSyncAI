@@ -78,7 +78,7 @@ export default function Pricing() {
           {/* Product tabs */}
           <Link
             to="/"
-            className="h-11 flex items-center px-4 text-xs text-muted hover:text-white transition-colors border-b-2 border-transparent"
+            className="h-11 flex items-center px-4 text-xs text-muted hover:text-[#161616] transition-colors border-b-2 border-transparent"
           >
             Overview
           </Link>
@@ -110,11 +110,11 @@ export default function Pricing() {
             <div>
               {/* Breadcrumb */}
               <div className="flex items-center gap-1.5 text-[11px] text-muted font-light mb-8">
-                <Link to="/" className="hover:text-white transition-colors">DocFlow</Link>
+                <Link to="/" className="hover:text-[#161616] transition-colors">DocFlow</Link>
                 <span>/</span>
-                <span className="text-white">Pricing</span>
+                <span className="text-[#161616]">Pricing</span>
               </div>
-              <h1 className="text-5xl sm:text-6xl font-light text-white mb-6 leading-none tracking-tight">Pricing</h1>
+              <h1 className="text-5xl sm:text-6xl font-light text-[#161616] mb-6 leading-none tracking-tight">Pricing</h1>
               <p className="text-base text-muted font-light max-w-sm leading-relaxed">
                 Runs on IBM watsonx Orchestrate. Trial starts on IBM's site. Implementation requires our partner network.
               </p>
@@ -122,7 +122,7 @@ export default function Pricing() {
             {/* Right — attribution */}
             <div className="hidden md:flex flex-col items-end justify-center h-48 gap-2">
               <div className="text-[10px] tracking-label text-muted uppercase font-semibold">Built using</div>
-              <div className="text-2xl font-light text-white/70 tracking-tight">IBM watsonx</div>
+              <div className="text-2xl font-light text-[#161616]/70 tracking-tight">IBM watsonx</div>
               <div className="text-[11px] text-dim font-light text-right max-w-[220px] leading-relaxed">
                 Custom demo by an IBM representative.<br />Not an official IBM product.
               </div>
@@ -133,7 +133,7 @@ export default function Pricing() {
         {/* ── IBM product ───────────────────────────────────────────────────── */}
         <div className="max-w-7xl mx-auto px-6 py-20">
           <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">The platform</div>
-          <h2 className="text-3xl font-light text-white mb-3">IBM watsonx Orchestrate</h2>
+          <h2 className="text-3xl font-light text-[#161616] mb-3">IBM watsonx Orchestrate</h2>
           <p className="text-muted font-light text-sm mb-12 max-w-lg">
             Document extraction, agent orchestration, and ERP connectivity — all within Orchestrate. Trial on IBM's site. Implementation through our partner network.
           </p>
@@ -147,12 +147,12 @@ export default function Pricing() {
                 <div className="text-[10px] tracking-label text-ibm-blue font-semibold uppercase mb-4">What it does</div>
                 <ul className="space-y-3 mb-8">
                   {[
-                    'Extracts structured data from any quote format via Orchestrate Flow — no templates, no manual mapping',
-                    'Connects agents directly to your ERP (SAP, Oracle, Dynamics, Del Mia Works, and more)',
-                    'Runs four agents overnight via a Manager Agent: Customer, Quote Validation, Pricing, Sales Order',
-                    'Auto-corrects tiered pricing discrepancies; routes MOQ violations for approval',
-                    'Full audit trail emailed to executives after each run',
-                  ].map((f, i) => (
+                    'Classifies, extracts, and validates documents of any format — no templates, no manual mapping',
+                    'LLM-backed extraction handles PDFs, spreadsheets, handwritten notes, and tables',
+                    'Human-in-the-loop review for low-confidence fields before downstream systems are updated',
+                    'Multi-agent orchestration validates extracted data against ERP master records',
+                    'Full audit trail and observability via Orchestrate Control Plane',
+                  ]}.map((f, i) => (
                     <li key={i} className="flex items-start gap-2.5">
                       <Check size={12} className="text-ibm-blue-light shrink-0 mt-0.5" />
                       <span className="text-sm text-muted font-light leading-snug">{f}</span>
@@ -175,7 +175,7 @@ export default function Pricing() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => trackEvent('cta_click', { cta: 'impl_help_card' })}
-                    className="inline-flex items-center gap-2 border border-border hover:border-border-bright text-white font-semibold px-5 py-3 transition-colors text-sm"
+                    className="inline-flex items-center gap-2 border border-border hover:border-border-bright text-[#161616] font-semibold px-5 py-3 transition-colors text-sm"
                   >
                     Work with an implementation partner
                     <ChevronRight size={14} />
@@ -187,7 +187,7 @@ export default function Pricing() {
               <div className="px-8 py-8">
                 <div className="text-[10px] tracking-label text-muted font-semibold uppercase mb-4">How it's priced</div>
                 <p className="text-sm text-muted font-light leading-relaxed mb-6">
-                  Orchestrate is billed on <span className="text-white">message volume</span> — each document extracted and each agent API call counts as a message.
+                  Orchestrate is billed on <span className="text-[#161616]">message volume</span> — each document extracted and each agent API call counts as a message.
                 </p>
                 <div className="border border-border px-5 py-5 mb-6">
                   <div className="text-[10px] text-muted font-semibold uppercase tracking-wide mb-3">Essentials Plan</div>
@@ -215,7 +215,7 @@ export default function Pricing() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackEvent('cta_click', { cta: 'orchestrate_pricing' })}
-                  className="inline-flex items-center gap-2 text-ibm-blue-light hover:text-white text-xs font-semibold transition-colors"
+                  className="inline-flex items-center gap-2 text-ibm-blue-light hover:text-[#161616] text-xs font-semibold transition-colors"
                 >
                   View full Orchestrate pricing <ChevronRight size={12} />
                 </a>
@@ -317,7 +317,7 @@ export default function Pricing() {
         {/* ── Take the next step ────────────────────────────────────────────── */}
         <div className="border-t border-border bg-surface">
           <div className="max-w-7xl mx-auto px-6 py-20">
-            <h2 className="text-3xl font-light text-white mb-3">Ready to get started?</h2>
+            <h2 className="text-3xl font-light text-[#161616] mb-3">Ready to get started?</h2>
             <p className="text-muted font-light mb-8 max-w-md text-sm leading-relaxed">
               Trial is self-serve on IBM's site. Configuration and ERP setup requires working with our implementation partner.
             </p>
@@ -337,7 +337,7 @@ export default function Pricing() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackEvent('cta_click', { cta: 'impl_help_bottom' })}
-                className="flex items-center gap-2 border border-border hover:border-border-bright text-white font-semibold px-6 py-3 transition-colors text-sm"
+                className="flex items-center gap-2 border border-border hover:border-border-bright text-[#161616] font-semibold px-6 py-3 transition-colors text-sm"
               >
                 Work with an implementation partner
                 <ChevronRight size={14} />
