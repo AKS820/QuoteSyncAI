@@ -119,7 +119,7 @@ export default function DiscoveryFlow() {
             </div>
             <a
               href="#stage-3"
-              className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-6 py-3 transition-colors text-sm"
+              className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-[#ffffff] font-semibold px-6 py-3 transition-colors text-sm"
             >
               View Live Demo
               <ChevronRight size={16} />
@@ -273,7 +273,7 @@ export default function DiscoveryFlow() {
         <button
           onClick={advance}
           disabled={!canAdvance()}
-          className="flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold px-6 py-2.5 transition-colors text-sm"
+          className="flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover disabled:opacity-40 disabled:cursor-not-allowed text-[#ffffff] font-semibold px-6 py-2.5 transition-colors text-sm"
         >
           {step === questions.length - 1 ? 'Show My Demo' : 'Next'}
           <ChevronRight size={15} />

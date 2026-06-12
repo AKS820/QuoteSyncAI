@@ -33,7 +33,7 @@ export default function ImplementationGuide() {
         ].map(step => (
           <div key={step.n} className="flex gap-4 px-5 py-5 border-b border-border last:border-b-0">
             <div className="shrink-0 flex flex-col items-center gap-1">
-              <div className="w-6 h-6 bg-ibm-blue flex items-center justify-center text-white text-xs font-semibold font-mono">
+              <div className="w-6 h-6 bg-ibm-blue flex items-center justify-center text-[#ffffff] text-xs font-semibold font-mono">
                 {step.n}
               </div>
               <span className="text-[10px] font-mono text-muted whitespace-nowrap">{step.time}</span>

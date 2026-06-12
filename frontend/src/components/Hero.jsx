@@ -51,7 +51,7 @@ export default function Hero() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackEvent('cta_click', { cta: 'book_demo', stage: 0 })}
-            className="flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-7 py-3.5 transition-colors text-sm"
+            className="flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-[#ffffff] font-semibold px-7 py-3.5 transition-colors text-sm"
           >
             Book a live demo
             <ChevronRight size={16} />

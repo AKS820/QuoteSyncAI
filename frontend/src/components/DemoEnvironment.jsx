@@ -213,7 +213,7 @@ export default function DemoEnvironment() {
           </div>
           <button
             onClick={openAgent}
-            className="flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-6 py-3 transition-colors text-sm shrink-0"
+            className="flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-[#ffffff] font-semibold px-6 py-3 transition-colors text-sm shrink-0"
           >
             <Zap size={14} />
             Check a quote

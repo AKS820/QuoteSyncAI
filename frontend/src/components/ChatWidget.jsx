@@ -49,7 +49,7 @@ function Message({ msg }) {
       )}
       <div className={`max-w-[85%] px-4 py-2.5 text-sm font-light leading-relaxed ${
         isUser
-          ? 'bg-ibm-blue text-white'
+          ? 'bg-ibm-blue text-[#ffffff]'
           : 'bg-surface border border-border text-white'
       }`}>
         {msg.content}

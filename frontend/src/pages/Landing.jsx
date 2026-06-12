@@ -207,7 +207,7 @@ function WinStory() {
           { n: 4, name: 'Sales Order Agent', desc: 'Auto-corrects tiered pricing in ERP. Holds MOQ violations and routes for human approval.' },
         ].map((a) => (
           <div key={a.n} className="flex items-start gap-4 px-5 py-4 border-b border-border last:border-b-0">
-            <div className="w-5 h-5 bg-ibm-blue flex items-center justify-center text-white text-[10px] font-semibold font-mono shrink-0 mt-0.5">{a.n}</div>
+            <div className="w-5 h-5 bg-ibm-blue flex items-center justify-center text-[#ffffff] text-[10px] font-semibold font-mono shrink-0 mt-0.5">{a.n}</div>
             <div>
               <span className="text-sm font-medium">{a.name}</span>
               <span className="text-xs text-muted font-light ml-2">{a.desc}</span>
@@ -258,7 +258,7 @@ function WinStory() {
         <p className="text-xs text-muted font-light mb-5">Watch the agents handle a real customer quote end-to-end.</p>
         <button
           onClick={() => { setShowDemo(true); trackEvent('demo_start'); }}
-          className="inline-flex items-center gap-3 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-10 py-4 transition-colors text-base"
+          className="inline-flex items-center gap-3 bg-ibm-blue hover:bg-ibm-blue-hover text-[#ffffff] font-semibold px-10 py-4 transition-colors text-base"
         >
           <span className="w-2 h-2 rounded-full bg-white/70 animate-pulse shrink-0" />
           See their flow
@@ -308,7 +308,7 @@ export default function Landing() {
             href={IMPL_MEETING_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-7 py-3.5 transition-colors text-sm"
+            className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-[#ffffff] font-semibold px-7 py-3.5 transition-colors text-sm"
           >
             Book a live demo
             <ChevronRight size={14} />

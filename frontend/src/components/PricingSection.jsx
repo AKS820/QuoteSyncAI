@@ -177,7 +177,7 @@ function PurchaseModal({ tier, onClose }) {
             <button
               onClick={handleSubmit}
               disabled={!name || !email || !company}
-              className="w-full bg-ibm-blue hover:bg-ibm-blue-hover disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold py-3 transition-colors text-sm"
+              className="w-full bg-ibm-blue hover:bg-ibm-blue-hover disabled:opacity-40 disabled:cursor-not-allowed text-[#ffffff] font-semibold py-3 transition-colors text-sm"
             >
               {isEnterprise ? 'Talk to an engineer' : 'Start protecting my quotes'}
             </button>
@@ -244,7 +244,7 @@ export default function PricingSection() {
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] tracking-label font-semibold uppercase text-muted">{tier.name}</span>
                   {tier.popular && (
-                    <span className="text-[10px] bg-ibm-blue text-white px-2 py-0.5 font-semibold tracking-wide">Most Popular</span>
+                    <span className="text-[10px] bg-ibm-blue text-[#ffffff] px-2 py-0.5 font-semibold tracking-wide">Most Popular</span>
                   )}
                 </div>
               </div>
@@ -274,7 +274,7 @@ export default function PricingSection() {
                   onClick={() => openModal(tier)}
                   className={`w-full py-3 font-semibold text-sm transition-colors ${
                     tier.popular
-                      ? 'bg-ibm-blue hover:bg-ibm-blue-hover text-white'
+                      ? 'bg-ibm-blue hover:bg-ibm-blue-hover text-[#ffffff]'
                       : 'border border-border hover:border-border-bright text-white'
                   }`}
                 >
@@ -314,7 +314,7 @@ export default function PricingSection() {
         </p>
         <button
           onClick={() => openModal(TIERS[1])}
-          className="bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-8 py-3 transition-colors text-sm"
+          className="bg-ibm-blue hover:bg-ibm-blue-hover text-[#ffffff] font-semibold px-8 py-3 transition-colors text-sm"
         >
           Start protecting my quotes
         </button>

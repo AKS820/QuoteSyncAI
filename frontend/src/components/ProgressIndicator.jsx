@@ -63,7 +63,7 @@ export default function ProgressIndicator({ currentStage, visitedStages, labels 
           href={DEMO_MEETING_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden sm:flex items-center gap-1.5 bg-ibm-blue hover:bg-ibm-blue-hover text-white text-xs font-semibold px-3 py-1.5 transition-colors shrink-0"
+          className="hidden sm:flex items-center gap-1.5 bg-ibm-blue hover:bg-ibm-blue-hover text-[#ffffff] text-xs font-semibold px-3 py-1.5 transition-colors shrink-0"
         >
           Book a live demo
         </a>

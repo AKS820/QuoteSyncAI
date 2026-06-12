@@ -222,7 +222,7 @@ export default function ROICalculator() {
             ) : (
               <button
                 onClick={() => setEmailModal(true)}
-                className="flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-5 py-2.5 text-sm transition-colors"
+                className="flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-[#ffffff] font-semibold px-5 py-2.5 text-sm transition-colors"
               >
                 <Mail size={14} />
                 Email Me This Report
@@ -253,7 +253,7 @@ export default function ROICalculator() {
             />
             <div className="flex gap-3">
               <button onClick={() => setEmailModal(false)} className="flex-1 py-2.5 border border-border text-sm text-muted hover:text-white hover:border-border-bright transition-colors">Cancel</button>
-              <button onClick={handleEmailSubmit} className="flex-1 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold py-2.5 transition-colors text-sm">Send Report</button>
+              <button onClick={handleEmailSubmit} className="flex-1 bg-ibm-blue hover:bg-ibm-blue-hover text-[#ffffff] font-semibold py-2.5 transition-colors text-sm">Send Report</button>
             </div>
           </motion.div>
         </div>

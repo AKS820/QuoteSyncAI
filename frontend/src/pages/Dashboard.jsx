@@ -105,7 +105,7 @@ export default function Dashboard() {
           {pwError && <p className="text-[10px] text-danger font-light mb-3">Incorrect password</p>}
           <button
             onClick={handleAuth}
-            className="w-full bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold py-3 transition-colors text-sm"
+            className="w-full bg-ibm-blue hover:bg-ibm-blue-hover text-[#ffffff] font-semibold py-3 transition-colors text-sm"
           >
             Access Dashboard
           </button>

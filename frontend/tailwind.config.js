@@ -13,6 +13,7 @@ export default {
         full: '9999px',
       },
       colors: {
+        white:           '#161616',
         'ibm-blue':      '#0F62FE',
         'ibm-blue-hover':'#0353E9',
         'ibm-blue-light':'#0043CE',

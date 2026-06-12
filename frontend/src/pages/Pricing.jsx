@@ -94,7 +94,7 @@ export default function Pricing() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackEvent('cta_click', { cta: 'nav_book_demo' })}
-              className="flex items-center gap-1.5 bg-ibm-blue hover:bg-ibm-blue-hover text-white text-xs font-semibold px-3 py-1.5 transition-colors"
+              className="flex items-center gap-1.5 bg-ibm-blue hover:bg-ibm-blue-hover text-[#ffffff] text-xs font-semibold px-3 py-1.5 transition-colors"
             >
               Book a live demo
             </a>
@@ -165,7 +165,7 @@ export default function Pricing() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => trackEvent('cta_click', { cta: 'book_demo_card' })}
-                    className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-5 py-3 transition-colors text-sm"
+                    className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-[#ffffff] font-semibold px-5 py-3 transition-colors text-sm"
                   >
                     Book a live demo
                     <ChevronRight size={14} />
@@ -296,7 +296,7 @@ export default function Pricing() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackEvent('cta_click', { cta: 'book_demo_setup' })}
-              className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-6 py-3 transition-colors text-sm"
+              className="inline-flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-[#ffffff] font-semibold px-6 py-3 transition-colors text-sm"
             >
               Book a live demo
               <ChevronRight size={14} />
@@ -327,7 +327,7 @@ export default function Pricing() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackEvent('cta_click', { cta: 'book_demo_bottom' })}
-                className="flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-6 py-3 transition-colors text-sm"
+                className="flex items-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-[#ffffff] font-semibold px-6 py-3 transition-colors text-sm"
               >
                 Book a live demo
                 <ChevronRight size={14} />

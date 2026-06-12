@@ -136,7 +136,7 @@ export default function QuoteDemoSection() {
 
               <button
                 onClick={openAgent}
-                className="flex items-center justify-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-white font-semibold px-6 py-3.5 transition-colors text-sm"
+                className="flex items-center justify-center gap-2 bg-ibm-blue hover:bg-ibm-blue-hover text-[#ffffff] font-semibold px-6 py-3.5 transition-colors text-sm"
               >
                 <ExternalLink size={14} className="shrink-0" />
                 Open live agent
